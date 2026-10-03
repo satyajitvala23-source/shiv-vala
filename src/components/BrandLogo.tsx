@@ -17,46 +17,45 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({ brandName, tagline, size =
 
   return (
     <div id="shiv-computer-branding" className="flex flex-col items-center text-center select-none w-full max-w-full">
-      {/* Visual Logo Emblem - Modern Transparent & Fitted Presentation with incremented size */}
+      {/* Visual Logo Emblem - Modern Transparent & Fitted Presentation */}
       <div className="relative mb-3 sm:mb-4 flex items-center justify-center group cursor-pointer">
         <div
           className={`${containerSizes[size]} bg-transparent flex items-center justify-center relative overflow-visible transition-all duration-300 group-hover:scale-105`}
         >
-          {/* Official Transparent Shiv Computer Logo Image - Cleanly fitted without opaque square */}
           {!imgError ? (
             <img
               src="/logo.png"
               alt="Shiv Computer Official Logo"
-              className="w-full h-full object-contain relative z-5 transition-transform duration-300 filter drop-shadow-xl drop-shadow-blue-600/25"
+              className="w-full h-full object-contain relative z-5 transition-transform duration-300 filter drop-shadow-xl drop-shadow-emerald-600/25"
               loading="eager"
               referrerPolicy="no-referrer"
               onError={() => setImgError(true)}
             />
           ) : (
-            <div className="w-full h-full bg-linear-to-br from-blue-700 to-sky-600 rounded-2xl flex items-center justify-center text-white font-extrabold text-2xl shadow-xl shadow-blue-500/30">
+            <div className="w-full h-full bg-linear-to-br from-emerald-700 via-teal-700 to-teal-900 rounded-2xl flex items-center justify-center text-white font-extrabold text-2xl shadow-xl shadow-emerald-500/25">
               <span>SC</span>
             </div>
           )}
         </div>
 
-        {/* Ambient status light with Bright Yellow Glowing Accent */}
+        {/* Ambient status light with Emerald Glowing Accent */}
         <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5 sm:h-5 sm:w-5 z-20">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-80" />
-          <span className="relative inline-flex rounded-full h-3.5 w-3.5 sm:h-5 sm:w-5 bg-amber-400 border-2 border-white dark:border-slate-900 shadow-md shadow-amber-500/60" />
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-80" />
+          <span className="relative inline-flex rounded-full h-3.5 w-3.5 sm:h-5 sm:w-5 bg-emerald-500 border-2 border-[#fbfaf6] dark:border-[#0c1113] shadow-md shadow-emerald-500/60" />
         </span>
       </div>
 
-      {/* Brand Title: Professional Royal Blue & White with bright yellow dot accent */}
-      <h1 id="brand-heading" className="text-xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center justify-center gap-1.5 flex-wrap">
-        <span className="bg-linear-to-r from-blue-700 via-blue-600 to-indigo-700 dark:from-blue-400 dark:via-sky-300 dark:to-white bg-clip-text text-transparent">
+      {/* Brand Title: Emerald Green + Deep Teal Gradient */}
+      <h1 id="brand-heading" className="text-xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-[#161e22] dark:text-[#f7f6f0] flex items-center justify-center gap-1.5 flex-wrap">
+        <span className="bg-linear-to-r from-emerald-800 via-teal-700 to-emerald-600 dark:from-emerald-400 dark:via-teal-300 dark:to-emerald-200 bg-clip-text text-transparent">
           {brandName}
         </span>
-        <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-amber-400 shadow-xs shadow-amber-400/60 inline-block align-middle" />
+        <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-emerald-500 shadow-xs shadow-emerald-500/60 inline-block align-middle" />
       </h1>
 
       {/* Tagline */}
-      <p id="brand-tagline" className="text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 mt-1 max-w-xs flex flex-wrap items-center justify-center gap-1.5 px-2">
-        <span className="px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 text-[10px] sm:text-[11px] text-blue-700 dark:text-blue-300 font-bold whitespace-nowrap">
+      <p id="brand-tagline" className="text-xs sm:text-sm font-semibold text-[#3a4750] dark:text-[#cbd5d0] mt-1 max-w-xs flex flex-wrap items-center justify-center gap-1.5 px-2">
+        <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 dark:bg-emerald-950/60 border border-emerald-500/25 dark:border-emerald-800 text-[10px] sm:text-[11px] text-emerald-800 dark:text-emerald-300 font-bold whitespace-nowrap">
           Digital Gujarat & CSC
         </span>
         <span className="text-slate-400 hidden sm:inline">·</span>

@@ -347,21 +347,21 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             id={`role-indicator-badge-${role}`}
             className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold mb-2.5 ${
               role === 'admin'
-                ? 'bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200/60 dark:border-blue-800'
-                : 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200/60 dark:border-indigo-800'
+                ? 'bg-teal-500/15 dark:bg-teal-950/60 text-teal-800 dark:text-teal-300 border border-teal-500/30 dark:border-teal-800'
+                : 'bg-emerald-500/15 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-500/30 dark:border-emerald-800'
             }`}
           >
             {role === 'admin' ? (
-              <ShieldCheck className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+              <ShieldCheck className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" />
             ) : (
-              <UserCheck className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
+              <UserCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
             )}
             <span>{role === 'admin' ? t.adminBadge : t.userBadge}</span>
           </div>
 
           <h2
             id="login-heading"
-            className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white"
+            className="text-xl sm:text-2xl font-bold tracking-tight text-[#161e22] dark:text-[#f7f6f0]"
           >
             {role === 'admin'
               ? t.adminHeading
@@ -371,7 +371,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           </h2>
           <p
             id="login-subtitle"
-            className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-xs mx-auto"
+            className="text-xs sm:text-sm text-[#3a4750] dark:text-[#cbd5d0] mt-1 max-w-xs mx-auto"
           >
             {role === 'admin'
               ? t.adminSubtitle
@@ -385,7 +385,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         {role === 'user' && (
           <div
             id="auth-mode-tab-bar"
-            className="flex p-1 bg-slate-100 dark:bg-slate-800 rounded-xl mb-5 text-xs font-semibold"
+            className="flex p-1 bg-[#ede8dc]/80 dark:bg-[#141c20] border border-[#d8e0dc] dark:border-white/10 rounded-xl mb-5 text-xs font-semibold"
           >
             <button
               type="button"
@@ -399,8 +399,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               }}
               className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg transition-all ${
                 authMode === 'login'
-                  ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  ? 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white shadow-xs border border-emerald-500/60'
+                  : 'text-[#3a4750] dark:text-[#cbd5d0] hover:text-[#161e22] dark:hover:text-white'
               }`}
             >
               <LogIn className="w-3.5 h-3.5" />
@@ -418,8 +418,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               }}
               className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg transition-all ${
                 authMode === 'register'
-                  ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  ? 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white shadow-xs border border-emerald-500/60'
+                  : 'text-[#3a4750] dark:text-[#cbd5d0] hover:text-[#161e22] dark:hover:text-white'
               }`}
             >
               <UserPlus className="w-3.5 h-3.5" />
@@ -490,10 +490,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                       : t.userIdentifierPlaceholder
                   }
                   disabled={isLoading}
-                  className={`w-full pl-10 pr-3.5 py-2.5 sm:py-3 bg-white dark:bg-slate-800 border text-xs sm:text-sm text-slate-900 dark:text-white rounded-xl transition-all duration-200 outline-none ${
+                  className={`w-full pl-10 pr-3.5 py-2.5 sm:py-3 bg-white/90 dark:bg-[#182227] border text-xs sm:text-sm text-[#161e22] dark:text-[#f7f6f0] rounded-xl transition-all duration-200 outline-none ${
                     errors.identifier
                       ? 'border-amber-400 focus:border-amber-500 focus:ring-3 focus:ring-amber-500/20'
-                      : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 focus:border-blue-600 focus:ring-3 focus:ring-blue-600/15'
+                      : 'border-[#d8e0dc] dark:border-[#263339] hover:border-emerald-500/40 focus:border-emerald-600 focus:ring-3 focus:ring-emerald-600/15'
                   }`}
                 />
               </div>
@@ -531,10 +531,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                   }}
                   placeholder={t.passwordPlaceholder}
                   disabled={isLoading}
-                  className={`w-full pl-10 pr-11 py-2.5 sm:py-3 bg-white dark:bg-slate-800 border text-xs sm:text-sm text-slate-900 dark:text-white rounded-xl transition-all duration-200 outline-none ${
+                  className={`w-full pl-10 pr-11 py-2.5 sm:py-3 bg-white/90 dark:bg-[#182227] border text-xs sm:text-sm text-[#161e22] dark:text-[#f7f6f0] rounded-xl transition-all duration-200 outline-none ${
                     errors.password
                       ? 'border-amber-400 focus:border-amber-500 focus:ring-3 focus:ring-amber-500/20'
-                      : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 focus:border-blue-600 focus:ring-3 focus:ring-blue-600/15'
+                      : 'border-[#d8e0dc] dark:border-[#263339] hover:border-emerald-500/40 focus:border-emerald-600 focus:ring-3 focus:ring-emerald-600/15'
                   }`}
                 />
                 <button
@@ -566,16 +566,16 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                   type="checkbox"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
-                  className="w-4 h-4 rounded-md border-slate-300 dark:border-slate-700 text-blue-600 focus:ring-blue-500/20 cursor-pointer"
+                  className="w-4 h-4 rounded-md border-[#d8e0dc] dark:border-[#263339] text-emerald-600 focus:ring-emerald-500/20 cursor-pointer"
                 />
-                <span className="text-slate-600 dark:text-slate-400 font-medium">{t.rememberMe}</span>
+                <span className="text-[#3a4750] dark:text-[#cbd5d0] font-medium">{t.rememberMe}</span>
               </label>
 
               <button
                 type="button"
                 id="forgot-password-link"
                 onClick={() => onForgotPasswordClick(identifier.trim())}
-                className="text-xs sm:text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline transition-colors"
+                className="text-xs sm:text-sm font-semibold text-emerald-700 dark:text-emerald-400 hover:text-emerald-800 dark:hover:text-emerald-300 hover:underline transition-colors"
               >
                 {t.forgotPassword}
               </button>
@@ -604,7 +604,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 
             {/* Switch to Register link for citizens */}
             {role === 'user' && (
-              <div className="pt-2 text-center text-xs text-slate-500 dark:text-slate-400">
+              <div className="pt-2 text-center text-xs text-[#3a4750] dark:text-[#cbd5d0]">
                 <span>{t.dontHaveAccount} </span>
                 <button
                   type="button"
@@ -616,7 +616,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                     setStatusMessage(null);
                     setErrors({});
                   }}
-                  className="font-bold text-indigo-600 dark:text-indigo-400 hover:underline"
+                  className="font-bold text-emerald-700 dark:text-emerald-400 hover:underline"
                 >
                   {t.signUpLink}
                 </button>
@@ -636,9 +636,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                     setStatusMessage(null);
                     setErrors({});
                   }}
-                  className="font-medium text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors inline-flex items-center gap-1.5"
+                  className="font-medium text-[#3a4750] dark:text-[#cbd5d0] hover:text-teal-700 dark:hover:text-teal-300 transition-colors inline-flex items-center gap-1.5"
                 >
-                  <ShieldCheck className="w-3.5 h-3.5 text-blue-500" />
+                  <ShieldCheck className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" />
                   <span>{language === 'gu' ? 'એડમિન પોર્ટલ લોગિન' : 'Admin Access Portal'} &rarr;</span>
                 </button>
               </div>
@@ -657,9 +657,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                     setStatusMessage(null);
                     setErrors({});
                   }}
-                  className="font-medium text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors inline-flex items-center gap-1.5"
+                  className="font-medium text-[#3a4750] dark:text-[#cbd5d0] hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors inline-flex items-center gap-1.5"
                 >
-                  <UserCheck className="w-3.5 h-3.5 text-indigo-500" />
+                  <UserCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                   <span>&larr; {language === 'gu' ? 'નાગરિક પોર્ટલ પર પાછા જાઓ' : 'Return to Citizen Portal'}</span>
                 </button>
               </div>
@@ -693,10 +693,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                   }}
                   placeholder={t.fullNamePlaceholder}
                   disabled={isLoading}
-                  className={`w-full pl-10 pr-3.5 py-2.5 bg-white dark:bg-slate-800 border text-xs sm:text-sm text-slate-900 dark:text-white rounded-xl transition-all duration-200 outline-none ${
+                  className={`w-full pl-10 pr-3.5 py-2.5 bg-white/90 dark:bg-[#182227] border text-xs sm:text-sm text-[#161e22] dark:text-[#f7f6f0] rounded-xl transition-all duration-200 outline-none ${
                     errors.name
                       ? 'border-amber-400 focus:border-amber-500 focus:ring-3 focus:ring-amber-500/20'
-                      : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 focus:border-blue-600 focus:ring-3 focus:ring-blue-600/15'
+                      : 'border-[#d8e0dc] dark:border-[#263339] hover:border-emerald-500/40 focus:border-emerald-600 focus:ring-3 focus:ring-emerald-600/15'
                   }`}
                 />
               </div>
@@ -731,10 +731,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                   }}
                   placeholder={t.emailPlaceholder}
                   disabled={isLoading}
-                  className={`w-full pl-10 pr-3.5 py-2.5 bg-white dark:bg-slate-800 border text-xs sm:text-sm text-slate-900 dark:text-white rounded-xl transition-all duration-200 outline-none ${
+                  className={`w-full pl-10 pr-3.5 py-2.5 bg-white/90 dark:bg-[#182227] border text-xs sm:text-sm text-[#161e22] dark:text-[#f7f6f0] rounded-xl transition-all duration-200 outline-none ${
                     errors.email
                       ? 'border-amber-400 focus:border-amber-500 focus:ring-3 focus:ring-amber-500/20'
-                      : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 focus:border-blue-600 focus:ring-3 focus:ring-blue-600/15'
+                      : 'border-[#d8e0dc] dark:border-[#263339] hover:border-emerald-500/40 focus:border-emerald-600 focus:ring-3 focus:ring-emerald-600/15'
                   }`}
                 />
               </div>
@@ -771,10 +771,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                   }}
                   placeholder={t.mobilePlaceholder}
                   disabled={isLoading}
-                  className={`w-full pl-10 pr-3.5 py-2.5 bg-white dark:bg-slate-800 border text-xs sm:text-sm text-slate-900 dark:text-white rounded-xl transition-all duration-200 outline-none ${
+                  className={`w-full pl-10 pr-3.5 py-2.5 bg-white/90 dark:bg-[#182227] border text-xs sm:text-sm text-[#161e22] dark:text-[#f7f6f0] rounded-xl transition-all duration-200 outline-none ${
                     errors.mobile
                       ? 'border-amber-400 focus:border-amber-500 focus:ring-3 focus:ring-amber-500/20'
-                      : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 focus:border-blue-600 focus:ring-3 focus:ring-blue-600/15'
+                      : 'border-[#d8e0dc] dark:border-[#263339] hover:border-emerald-500/40 focus:border-emerald-600 focus:ring-3 focus:ring-emerald-600/15'
                   }`}
                 />
               </div>
@@ -809,10 +809,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                   }}
                   placeholder="Min 6 characters"
                   disabled={isLoading}
-                  className={`w-full pl-10 pr-11 py-2.5 bg-white dark:bg-slate-800 border text-xs sm:text-sm text-slate-900 dark:text-white rounded-xl transition-all duration-200 outline-none ${
+                  className={`w-full pl-10 pr-11 py-2.5 bg-white/90 dark:bg-[#182227] border text-xs sm:text-sm text-[#161e22] dark:text-[#f7f6f0] rounded-xl transition-all duration-200 outline-none ${
                     errors.password
                       ? 'border-amber-400 focus:border-amber-500 focus:ring-3 focus:ring-amber-500/20'
-                      : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 focus:border-blue-600 focus:ring-3 focus:ring-blue-600/15'
+                      : 'border-[#d8e0dc] dark:border-[#263339] hover:border-emerald-500/40 focus:border-emerald-600 focus:ring-3 focus:ring-emerald-600/15'
                   }`}
                 />
                 <button
@@ -854,10 +854,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                   }}
                   placeholder={t.confirmPasswordPlaceholder}
                   disabled={isLoading}
-                  className={`w-full pl-10 pr-11 py-2.5 bg-white dark:bg-slate-800 border text-xs sm:text-sm text-slate-900 dark:text-white rounded-xl transition-all duration-200 outline-none ${
+                  className={`w-full pl-10 pr-11 py-2.5 bg-white/90 dark:bg-[#182227] border text-xs sm:text-sm text-[#161e22] dark:text-[#f7f6f0] rounded-xl transition-all duration-200 outline-none ${
                     errors.confirmPassword
                       ? 'border-amber-400 focus:border-amber-500 focus:ring-3 focus:ring-amber-500/20'
-                      : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 focus:border-blue-600 focus:ring-3 focus:ring-blue-600/15'
+                      : 'border-[#d8e0dc] dark:border-[#263339] hover:border-emerald-500/40 focus:border-emerald-600 focus:ring-3 focus:ring-emerald-600/15'
                   }`}
                 />
                 <button
@@ -898,7 +898,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             </div>
 
             {/* Switch to Login link */}
-            <div className="pt-1 text-center text-xs text-slate-500 dark:text-slate-400">
+            <div className="pt-1 text-center text-xs text-[#3a4750] dark:text-[#cbd5d0]">
               <span>{t.alreadyHaveAccount} </span>
               <button
                 type="button"
@@ -910,7 +910,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                   setStatusMessage(null);
                   setErrors({});
                 }}
-                className="font-bold text-indigo-600 dark:text-indigo-400 hover:underline"
+                className="font-bold text-emerald-700 dark:text-emerald-400 hover:underline"
               >
                 {t.signInLink}
               </button>
