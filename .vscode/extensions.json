@@ -1,0 +1,34 @@
+{
+  "recommendations": [
+    // Core framework support
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+
+    // React / TypeScript
+    "ms-vscode.vscode-typescript-next",
+    "dsznajder.es7-react-js-snippets",
+    "burkeholland.simple-react-snippets",
+
+    // Tailwind CSS
+    "bradlc.vscode-tailwindcss",
+
+    // Firebase
+    "toba.vsfire",
+
+    // Debug
+    "ms-edgedevtools.vscode-edge-devtools",
+
+    // Icons / theme
+    "pkief.material-icon-theme",
+
+    // Git
+    "eamodio.gitlens",
+
+    // Path intellisense
+    "christian-kohler.path-intellisense",
+
+    // JSON / ENV
+    "mikestead.dotenv",
+    "zainchen.json"
+  ]
+}

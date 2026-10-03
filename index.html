@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shiv Computer</title>
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="apple-touch-icon" href="/logo.png" />
+    <meta name="description" content="Complete role-based web portal for Shiv Computer fully integrated with the Shiv-ori Firebase project featuring live application tracking, citizen services, admin controls, and Firestore persistence." />
+    <meta property="og:title" content="Shiv Computer" />
+    <meta property="og:description" content="Complete role-based web portal for Shiv Computer fully integrated with the Shiv-ori Firebase project featuring live application tracking, citizen services, admin controls, and Firestore persistence." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Noto+Sans+Gujarati:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+      try {
+        const savedTheme = localStorage.getItem('sc_theme');
+        if (savedTheme === 'dark') {
+          document.documentElement.classList.add('dark', 'dark-mode');
+        }
+      } catch (e) {}
+
+      // Desktop Browser Zoom Prevention:
+      // Prevents accidental browser zooming (Ctrl+Wheel, Ctrl++, Ctrl+-, Ctrl+0, Cmd equivalents)
+      // while strictly preserving normal mouse-wheel scrolling, touch navigation, and text selection.
+      try {
+        var onWheel = function(e) {
+          if (e.ctrlKey || e.metaKey) {
+            e.preventDefault();
+          }
+        };
+
+        var onKeyDown = function(e) {
+          if ((e.ctrlKey || e.metaKey) && !e.altKey) {
+            var key = e.key;
+            var code = e.code;
+            var keyCode = e.keyCode || e.which;
+
+            var isZoomIn = key === '+' || key === '=' || code === 'Equal' || code === 'NumpadAdd' || keyCode === 187 || keyCode === 107;
+            var isZoomOut = key === '-' || key === '_' || code === 'Minus' || code === 'NumpadSubtract' || keyCode === 189 || keyCode === 109;
+            var isZoomReset = key === '0' || code === 'Digit0' || code === 'Numpad0' || keyCode === 48 || keyCode === 96;
+
+            if (isZoomIn || isZoomOut || isZoomReset) {
+              e.preventDefault();
+              e.stopPropagation();
+            }
+          }
+        };
+
+        window.addEventListener('wheel', onWheel, { passive: false });
+        document.addEventListener('wheel', onWheel, { passive: false });
+        window.addEventListener('keydown', onKeyDown, { capture: true });
+        document.addEventListener('keydown', onKeyDown, { capture: true });
+
+        // Prevent gesture pinch-to-zoom on desktop Safari trackpad & iOS
+        var onGesture = function(e) { e.preventDefault(); };
+        document.addEventListener('gesturestart', onGesture, { passive: false });
+        document.addEventListener('gesturechange', onGesture, { passive: false });
+        document.addEventListener('gestureend', onGesture, { passive: false });
+      } catch (e) {}
+
+      // Multi-touch pinch zoom prevention for mobile touch devices
+      try {
+        document.addEventListener('touchmove', function(e) {
+          if (e.touches && e.touches.length > 1) {
+            e.preventDefault();
+          }
+        }, { passive: false });
+      } catch (e) {}
+    </script>
+  </head>
+  <body class="font-sans antialiased selection:bg-blue-600 selection:text-white">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

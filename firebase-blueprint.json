@@ -1,0 +1,198 @@
+{
+  "schemaVersion": "1.0.0",
+  "entities": {
+    "User": {
+      "name": "User",
+      "path": "/users/{userId}",
+      "description": "User profile with role, contact info, and status",
+      "fields": {
+        "id": {
+          "type": "string",
+          "description": "Firebase Auth UID",
+          "required": true
+        },
+        "name": {
+          "type": "string",
+          "description": "User's full name",
+          "required": true
+        },
+        "username": {
+          "type": "string",
+          "description": "Unique username in lowercase",
+          "required": true
+        },
+        "email": {
+          "type": "string",
+          "description": "User's email address",
+          "required": true
+        },
+        "role": {
+          "type": "string",
+          "description": "User role ('admin' or 'user')",
+          "required": true,
+          "validation": "role in ['admin', 'user']"
+        },
+        "status": {
+          "type": "string",
+          "description": "Account status ('Active' or 'Inactive')",
+          "required": true,
+          "default": "Active"
+        },
+        "phone": {
+          "type": "string",
+          "description": "Phone number",
+          "required": false
+        },
+        "address": {
+          "type": "string",
+          "description": "Address",
+          "required": false
+        },
+        "createdAt": {
+          "type": "timestamp",
+          "description": "Creation timestamp",
+          "required": true
+        },
+        "lastLoginAt": {
+          "type": "timestamp",
+          "description": "Last login timestamp",
+          "required": false
+        }
+      }
+    },
+    "UsernameLookup": {
+      "name": "UsernameLookup",
+      "path": "/usernames/{username}",
+      "description": "Lookup table mapping lowercase unique username to uid and email",
+      "fields": {
+        "username": {
+          "type": "string",
+          "description": "Unique username in lowercase",
+          "required": true
+        },
+        "uid": {
+          "type": "string",
+          "description": "Firebase Auth UID of the user",
+          "required": true
+        },
+        "email": {
+          "type": "string",
+          "description": "Email associated with the username",
+          "required": true
+        },
+        "role": {
+          "type": "string",
+          "description": "Role associated with the username",
+          "required": true
+        },
+        "createdAt": {
+          "type": "timestamp",
+          "description": "Creation timestamp",
+          "required": true
+        }
+      }
+    },
+    "FormSubmission": {
+      "name": "FormSubmission",
+      "path": "/form_submissions/{submissionId}",
+      "description": "Citizen service applications and form submissions",
+      "fields": {
+        "submissionId": {
+          "type": "string",
+          "description": "Unique submission identifier",
+          "required": true
+        },
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the applicant",
+          "required": true
+        },
+        "name": {
+          "type": "string",
+          "description": "Full name of the applicant",
+          "required": true
+        },
+        "phone": {
+          "type": "string",
+          "description": "Contact phone number",
+          "required": true
+        },
+        "email": {
+          "type": "string",
+          "description": "Applicant email address",
+          "required": true
+        },
+        "formType": {
+          "type": "string",
+          "description": "Type or service category of the form submitted",
+          "required": true
+        },
+        "formData": {
+          "type": "map",
+          "description": "Custom form data payload including notes and document references",
+          "required": true
+        },
+        "status": {
+          "type": "string",
+          "description": "Current status of the submission (pending, processing, completed, approved, rejected)",
+          "required": true
+        },
+        "createdAt": {
+          "type": "timestamp",
+          "description": "Creation timestamp",
+          "required": true
+        },
+        "updatedAt": {
+          "type": "timestamp",
+          "description": "Last update timestamp",
+          "required": true
+        }
+      }
+    },
+    "Setting": {
+      "name": "Setting",
+      "path": "/settings/{settingId}",
+      "description": "Global website configuration, contact info, and persistent settings",
+      "fields": {
+        "websiteContent": {
+          "type": "map",
+          "description": "Website texts, headers, contact info, and notices",
+          "required": false
+        },
+        "updatedAt": {
+          "type": "timestamp",
+          "description": "Timestamp of last modification",
+          "required": true
+        }
+      }
+    },
+    "Admin": {
+      "name": "Admin",
+      "path": "/admins/{adminId}",
+      "description": "Authorized administrators record for secure RBAC verification",
+      "fields": {
+        "uid": {
+          "type": "string",
+          "description": "Firebase Auth UID of the administrator",
+          "required": true
+        },
+        "email": {
+          "type": "string",
+          "description": "Administrator email address",
+          "required": true
+        },
+        "role": {
+          "type": "string",
+          "description": "Role string, set to 'admin'",
+          "required": true
+        },
+        "createdAt": {
+          "type": "timestamp",
+          "description": "Creation timestamp",
+          "required": true
+        }
+      }
+    }
+  },
+  "indexes": []
+}
