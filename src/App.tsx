@@ -56,10 +56,10 @@ function AppContent() {
 
   if (authLoading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-400">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-9 h-9 border-3 border-blue-600 border-t-transparent rounded-full animate-spin" />
-          <p className="text-xs font-semibold tracking-wider uppercase text-slate-500">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-[#ddf3fd] to-[#aed9f4] dark:from-[#050e1a] dark:to-[#060f1c] text-sky-700 dark:text-sky-300">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-11 h-11 rounded-full border-[3px] border-cyan-400/25 border-t-cyan-400 border-r-sky-500 animate-spin" />
+          <p className="text-xs font-semibold tracking-widest uppercase text-sky-600/80 dark:text-sky-400/80">
             {language === 'gu' ? 'શિવ કમ્પ્યુટર પોર્ટલ લોડ થઈ રહ્યું છે...' : 'Loading Shiv Portal...'}
           </p>
         </div>
@@ -72,7 +72,7 @@ function AppContent() {
     const activeAuthRole = currentView === 'admin-login' ? 'admin' : (currentView === 'register' ? 'user' : selectedRole);
 
     return (
-      <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white transition-colors duration-200">
+      <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#ddf3fd] via-[#c8eafa] to-[#b4d9f2] dark:from-[#050e1a] dark:via-[#06101e] dark:to-[#040c16] text-[#0c3a56] dark:text-[#c8e8f8] transition-colors duration-300">
         <HeaderControls
           role={activeAuthRole}
           onRoleChange={(newRole) => {

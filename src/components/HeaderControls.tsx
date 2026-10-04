@@ -77,7 +77,7 @@ export const HeaderControls: React.FC<HeaderControlsProps> = ({
             type="button"
             id="language-selector-button"
             onClick={() => setIsLangOpen((prev) => !prev)}
-            className="flex items-center gap-1 sm:gap-1.5 px-2.5 py-1.5 sm:px-3 sm:py-1.5 rounded-xl border border-[#d8e0dc] dark:border-white/10 bg-[#fbfaf6]/90 dark:bg-[#141c20]/90 text-[#222c30] dark:text-[#edeae0] text-xs sm:text-sm font-medium hover:bg-white dark:hover:bg-[#1a2429] transition-colors shadow-xs focus:outline-none focus:ring-2 focus:ring-emerald-500/25"
+          className="flex items-center gap-1 sm:gap-1.5 px-2.5 py-1.5 sm:px-3 sm:py-1.5 rounded-xl border border-sky-200/70 dark:border-cyan-400/18 bg-white/65 dark:bg-sky-950/65 backdrop-blur-md text-[#0c3a56] dark:text-[#c8e8f8] text-xs sm:text-sm font-medium hover:bg-white/90 dark:hover:bg-sky-900/80 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-400/30"
             aria-label="Select Language"
             aria-expanded={isLangOpen}
           >
@@ -107,15 +107,15 @@ export const HeaderControls: React.FC<HeaderControlsProps> = ({
                     }}
                     className={`w-full flex items-center justify-between px-3 py-2 text-xs sm:text-sm text-left transition-colors ${
                       isSelected
-                        ? 'bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 font-semibold'
-                        : 'text-[#222c30] dark:text-[#edeae0] hover:bg-emerald-500/5 dark:hover:bg-white/5'
+                        ? 'bg-cyan-500/12 dark:bg-cyan-500/20 text-sky-800 dark:text-sky-300 font-semibold'
+                        : 'text-[#0c3a56] dark:text-[#c8e8f8] hover:bg-cyan-500/7 dark:hover:bg-white/5'
                     }`}
                   >
                     <span className="flex items-center gap-2">
                       <span className="text-base">{lang.flag}</span>
                       <span>{lang.nativeLabel}</span>
                     </span>
-                    {isSelected && <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />}
+                    {isSelected && <Check className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />}
                   </button>
                 );
               })}
@@ -128,7 +128,7 @@ export const HeaderControls: React.FC<HeaderControlsProps> = ({
           {/* Segmented Pill Toggle for desktop/tablet */}
           <div
             id="login-type-toggle-group"
-            className="hidden sm:inline-flex p-1 bg-[#ede8dc]/80 dark:bg-[#141c20]/90 border border-[#d8e0dc] dark:border-white/10 rounded-xl shadow-xs"
+            className="hidden sm:inline-flex p-1 bg-sky-100/70 dark:bg-sky-950/70 border border-sky-200/60 dark:border-cyan-400/15 rounded-xl shadow-sm backdrop-blur-md"
             role="radiogroup"
             aria-label="Login Type Selector"
           >
@@ -140,11 +140,11 @@ export const HeaderControls: React.FC<HeaderControlsProps> = ({
               onClick={() => onRoleChange('admin')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 ${
                 role === 'admin'
-                  ? 'bg-gradient-to-r from-teal-800 to-teal-900 text-white shadow-xs border border-teal-700/60'
-                  : 'text-[#3a4750] dark:text-[#cbd5d0] hover:text-[#161e22] dark:hover:text-white'
+                  ? 'bg-gradient-to-r from-sky-700 to-sky-800 text-white shadow-sm border border-sky-600/60'
+                  : 'text-[#2c5970] dark:text-[#7aafcc] hover:text-[#0c3a56] dark:hover:text-white'
               }`}
             >
-              <ShieldCheck className={`w-3.5 h-3.5 ${role === 'admin' ? 'text-teal-300' : 'text-slate-400'}`} />
+              <ShieldCheck className={`w-3.5 h-3.5 ${role === 'admin' ? 'text-sky-200' : 'text-slate-400'}`} />
               <span>{adminLabel}</span>
             </button>
 
@@ -156,11 +156,11 @@ export const HeaderControls: React.FC<HeaderControlsProps> = ({
               onClick={() => onRoleChange('user')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 ${
                 role === 'user'
-                  ? 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white shadow-xs border border-emerald-500/60'
-                  : 'text-[#3a4750] dark:text-[#cbd5d0] hover:text-[#161e22] dark:hover:text-white'
+                  ? 'bg-gradient-to-r from-cyan-500 to-sky-600 text-white shadow-sm border border-cyan-400/60'
+                  : 'text-[#2c5970] dark:text-[#7aafcc] hover:text-[#0c3a56] dark:hover:text-white'
               }`}
             >
-              <User className={`w-3.5 h-3.5 ${role === 'user' ? 'text-emerald-200' : 'text-slate-400'}`} />
+              <User className={`w-3.5 h-3.5 ${role === 'user' ? 'text-white' : 'text-slate-400'}`} />
               <span>{userLabel}</span>
             </button>
           </div>
@@ -171,12 +171,12 @@ export const HeaderControls: React.FC<HeaderControlsProps> = ({
               type="button"
               id="role-dropdown-mobile-btn"
               onClick={() => setIsRoleDropdownOpen((prev) => !prev)}
-              className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl border border-[#d8e0dc] dark:border-white/10 bg-[#fbfaf6] dark:bg-[#141c20] text-[#161e22] dark:text-[#f7f6f0] text-xs font-semibold shadow-xs"
+              className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl border border-sky-200/70 dark:border-cyan-400/15 bg-white/65 dark:bg-sky-950/65 backdrop-blur-md text-[#0c3a56] dark:text-[#c8e8f8] text-xs font-semibold shadow-sm"
             >
               {role === 'admin' ? (
-                <ShieldCheck className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" />
+                <ShieldCheck className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
               ) : (
-                <User className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                <User className="w-3.5 h-3.5 text-cyan-500 dark:text-cyan-400" />
               )}
               <span className="truncate max-w-[70px]">{role === 'admin' ? adminLabel : userLabel}</span>
               <ChevronDown className={`w-3 h-3 text-slate-400 ${isRoleDropdownOpen ? 'rotate-180' : ''}`} />
@@ -196,10 +196,10 @@ export const HeaderControls: React.FC<HeaderControlsProps> = ({
                   }`}
                 >
                   <span className="flex items-center gap-1.5">
-                    <ShieldCheck className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" />
+                    <ShieldCheck className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
                     {adminLabel}
                   </span>
-                  {role === 'admin' && <Check className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" />}
+                  {role === 'admin' && <Check className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />}
                 </button>
                 <button
                   type="button"
@@ -209,14 +209,14 @@ export const HeaderControls: React.FC<HeaderControlsProps> = ({
                     setIsRoleDropdownOpen(false);
                   }}
                   className={`w-full flex items-center justify-between px-3 py-2 text-xs text-left ${
-                    role === 'user' ? 'bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 font-semibold' : 'text-[#222c30] dark:text-[#edeae0]'
+                    role === 'user' ? 'bg-cyan-500/15 text-sky-800 dark:text-sky-300 font-semibold' : 'text-[#0c3a56] dark:text-[#c8e8f8]'
                   }`}
                 >
                   <span className="flex items-center gap-1.5">
-                    <User className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                    <User className="w-3.5 h-3.5 text-cyan-500 dark:text-cyan-400" />
                     {userLabel}
                   </span>
-                  {role === 'user' && <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />}
+                  {role === 'user' && <Check className="w-3.5 h-3.5 text-cyan-500 dark:text-cyan-400" />}
                 </button>
               </div>
             )}
