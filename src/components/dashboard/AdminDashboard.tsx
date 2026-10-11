@@ -46,6 +46,7 @@ import {
   ServiceItem,
 } from '../../types';
 import { updateAccountPassword, sendFirebasePasswordResetEmail } from '../../lib/auth';
+import { auth } from '../../lib/firebase';
 import { DashboardHeader } from './DashboardHeader';
 import { ApplicationDetailsModal } from './ApplicationDetailsModal';
 import { ServiceModal } from './ServiceModal';
@@ -73,6 +74,7 @@ export const AdminDashboard: React.FC = () => {
     t,
     language,
     logout,
+    currentUser,
     applications,
     services,
     agricultureServices,
