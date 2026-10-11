@@ -72,7 +72,8 @@ function AppContent() {
     const activeAuthRole = currentView === 'admin-login' ? 'admin' : (currentView === 'register' ? 'user' : selectedRole);
 
     return (
-      <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#ddf3fd] via-[#c8eafa] to-[#b4d9f2] dark:from-[#050e1a] dark:via-[#06101e] dark:to-[#040c16] text-[#0c3a56] dark:text-[#c8e8f8] transition-colors duration-300">
+      <div className="min-h-screen flex flex-col relative text-[#0c3a56] dark:text-[#c8e8f8] transition-colors duration-300">
+        <DynamicGlassBackground />
         <HeaderControls
           role={activeAuthRole}
           onRoleChange={(newRole) => {

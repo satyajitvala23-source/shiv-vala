@@ -122,7 +122,7 @@ export const HeaderControls: React.FC<HeaderControlsProps> = ({
         <div id="login-type-selector-wrapper" className="flex items-center">
           <div
             id="login-type-toggle-group"
-            className="inline-flex p-1 bg-sky-100/70 dark:bg-sky-950/70 border border-sky-200/60 dark:border-cyan-400/15 rounded-xl shadow-xs backdrop-blur-md"
+            className="inline-flex p-1 bg-white/70 dark:bg-sky-950/70 border border-sky-200/80 dark:border-cyan-400/25 rounded-2xl shadow-sm backdrop-blur-xl"
             role="radiogroup"
             aria-label="Login Role Selection"
           >
@@ -132,13 +132,13 @@ export const HeaderControls: React.FC<HeaderControlsProps> = ({
               role="radio"
               aria-checked={role === 'admin'}
               onClick={() => onRoleChange('admin')}
-              className={`flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg text-xs font-bold transition-all duration-200 active:scale-95 ${
+              className={`flex items-center gap-1 sm:gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 ${
                 role === 'admin'
-                  ? 'bg-gradient-to-r from-sky-700 to-sky-800 text-white shadow-xs border border-sky-600/60'
-                  : 'text-[#2c5970] dark:text-[#7aafcc] hover:text-[#0c3a56] dark:hover:text-white'
+                  ? 'btn-glossy-primary shadow-md'
+                  : 'text-[#2c5970] dark:text-[#7aafcc] hover:text-[#0c3a56] dark:hover:text-white hover:bg-sky-500/10'
               }`}
             >
-              <ShieldCheck className={`w-3.5 h-3.5 ${role === 'admin' ? 'text-sky-200' : 'text-slate-400'}`} />
+              <ShieldCheck className={`w-3.5 h-3.5 ${role === 'admin' ? 'text-white' : 'text-slate-400'}`} />
               <span>Admin</span>
             </button>
 
@@ -148,10 +148,10 @@ export const HeaderControls: React.FC<HeaderControlsProps> = ({
               role="radio"
               aria-checked={role === 'user'}
               onClick={() => onRoleChange('user')}
-              className={`flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg text-xs font-bold transition-all duration-200 active:scale-95 ${
+              className={`flex items-center gap-1 sm:gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 ${
                 role === 'user'
-                  ? 'bg-gradient-to-r from-cyan-500 to-sky-600 text-white shadow-xs border border-cyan-400/60'
-                  : 'text-[#2c5970] dark:text-[#7aafcc] hover:text-[#0c3a56] dark:hover:text-white'
+                  ? 'btn-glossy-primary shadow-md'
+                  : 'text-[#2c5970] dark:text-[#7aafcc] hover:text-[#0c3a56] dark:hover:text-white hover:bg-sky-500/10'
               }`}
             >
               <User className={`w-3.5 h-3.5 ${role === 'user' ? 'text-white' : 'text-slate-400'}`} />

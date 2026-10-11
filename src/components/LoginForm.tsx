@@ -345,23 +345,19 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         <div className="mt-5 mb-5 text-center">
           <div
             id={`role-indicator-badge-${role}`}
-            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold mb-2.5 ${
-              role === 'admin'
-                ? 'bg-teal-500/15 dark:bg-teal-950/60 text-teal-800 dark:text-teal-300 border border-teal-500/30 dark:border-teal-800'
-                : 'bg-emerald-500/15 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-500/30 dark:border-emerald-800'
-            }`}
+            className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold mb-2.5 bg-sky-500/15 dark:bg-cyan-950/60 text-sky-800 dark:text-cyan-300 border border-sky-400/30 dark:border-cyan-500/30 shadow-xs backdrop-blur-md"
           >
             {role === 'admin' ? (
-              <ShieldCheck className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" />
+              <ShieldCheck className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
             ) : (
-              <UserCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+              <UserCheck className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
             )}
             <span>{role === 'admin' ? t.adminBadge : t.userBadge}</span>
           </div>
 
           <h2
             id="login-heading"
-            className="text-xl sm:text-2xl font-bold tracking-tight text-[#161e22] dark:text-[#f7f6f0]"
+            className="text-xl sm:text-2xl font-bold tracking-tight text-[#0c3a56] dark:text-[#f0f8ff]"
           >
             {role === 'admin'
               ? t.adminHeading
@@ -371,7 +367,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           </h2>
           <p
             id="login-subtitle"
-            className="text-xs sm:text-sm text-[#3a4750] dark:text-[#cbd5d0] mt-1 max-w-xs mx-auto"
+            className="text-xs sm:text-sm text-[#2c5970] dark:text-[#a0c4dc] mt-1 max-w-xs mx-auto"
           >
             {role === 'admin'
               ? t.adminSubtitle
@@ -385,7 +381,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         {role === 'user' && (
           <div
             id="auth-mode-tab-bar"
-            className="flex p-1 bg-[#ede8dc]/80 dark:bg-[#141c20] border border-[#d8e0dc] dark:border-white/10 rounded-xl mb-5 text-xs font-semibold"
+            className="flex p-1 bg-sky-100/70 dark:bg-sky-950/70 border border-sky-200/80 dark:border-cyan-400/20 rounded-2xl mb-5 text-xs font-semibold backdrop-blur-md"
           >
             <button
               type="button"
@@ -397,10 +393,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                 setStatusMessage(null);
                 setErrors({});
               }}
-              className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg transition-all ${
+              className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl transition-all ${
                 authMode === 'login'
-                  ? 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white shadow-xs border border-emerald-500/60'
-                  : 'text-[#3a4750] dark:text-[#cbd5d0] hover:text-[#161e22] dark:hover:text-white'
+                  ? 'btn-glossy-primary shadow-xs'
+                  : 'text-[#2c5970] dark:text-[#a0c4dc] hover:text-[#0c3a56] dark:hover:text-white'
               }`}
             >
               <LogIn className="w-3.5 h-3.5" />
@@ -416,10 +412,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                 setStatusMessage(null);
                 setErrors({});
               }}
-              className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg transition-all ${
+              className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl transition-all ${
                 authMode === 'register'
-                  ? 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white shadow-xs border border-emerald-500/60'
-                  : 'text-[#3a4750] dark:text-[#cbd5d0] hover:text-[#161e22] dark:hover:text-white'
+                  ? 'btn-glossy-primary shadow-xs'
+                  : 'text-[#2c5970] dark:text-[#a0c4dc] hover:text-[#0c3a56] dark:hover:text-white'
               }`}
             >
               <UserPlus className="w-3.5 h-3.5" />
@@ -636,15 +632,15 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                     setStatusMessage(null);
                     setErrors({});
                   }}
-                  className="font-medium text-[#3a4750] dark:text-[#cbd5d0] hover:text-teal-700 dark:hover:text-teal-300 transition-colors inline-flex items-center gap-1.5"
+                  className="font-medium text-[#2c5970] dark:text-[#a0c4dc] hover:text-sky-700 dark:hover:text-cyan-300 transition-colors inline-flex items-center gap-1.5"
                 >
-                  <ShieldCheck className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" />
-                  <span>{language === 'gu' ? 'એડમિન પોર્ટલ લોગિન' : 'Admin Access Portal'} &rarr;</span>
+                  <ShieldCheck className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
+                  <span>Admin &rarr;</span>
                 </button>
               </div>
             )}
 
-            {/* Quick Switch from Admin to Citizen Portal */}
+            {/* Quick Switch from Admin to User */}
             {role === 'admin' && (
               <div className="pt-2 text-center text-xs">
                 <button
@@ -657,10 +653,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                     setStatusMessage(null);
                     setErrors({});
                   }}
-                  className="font-medium text-[#3a4750] dark:text-[#cbd5d0] hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors inline-flex items-center gap-1.5"
+                  className="font-medium text-[#2c5970] dark:text-[#a0c4dc] hover:text-sky-700 dark:hover:text-cyan-300 transition-colors inline-flex items-center gap-1.5"
                 >
-                  <UserCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                  <span>&larr; {language === 'gu' ? 'નાગરિક પોર્ટલ પર પાછા જાઓ' : 'Return to Citizen Portal'}</span>
+                  <UserCheck className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
+                  <span>&larr; User</span>
                 </button>
               </div>
             )}
