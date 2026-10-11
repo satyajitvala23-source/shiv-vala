@@ -162,7 +162,7 @@ export const QuickServiceCards: React.FC<QuickServiceCardsProps> = ({ onSelectSe
         processingTime: cfg.badgeEn,
         requiredDocuments: ['Aadhaar Card', 'Passport Photograph / Relevant details'],
         enabled: true,
-        department: 'Shiv Computer Citizen Services',
+        department: 'Shiv Computer Services',
       });
     }
   };

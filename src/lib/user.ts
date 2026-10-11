@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * SHIV COMPUTER - CITIZEN / USER OPERATIONS (Project: "Shiv-ori")
+ * SHIV COMPUTER - USER OPERATIONS
  * ============================================================================
  * 
  * Provides citizen user operations:

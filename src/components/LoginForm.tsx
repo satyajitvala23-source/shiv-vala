@@ -377,7 +377,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           </p>
         </div>
 
-        {/* Citizen Mode: Tab Switcher (Sign In vs Sign Up) */}
+        {/* User Mode: Tab Switcher (Sign In vs Sign Up) */}
         {role === 'user' && (
           <div
             id="auth-mode-tab-bar"
@@ -598,7 +598,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               </button>
             </div>
 
-            {/* Switch to Register link for citizens */}
+            {/* Switch to Register link for users */}
             {role === 'user' && (
               <div className="pt-2 text-center text-xs text-[#3a4750] dark:text-[#cbd5d0]">
                 <span>{t.dontHaveAccount} </span>
@@ -619,7 +619,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               </div>
             )}
 
-            {/* Quick Switch to Admin Portal */}
+            {/* Quick Switch to Admin */}
             {role === 'user' && (
               <div className="pt-2 text-center text-xs">
                 <button
@@ -645,7 +645,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               <div className="pt-2 text-center text-xs">
                 <button
                   type="button"
-                  id="switch-to-citizen-login-link"
+                  id="switch-to-user-login-link"
                   onClick={() => {
                     setSelectedRole('user');
                     setCurrentView('login');

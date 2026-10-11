@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * SHIV COMPUTER - ADMIN OPERATIONS (Project: "Shiv-ori")
+ * SHIV COMPUTER - ADMIN OPERATIONS
  * ============================================================================
  * 
  * Provides administrative controls for the Shiv Computer Admin Panel:

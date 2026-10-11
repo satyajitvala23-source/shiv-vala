@@ -130,18 +130,18 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
               {role === 'admin' ? (
                 <div
                   id="header-role-badge"
-                  className="hidden md:inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full bg-amber-400/15 text-amber-800 dark:text-amber-300 border border-amber-400/30 shadow-2xs backdrop-blur-xs whitespace-nowrap"
+                  className="hidden md:inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-amber-400/15 text-amber-800 dark:text-amber-300 border border-amber-400/30 shadow-2xs backdrop-blur-xs whitespace-nowrap"
                 >
                   <ShieldCheck className="w-3 h-3 text-amber-500" />
-                  <span>{language === 'gu' ? 'એડમિન પોર્ટલ' : 'Admin Portal'}</span>
+                  <span>Admin</span>
                 </div>
               ) : (
                 <div
                   id="header-role-badge"
-                  className="hidden md:inline-flex items-center gap-1.5 text-[11px] font-semibold px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-700 dark:text-blue-300 border border-blue-500/20 shadow-2xs backdrop-blur-xs whitespace-nowrap"
+                  className="hidden md:inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-700 dark:text-blue-300 border border-blue-500/20 shadow-2xs backdrop-blur-xs whitespace-nowrap"
                 >
                   <UserCheck className="w-3 h-3 text-blue-600 dark:text-blue-400" />
-                  <span>{language === 'gu' ? 'નાગરિક પોર્ટલ' : 'Citizen Portal'}</span>
+                  <span>User</span>
                 </div>
               )}
             </div>
@@ -312,7 +312,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
               {role === 'admin' ? 'A' : currentUser.name.charAt(0)}
             </div>
             <span className="hidden lg:block text-xs font-semibold text-slate-800 dark:text-slate-200 max-w-[120px] truncate">
-              {role === 'admin' ? 'Super Admin' : currentUser.name}
+              {role === 'admin' ? 'Admin' : (currentUser.name || 'User')}
             </span>
             <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
           </button>
@@ -324,10 +324,10 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
             >
               <div className="p-2 border-b border-slate-100 dark:border-white/10 mb-1">
                 <div className="font-semibold text-xs text-slate-900 dark:text-white">
-                  {role === 'admin' ? (currentUser.name || 'Shiv Master Administrator') : (currentUser.name || 'Citizen User')}
+                  {currentUser.name || (role === 'admin' ? 'Admin' : 'User')}
                 </div>
                 <div className="text-[11px] text-slate-500 dark:text-slate-400 truncate">
-                  {currentUser.email || (role === 'admin' ? 'Administrator' : 'Citizen')}
+                  {currentUser.email || (role === 'admin' ? 'Admin' : 'User')}
                 </div>
               </div>
 

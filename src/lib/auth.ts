@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * SHIV COMPUTER - FIREBASE AUTHENTICATION LAYER (Project: "Shiv-ori")
+ * SHIV COMPUTER - FIREBASE AUTHENTICATION LAYER
  * ============================================================================
  * 
  * Strict Security Principles:

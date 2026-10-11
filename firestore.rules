@@ -97,12 +97,12 @@ service cloud.firestore {
       allow update, delete: if isAdmin();
     }
 
-    // 6. Published Documents Collection (Cross-Platform Library)
+    // 6. Published Documents Collection (Official Documents managed exclusively by Admin)
     match /published_documents/{docId} {
-      // All visitors and citizens can read published documents
+      // All users and visitors can view, preview, and download documents uploaded by Admin
       allow read: if true;
 
-      // Only verified administrators can upload, modify, or delete published documents
+      // STRICT SECURITY: Only verified administrators can upload, edit, or delete documents
       allow create, update, delete: if isAdmin();
 
       match /chunks/{chunkId} {
@@ -111,31 +111,21 @@ service cloud.firestore {
       }
     }
 
-    // 7. User Documents Collection (Citizen Personal Locker)
+    // 7. User Documents Collection (Read-only access for users, Admin-only write)
     match /user_documents/{docId} {
-      // User can view their own documents; Admin can view all
+      // Users can only view documents assigned to them; Admin can view all
       allow read: if isAuthenticated() && (
         isAdmin() || resource.data.userId == request.auth.uid
       );
 
-      // Authenticated users can upload documents with their own UID; Admin can also create
-      allow create: if isAuthenticated() && (
-        isAdmin() || request.resource.data.userId == request.auth.uid
-      );
-
-      // Users can update their own documents; Admin can update any
-      allow update: if isAuthenticated() && (
-        isAdmin() || (resource.data.userId == request.auth.uid && request.resource.data.userId == request.auth.uid)
-      );
-
-      // Users can delete their own documents; Admin can delete any
-      allow delete: if isAuthenticated() && (
-        isAdmin() || resource.data.userId == request.auth.uid
-      );
+      // STRICT SECURITY: Only Admin can create, modify, or delete document records
+      allow create, update, delete: if isAdmin();
 
       match /chunks/{chunkId} {
-        allow read: if isAuthenticated();
-        allow write: if isAuthenticated();
+        allow read: if isAuthenticated() && (
+          isAdmin() || resource.data.userId == request.auth.uid
+        );
+        allow write: if isAdmin();
       }
     }
   }

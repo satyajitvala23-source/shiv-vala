@@ -1,6 +1,8 @@
 rules_version = '2';
 
 // Firebase Cloud Storage security rules for Shiv Computer
+// Strict Role-Based Security: Only Admin can upload, edit, and delete documents.
+// Users can only view, preview, and download documents uploaded by the Admin.
 service firebase.storage {
   match /b/{bucket}/o {
 
@@ -11,38 +13,25 @@ service firebase.storage {
     function isAdmin() {
       return isAuthenticated() && (
         request.auth.token.email in ['satyajitvala23@gmail.com', 'admin@shivcomputer.com', 'satu@shivcomputer.com'] ||
-        request.auth.token.role == 'admin'
+        request.auth.token.role == 'admin' ||
+        request.auth.token.admin == true
       );
     }
 
-    // Official Published Documents (Public Library)
+    // Official Published Documents (Managed exclusively by Admin)
     match /documents/{allPaths=**} {
-      // Anyone can download or view published official forms & documents
+      // Anyone / All Users can view and download official documents
       allow read: if true;
 
-      // Only authenticated admins can upload, edit, or delete up to 25 MB
-      allow write: if isAdmin() &&
-        request.resource.size < 25 * 1024 * 1024;
+      // ONLY verified Admin can upload, edit, or delete documents
+      allow write: if isAdmin() && request.resource.size < 25 * 1024 * 1024;
+      allow delete: if isAdmin();
     }
 
-    // Citizen Personal Locker Documents
-    match /user_documents/{allPaths=**} {
-      // User can view their own documents; Admin can view all
-      allow read: if isAuthenticated();
-
-      // Authenticated users and admins can upload and manage documents up to 25 MB
-      allow write: if isAuthenticated() &&
-        request.resource.size < 25 * 1024 * 1024;
-    }
-
-    // Applicant Submitted Application Proofs (Aadhaar, 7/12, Ration Cards, Photos)
-    match /applicant_docs/{userId}/{allPaths=**} {
-      // User can view their own documents; Admin can view all
-      allow read: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
-
-      // User can upload their own verification documents (up to 25 MB)
-      allow write: if isAuthenticated() && (request.auth.uid == userId || isAdmin()) &&
-        request.resource.size < 25 * 1024 * 1024;
+    // Fallback path
+    match /{allPaths=**} {
+      allow read: if true;
+      allow write, delete: if isAdmin();
     }
   }
 }

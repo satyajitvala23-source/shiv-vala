@@ -50,7 +50,7 @@ export const ApplyServiceModal: React.FC<ApplyServiceModalProps> = ({
         <div className="p-4 sm:p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/70 dark:bg-slate-800/40">
           <div>
             <span className="text-[11px] font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
-              {service.category === 'agriculture' ? 'Agriculture Scheme Application' : 'Citizen Service Application'}
+              {service.category === 'agriculture' ? 'Agriculture Scheme Application' : 'Service Application'}
             </span>
             <h3 className="font-bold text-slate-900 dark:text-white text-base">
               {service.name}

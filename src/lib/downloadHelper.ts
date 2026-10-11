@@ -156,12 +156,25 @@ export interface DownloadResult {
 /**
  * Universal download engine that works across Windows, macOS, Linux, Android, and iOS/iPadOS.
  */
-export async function downloadDocumentCrossPlatform(options: {
-  fileUrl: string;
-  fileName: string;
-  mimeType?: string;
-}): Promise<DownloadResult> {
-  let { fileUrl, fileName, mimeType } = options;
+export async function downloadDocumentCrossPlatform(
+  optionsOrUrl: string | { fileUrl: string; fileName: string; mimeType?: string },
+  fileNameArg?: string,
+  mimeTypeArg?: string
+): Promise<DownloadResult> {
+  let fileUrl = '';
+  let fileName = 'downloaded_file';
+  let mimeType: string | undefined = undefined;
+
+  if (typeof optionsOrUrl === 'string') {
+    fileUrl = optionsOrUrl;
+    fileName = fileNameArg || 'downloaded_file';
+    mimeType = mimeTypeArg;
+  } else {
+    fileUrl = optionsOrUrl.fileUrl;
+    fileName = optionsOrUrl.fileName;
+    mimeType = optionsOrUrl.mimeType;
+  }
+
   const deviceInfo = getDevicePlatformInfo();
   const cleanName = sanitizeFileName(fileName, mimeType);
 

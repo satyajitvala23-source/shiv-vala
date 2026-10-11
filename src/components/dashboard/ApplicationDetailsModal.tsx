@@ -340,7 +340,7 @@ export const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = (
           {role === 'admin' && (
             <div className="pt-4 border-t border-slate-200 dark:border-slate-800 space-y-4">
               <div className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                Administrator Status & Workflow Controls
+                Admin Status & Workflow Controls
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

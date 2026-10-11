@@ -153,13 +153,13 @@ export const OfficeAddressCard: React.FC<OfficeAddressCardProps> = ({
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">
-                      {language === 'gu' ? 'સહ-સંચાલક / પ્રતિનિધિ:' : 'Co-Administrator / Support:'}
+                      {language === 'gu' ? 'સહ-સંચાલક / સપોર્ટ:' : 'Admin Support:'}
                     </div>
                     <div className="text-sm font-bold text-slate-900 dark:text-white truncate">
                       {contact2Name}
                     </div>
                     <div className="text-[11px] text-slate-500 dark:text-slate-400">
-                      {language === 'gu' ? 'ડિજિટલ સેવા અને નાગરિક સપોર્ટ' : 'Citizen Assistance & Operations'}
+                      {language === 'gu' ? 'ડિજિટલ સેવા અને યુઝર સપોર્ટ' : 'Digital Services & User Support'}
                     </div>
                   </div>
                 </div>

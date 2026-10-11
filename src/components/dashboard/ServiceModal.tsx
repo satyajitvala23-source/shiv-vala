@@ -95,7 +95,7 @@ export const ServiceModal: React.FC<ServiceModalProps> = ({
       >
         <div className="p-4 sm:p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/70 dark:bg-slate-800/40">
           <h3 className="font-bold text-slate-900 dark:text-white text-base">
-            {serviceToEdit ? 'Edit Service Details' : 'Add New Citizen Service'}
+            {serviceToEdit ? 'Edit Service Details' : 'Add New Service'}
           </h3>
           <button
             type="button"
@@ -131,7 +131,7 @@ export const ServiceModal: React.FC<ServiceModalProps> = ({
                 onChange={(e) => setCategory(e.target.value as 'general' | 'agriculture')}
                 className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none"
               >
-                <option value="general">General Citizen Service</option>
+                <option value="general">General Service</option>
                 <option value="agriculture">Agriculture / iKhedut Service</option>
               </select>
             </div>
@@ -241,7 +241,7 @@ export const ServiceModal: React.FC<ServiceModalProps> = ({
                 className="w-4 h-4 rounded text-blue-600 focus:ring-0 cursor-pointer"
               />
               <span className="font-semibold text-slate-700 dark:text-slate-300">
-                Service Active / Enabled for Citizens
+                Service Active / Enabled for Users
               </span>
             </label>
           </div>

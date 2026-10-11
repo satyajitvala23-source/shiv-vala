@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * SHIV COMPUTER - FIREBASE UNIFIED FACADE (Project: "Shiv-ori")
+ * SHIV COMPUTER - FIREBASE UNIFIED FACADE
  * ============================================================================
  * 
  * Re-exports modular Firebase services:

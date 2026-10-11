@@ -6,7 +6,6 @@ import { LoginForm } from './components/LoginForm';
 import { HeaderControls } from './components/HeaderControls';
 import { ForgotPasswordModal } from './components/ForgotPasswordModal';
 import { ResetPasswordModal } from './components/ResetPasswordModal';
-import { AIChatbot } from './components/AIChatbot';
 import { DynamicGlassBackground } from './components/DynamicGlassBackground';
 
 function AppContent() {
@@ -153,9 +152,6 @@ function AppContent() {
           language={language}
           t={t}
         />
-
-        {/* Shiv AI Assistant: shown only on Login and Dashboard pages */}
-        {(currentView === 'login' || currentView === 'admin-login') && <AIChatbot />}
       </div>
     );
   }
@@ -201,7 +197,6 @@ function AppContent() {
         language={language}
         t={t}
       />
-      <AIChatbot />
     </>
   );
 }
