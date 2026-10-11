@@ -10,6 +10,7 @@
 import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app';
 import { getAuth, Auth } from 'firebase/auth';
 import { getFirestore, initializeFirestore, Firestore } from 'firebase/firestore';
+import { getStorage, FirebaseStorage } from 'firebase/storage';
 import firebaseConfig from '../firebase-applet-config.json';
 
 // Initialize Firebase App (Singleton pattern)
@@ -52,6 +53,16 @@ try {
 
 export const db: Firestore = firestoreDb;
 
+// Initialize Firebase Storage
+let firebaseStorage: FirebaseStorage;
+try {
+  firebaseStorage = getStorage(app);
+} catch (err) {
+  console.warn('[Firebase] Firebase Storage initialization error:', err);
+  firebaseStorage = getStorage(app);
+}
+export const storage: FirebaseStorage = firebaseStorage;
+
 export const PROJECT_ID = firebaseConfig.projectId;
 export const AUTH_DOMAIN = firebaseConfig.authDomain;
 export const DATABASE_ID = firebaseConfig.firestoreDatabaseId;
@@ -62,6 +73,7 @@ export default {
   app,
   auth,
   db,
+  storage,
   firebaseConfig,
   projectId: PROJECT_ID,
   authDomain: AUTH_DOMAIN,

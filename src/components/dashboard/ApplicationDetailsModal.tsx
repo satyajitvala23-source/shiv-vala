@@ -15,9 +15,13 @@ import {
   Send,
   Download,
   Upload,
+  Eye,
+  Camera,
 } from 'lucide-react';
-import { Application, ApplicationStatus, LoginRole } from '../../types';
+import { Application, ApplicationStatus, LoginRole, PublishedDocument } from '../../types';
 import { useApp } from '../../context/AppContext';
+import { downloadDocumentCrossPlatform } from '../../lib/downloadHelper';
+import { DocumentViewerModal } from './DocumentViewerModal';
 
 interface ApplicationDetailsModalProps {
   application: Application | null;
@@ -38,6 +42,38 @@ export const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = (
   const [adminNoteInput, setAdminNoteInput] = useState(application?.adminNotes || '');
   const [isSavedNotice, setIsSavedNotice] = useState(false);
   const [newDocUploadName, setNewDocUploadName] = useState('');
+  const [viewingDoc, setViewingDoc] = useState<PublishedDocument | null>(null);
+
+  const handleViewDoc = (name: string, size: string, date: string) => {
+    const isImg = name.toLowerCase().endsWith('.png') || name.toLowerCase().endsWith('.jpg') || name.toLowerCase().endsWith('.jpeg');
+    const temp: PublishedDocument = {
+      id: `APP-DOC-${Date.now()}`,
+      title: name,
+      category: 'forms',
+      description: `Applicant attached proof (${size} • ${date})`,
+      fileName: name.includes('.') ? name : `${name}.pdf`,
+      fileUrl: `data:application/pdf;base64,JVBERi0xLjQKMSAwIG9iajw8L1R5cGUvQ2F0YWxvZy9QYWdlcyAyIDAgUj4+ZW5kb2JqCjIgMCBvYmo8PC9UeXBlL1BhZ2VzL0tpZHNbMyAwIFJdL0NvdW50IDE+PmVuZG9iagozIDAgb2JqPDwvVHlwZS9QYWdlL1BhcmVudCAyIDAgUi9NZWRpYUJveFswIDAgNTk1IDg0Ml0vUmVzb3VyY2VzPDwvRm9udDw8L0YxIDQgMCBSPj4+Pi9Db250ZW50cyA1IDAgUj4+ZW5kb2JqCjQgMCBvYmo8PC9UeXBlL0ZvbnQvU3VidHlwZS9UeXBlMS9CYXNlRm9udC9IZWx2ZXRpY2E+PmVuZG9iago1IDAgb2JqPDwvTGVuZ3RoIDExMD4+c3RyZWFtCkJUCi9GMTQgMTYgVGYKNTAgNzUwIFRkCihTaGl2IENvbXB1dGVyIC0gQXBwbGljYW50IERvY3VtZW50IFZlcmlmaWNhdGlvbikgVGoKMCAtMzAgVGYKKFZlcmlmaWVkIEZpbGUgQXR0YWNobWVudCkgVGoKRVRKZW5kc3RyZWFtCmVuZG9iagp4cmVmCjAgNgowMDAwMDAwMDAwIDY1NTM1IGYgCjAwMDAwMDAwMTAgMDAwMDAgbiAKMDAwMDAwMDA2MCAwMDAwMCBuIAowMDAwMDAwMTE3IDAwMDAwIG4gCjAwMDAwMDAyMjcgMDAwMDAgbiAKMDAwMDAwMDI5NSAwMDAwMCBuIAp0cmFpbGVyCjw8L1NpemUgNi9Sb290IDEgMCBSPj4Kc3RhcnR4cmVmCjQ1OQolJUVPRg==`,
+      fileType: isImg ? 'image' : 'pdf',
+      mimeType: isImg ? 'image/jpeg' : 'application/pdf',
+      fileSize: size,
+      fileSizeBytes: 500000,
+      uploadedAt: date,
+      isPublished: true,
+      downloadCount: 1,
+      viewCount: 1,
+      targetAudience: 'all',
+    };
+    setViewingDoc(temp);
+  };
+
+  const handleDownloadDoc = async (name: string) => {
+    const clean = name.includes('.') ? name : `${name}.pdf`;
+    await downloadDocumentCrossPlatform({
+      fileUrl: `data:application/pdf;base64,JVBERi0xLjQKMSAwIG9iajw8L1R5cGUvQ2F0YWxvZy9QYWdlcyAyIDAgUj4+ZW5kb2JqCjIgMCBvYmo8PC9UeXBlL1BhZ2VzL0tpZHNbMyAwIFJdL0NvdW50IDE+PmVuZG9iagozIDAgb2JqPDwvVHlwZS9QYWdlL1BhcmVudCAyIDAgUi9NZWRpYUJveFswIDAgNTk1IDg0Ml0vUmVzb3VyY2VzPDwvRm9udDw8L0YxIDQgMCBSPj4+Pi9Db250ZW50cyA1IDAgUj4+ZW5kb2JqCjQgMCBvYmo8PC9UeXBlL0ZvbnQvU3VidHlwZS9UeXBlMS9CYXNlRm9udC9IZWx2ZXRpY2E+PmVuZG9iago1IDAgb2JqPDwvTGVuZ3RoIDExMD4+c3RyZWFtCkJUCi9GMTQgMTYgVGYKNTAgNzUwIFRkCihTaGl2IENvbXB1dGVyIC0gQXBwbGljYW50IERvY3VtZW50IFZlcmlmaWNhdGlvbikgVGoKMCAtMzAgVGYKKFZlcmlmaWVkIEZpbGUgQXR0YWNobWVudCkgVGoKRVRKZW5kc3RyZWFtCmVuZG9iagp4cmVmCjAgNgowMDAwMDAwMDAwIDY1NTM1IGYgCjAwMDAwMDAwMTAgMDAwMDAgbiAKMDAwMDAwMDA2MCAwMDAwMCBuIAowMDAwMDAwMTE3IDAwMDAwIG4gCjAwMDAwMDAyMjcgMDAwMDAgbiAKMDAwMDAwMDI5NSAwMDAwMCBuIAp0cmFpbGVyCjw8L1NpemUgNi9Sb290IDEgMCBSPj4Kc3RhcnR4cmVmCjQ1OQolJUVPRg==`,
+      fileName: clean,
+      mimeType: 'application/pdf',
+    });
+  };
 
   useEffect(() => {
     if (application) {
@@ -248,9 +284,17 @@ export const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = (
                     </span>
                     <button
                       type="button"
-                      title="Download document copy"
-                      onClick={() => alert(`Downloading document: ${doc.name}`)}
-                      className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-white transition-colors"
+                      title="Inspect Document Proof"
+                      onClick={() => handleViewDoc(doc.name, doc.size, doc.date)}
+                      className="p-1.5 text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors"
+                    >
+                      <Eye className="w-4 h-4" />
+                    </button>
+                    <button
+                      type="button"
+                      title="Download Document"
+                      onClick={() => handleDownloadDoc(doc.name)}
+                      className="p-1.5 text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors"
                     >
                       <Download className="w-4 h-4" />
                     </button>
@@ -391,6 +435,12 @@ export const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = (
           </button>
         </div>
       </div>
+
+      {/* Cross-Platform Document Viewer Modal */}
+      <DocumentViewerModal
+        document={viewingDoc}
+        onClose={() => setViewingDoc(null)}
+      />
     </div>
   );
 };

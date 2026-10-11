@@ -1,0 +1,45 @@
+rules_version = '2';
+
+// Craft rules based on data in your Firestore database
+// Allow write only by verified admin users and validate file types & sizes
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.email in ['satyajitvala23@gmail.com', 'admin@shivcomputer.com', 'satu@shivcomputer.com'] ||
+        request.auth.token.role == 'admin'
+      );
+    }
+
+    // Published Documents: JPG, JPEG, PNG, WebP and PDF up to 20 MB
+    match /documents/{allPaths=**} {
+      // Anyone can download or view published official forms & documents
+      allow read: if true;
+
+      // Only authenticated admins can upload, edit, or delete
+      allow write: if isAdmin() &&
+        request.resource.size < 20 * 1024 * 1024 &&
+        (
+          request.resource.contentType.matches('application/pdf') ||
+          request.resource.contentType.matches('image/jpeg') ||
+          request.resource.contentType.matches('image/png') ||
+          request.resource.contentType.matches('image/webp')
+        );
+    }
+
+    // Applicant Submitted Documents (Aadhaar, 7/12, Ration Cards, Photos)
+    match /applicant_docs/{userId}/{allPaths=**} {
+      // User can view their own documents; Admin can view all
+      allow read: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
+
+      // User can upload their own verification documents (up to 15 MB)
+      allow write: if isAuthenticated() && (request.auth.uid == userId || isAdmin()) &&
+        request.resource.size < 15 * 1024 * 1024;
+    }
+  }
+}

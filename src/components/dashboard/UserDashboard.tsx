@@ -36,6 +36,7 @@ import { ApplyServiceModal } from './ApplyServiceModal';
 import { OfficeAddressCard } from './OfficeAddressCard';
 import { QuickServiceCards } from './QuickServiceCards';
 import { AnimatedCounter } from '../AnimatedCounter';
+import { UserDocumentHub } from './UserDocumentHub';
 import { sendPasswordReset, resendVerificationEmail, auth } from '../../lib/firebase';
 
 type UserTab =
@@ -844,72 +845,13 @@ export const UserDashboard: React.FC = () => {
             </div>
           )}
 
-          {/* TAB 6: DOWNLOAD FORMS */}
+          {/* TAB 6: OFFICIAL FORMS & DOCUMENTS HUB */}
           {activeTab === 'downloadForms' && (
-            <div className="space-y-6">
-              <div>
-                <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
-                  Official Application Forms & Affidavit Templates
-                </h1>
-                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
-                  Download standard government forms, print them, fill in your details, or bring them to Shiv Computer.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {forms.filter((f) => f.enabled).map((form) => (
-                  <div
-                    key={form.id}
-                    className="glass-card p-5 rounded-2xl flex flex-col justify-between space-y-4 group transition-all"
-                  >
-                    <div>
-                      <div className="flex items-center justify-between text-[11px] font-semibold mb-3">
-                        <span className="uppercase px-2.5 py-0.5 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 font-mono text-[10px]">
-                          {form.category}
-                        </span>
-                        <span className="text-slate-400 font-mono">{form.fileSize}</span>
-                      </div>
-
-                      <div className="flex items-start gap-3">
-                        <div className="w-11 h-11 rounded-2xl bg-linear-to-br from-blue-500/20 to-sky-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                          <FileText className="w-5 h-5" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h3 className="font-bold text-sm sm:text-base text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                            {form.title}
-                          </h3>
-                          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">
-                            {form.description}
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="mt-4 pt-3 border-t border-slate-200/60 dark:border-white/10 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
-                        <div className="flex items-center gap-1.5">
-                          <Clock className="w-3.5 h-3.5 text-blue-500" />
-                          <span>{language === 'gu' ? 'સરકારી નમૂનો' : 'Govt Approved'}</span>
-                        </div>
-                        <span className="font-medium text-blue-600 dark:text-blue-400 font-mono">
-                          {form.downloadCount} {language === 'gu' ? 'ડાઉનલોડ્સ' : 'downloads'}
-                        </span>
-                      </div>
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={() => {
-                        incrementFormDownload(form.id);
-                        alert(`Downloading official PDF form: ${form.title}`);
-                      }}
-                      className="w-full py-2.5 px-3.5 rounded-xl bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold text-xs flex items-center justify-center gap-2 shadow-md shadow-blue-500/20 border border-white/20 transition-all active:scale-95"
-                    >
-                      <Download className="w-4 h-4" />
-                      <span>{language === 'gu' ? 'પીડીએફ ફોર્મ ડાઉનલોડ કરો' : 'Download PDF Form'}</span>
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <UserDocumentHub
+              forms={forms}
+              incrementFormDownload={incrementFormDownload}
+              language={language}
+            />
           )}
 
           {/* TAB 7: UPLOAD DOCUMENTS */}

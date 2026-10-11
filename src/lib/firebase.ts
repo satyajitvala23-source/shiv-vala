@@ -22,7 +22,8 @@ export * from './firestore';
 export * from './admin';
 export * from './user';
 
-import { auth, db } from './firebase-config';
+import { auth, db, storage } from './firebase-config';
+export { auth, db, storage };
 import {
   signInAdmin,
   signInCitizen,

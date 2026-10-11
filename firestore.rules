@@ -96,5 +96,14 @@ service cloud.firestore {
       // Only admin can modify or release usernames
       allow update, delete: if isAdmin();
     }
+
+    // 6. Published Documents Collection (Cross-Platform Library)
+    match /published_documents/{docId} {
+      // All visitors and citizens can read published documents
+      allow read: if true;
+
+      // Only verified administrators can upload, modify, or delete published documents
+      allow create, update, delete: if isAdmin();
+    }
   }
 }

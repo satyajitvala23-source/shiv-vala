@@ -80,6 +80,41 @@ export interface FormTemplate {
   lastUpdated: string;
 }
 
+export type DocumentCategory =
+  | 'certificates'
+  | 'revenue'
+  | 'agriculture'
+  | 'forms'
+  | 'notices'
+  | 'general';
+
+export interface PublishedDocument {
+  id: string;
+  title: string;
+  titleGujarati?: string;
+  category: DocumentCategory;
+  categoryLabel?: string;
+  description: string;
+  descriptionGujarati?: string;
+  fileName: string;
+  fileUrl: string;
+  storagePath?: string;
+  fileType: 'pdf' | 'image' | 'jpeg' | 'png' | 'webp';
+  mimeType: string;
+  fileSize: string;
+  fileSizeBytes: number;
+  uploadedAt: string;
+  updatedAt?: string;
+  uploadedBy?: string;
+  uploadedByEmail?: string;
+  isPublished: boolean;
+  downloadCount: number;
+  viewCount: number;
+  targetAudience: 'all' | 'citizens' | 'farmers' | 'students';
+  tags?: string[];
+  thumbnailUrl?: string;
+}
+
 export interface CustomerUser {
   id: string;
   uid?: string;

@@ -53,6 +53,7 @@ import { ServiceModal } from './ServiceModal';
 import { FormModal } from './FormModal';
 import { OfficeAddressCard } from './OfficeAddressCard';
 import { AnimatedCounter } from '../AnimatedCounter';
+import { AdminDocumentManager } from './AdminDocumentManager';
 
 type AdminTab =
   | 'dashboard'
@@ -1276,98 +1277,15 @@ export const AdminDashboard: React.FC = () => {
           </div>
           )}
 
-          {/* TAB 7: DOCUMENTS VERIFICATION QUEUE */}
+          {/* TAB 7: UNIVERSAL DOCUMENT MANAGEMENT & VERIFICATION HUB */}
           {activeTab === 'documents' && (
-            <div className="space-y-6">
-              <div>
-                <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
-                  Document Verification Hub
-                </h1>
-                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
-                  Inspect applicant Aadhaar, 7/12 land records, affidavits, and mark verification status.
-                </p>
-              </div>
-
-              <div className="space-y-4">
-                {applications.length === 0 ? (
-                  <div className="p-12 text-center bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 text-slate-400">
-                    No documents pending verification. Real uploaded documents will appear here.
-                  </div>
-                ) : (
-                  applications.map((app) => (
-                  <div
-                    key={app.id}
-                    className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3"
-                  >
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <span className="font-mono text-xs font-bold text-blue-600">{app.id}</span>
-                          <span className="font-semibold text-sm text-slate-900 dark:text-white">{app.serviceName}</span>
-                        </div>
-                        <div className="text-xs text-slate-400 mt-0.5">
-                          Applicant: <strong>{app.applicantName}</strong> ({app.applicantPhone})
-                        </div>
-                      </div>
-                      <span className={`text-[11px] font-semibold px-2.5 py-0.5 rounded-full border self-start ${getStatusBadge(app.status)}`}>
-                        {getStatusLabel(app.status)}
-                      </span>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pt-1">
-                      {app.uploadedDocuments.map((doc) => (
-                        <div
-                          key={doc.id}
-                          className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700 flex items-center justify-between"
-                        >
-                          <div className="overflow-hidden pr-2">
-                            <div className="font-medium text-xs text-slate-800 dark:text-slate-200 truncate">
-                              {doc.name}
-                            </div>
-                            <div className="text-[10px] text-slate-400">
-                              {doc.size} • {doc.date}
-                            </div>
-                          </div>
-
-                          <div className="flex items-center gap-1 shrink-0">
-                            <span
-                              className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${
-                                doc.status === 'Verified'
-                                  ? 'bg-emerald-100 text-emerald-800'
-                                  : doc.status === 'Needs Correction'
-                                  ? 'bg-amber-100 text-amber-800'
-                                  : 'bg-blue-100 text-blue-800'
-                              }`}
-                            >
-                              {doc.status}
-                            </span>
-                            <button
-                              type="button"
-                              onClick={() => alert(`Opening file preview for: ${doc.name}`)}
-                              className="p-1 text-slate-400 hover:text-slate-700 dark:hover:text-white"
-                              title="Inspect File"
-                            >
-                              <Eye className="w-3.5 h-3.5" />
-                            </button>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="flex justify-end pt-2">
-                      <button
-                        type="button"
-                        onClick={() => setSelectedAppForModal(app)}
-                        className="text-xs font-semibold text-blue-600 hover:underline"
-                      >
-                        Open Application Review Controls →
-                      </button>
-                    </div>
-                  </div>
-                ))
-              )}
-            </div>
-          </div>
+            <AdminDocumentManager
+              applications={applications}
+              onOpenAppReview={(app) => setSelectedAppForModal(app)}
+              getStatusBadge={getStatusBadge}
+              getStatusLabel={getStatusLabel}
+              language={language}
+            />
           )}
 
           {/* TAB 8: PAYMENTS & REVENUE */}
