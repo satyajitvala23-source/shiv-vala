@@ -1,7 +1,6 @@
 rules_version = '2';
 
-// Craft rules based on data in your Firestore database
-// Allow write only by verified admin users and validate file types & sizes
+// Firebase Cloud Storage security rules for Shiv Computer
 service firebase.storage {
   match /b/{bucket}/o {
 
@@ -16,30 +15,34 @@ service firebase.storage {
       );
     }
 
-    // Published Documents: JPG, JPEG, PNG, WebP and PDF up to 20 MB
+    // Official Published Documents (Public Library)
     match /documents/{allPaths=**} {
       // Anyone can download or view published official forms & documents
       allow read: if true;
 
-      // Only authenticated admins can upload, edit, or delete
+      // Only authenticated admins can upload, edit, or delete up to 25 MB
       allow write: if isAdmin() &&
-        request.resource.size < 20 * 1024 * 1024 &&
-        (
-          request.resource.contentType.matches('application/pdf') ||
-          request.resource.contentType.matches('image/jpeg') ||
-          request.resource.contentType.matches('image/png') ||
-          request.resource.contentType.matches('image/webp')
-        );
+        request.resource.size < 25 * 1024 * 1024;
     }
 
-    // Applicant Submitted Documents (Aadhaar, 7/12, Ration Cards, Photos)
+    // Citizen Personal Locker Documents
+    match /user_documents/{allPaths=**} {
+      // User can view their own documents; Admin can view all
+      allow read: if isAuthenticated();
+
+      // Authenticated users and admins can upload and manage documents up to 25 MB
+      allow write: if isAuthenticated() &&
+        request.resource.size < 25 * 1024 * 1024;
+    }
+
+    // Applicant Submitted Application Proofs (Aadhaar, 7/12, Ration Cards, Photos)
     match /applicant_docs/{userId}/{allPaths=**} {
       // User can view their own documents; Admin can view all
       allow read: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
 
-      // User can upload their own verification documents (up to 15 MB)
+      // User can upload their own verification documents (up to 25 MB)
       allow write: if isAuthenticated() && (request.auth.uid == userId || isAdmin()) &&
-        request.resource.size < 15 * 1024 * 1024;
+        request.resource.size < 25 * 1024 * 1024;
     }
   }
 }

@@ -854,27 +854,25 @@ export const UserDashboard: React.FC = () => {
             />
           )}
 
-          {/* TAB 7: UPLOAD DOCUMENTS */}
+          {/* TAB 7: UPLOAD DOCUMENTS & PERSONAL LOCKER */}
           {activeTab === 'uploadDocs' && (
             <div className="space-y-6">
-              <div>
-                <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
-                  Document Locker & Upload Portal
-                </h1>
-                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
-                  Upload required identification, ration cards, land extracts, and passport photos for your applications.
-                </p>
-              </div>
+              <UserDocumentHub
+                forms={forms}
+                incrementFormDownload={incrementFormDownload}
+                language={language}
+              />
 
               <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
-                <div className="font-bold text-sm text-slate-900 dark:text-white">
-                  Attach New Document to an Application
+                <div className="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+                  <UploadCloud className="w-4 h-4 text-blue-600" />
+                  <span>Attach Document Directly to an Active Application</span>
                 </div>
 
                 <div className="space-y-3">
                   {userApplications.length === 0 ? (
-                    <div className="p-8 text-center text-slate-400 text-xs">
-                      No applications submitted yet. Apply for a service to upload documents.
+                    <div className="p-6 text-center text-slate-400 text-xs">
+                      No applications submitted yet. Apply for a service above to link documents directly.
                     </div>
                   ) : (
                     userApplications.map((app) => (
@@ -898,7 +896,7 @@ export const UserDashboard: React.FC = () => {
                           className="px-3.5 py-1.5 rounded-xl bg-blue-600 text-white font-semibold text-xs flex items-center gap-1.5 self-start sm:self-center"
                         >
                           <UploadCloud className="w-3.5 h-3.5" />
-                          <span>Manage & Upload Docs</span>
+                          <span>Attach to Application</span>
                         </button>
                       </div>
                     ))

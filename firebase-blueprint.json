@@ -192,6 +192,110 @@
           "required": true
         }
       }
+    },
+    "PublishedDocument": {
+      "name": "PublishedDocument",
+      "path": "/published_documents/{docId}",
+      "description": "Official published documents and forms library",
+      "fields": {
+        "id": {
+          "type": "string",
+          "description": "Unique document identifier",
+          "required": true
+        },
+        "title": {
+          "type": "string",
+          "description": "Document title",
+          "required": true
+        },
+        "category": {
+          "type": "string",
+          "description": "Document category",
+          "required": true
+        },
+        "fileName": {
+          "type": "string",
+          "description": "Original file name",
+          "required": true
+        },
+        "fileUrl": {
+          "type": "string",
+          "description": "Storage URL or cloud chunk reference",
+          "required": true
+        },
+        "fileType": {
+          "type": "string",
+          "description": "File format extension / type",
+          "required": true
+        },
+        "fileSize": {
+          "type": "string",
+          "description": "Formatted file size",
+          "required": true
+        },
+        "uploadedAt": {
+          "type": "string",
+          "description": "Upload timestamp",
+          "required": true
+        },
+        "isPublished": {
+          "type": "boolean",
+          "description": "Whether document is visible publicly",
+          "required": true
+        }
+      }
+    },
+    "UserDocument": {
+      "name": "UserDocument",
+      "path": "/user_documents/{docId}",
+      "description": "Citizen private uploaded documents in personal cloud locker",
+      "fields": {
+        "id": {
+          "type": "string",
+          "description": "Unique document identifier",
+          "required": true
+        },
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID of owner",
+          "required": true
+        },
+        "title": {
+          "type": "string",
+          "description": "Document title",
+          "required": true
+        },
+        "category": {
+          "type": "string",
+          "description": "Document category",
+          "required": true
+        },
+        "fileName": {
+          "type": "string",
+          "description": "Original file name",
+          "required": true
+        },
+        "fileUrl": {
+          "type": "string",
+          "description": "Storage URL or cloud chunk reference",
+          "required": true
+        },
+        "fileType": {
+          "type": "string",
+          "description": "File format extension / type",
+          "required": true
+        },
+        "fileSize": {
+          "type": "string",
+          "description": "Formatted file size",
+          "required": true
+        },
+        "uploadedAt": {
+          "type": "string",
+          "description": "Upload timestamp",
+          "required": true
+        }
+      }
     }
   },
   "indexes": []

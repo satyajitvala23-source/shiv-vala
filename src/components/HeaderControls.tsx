@@ -21,18 +21,13 @@ export const HeaderControls: React.FC<HeaderControlsProps> = ({
   userLabel,
 }) => {
   const [isLangOpen, setIsLangOpen] = useState(false);
-  const [isRoleDropdownOpen, setIsRoleDropdownOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
-  const roleRef = useRef<HTMLDivElement>(null);
 
-  // Close dropdowns on outside click
+  // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (langRef.current && !langRef.current.contains(event.target as Node)) {
         setIsLangOpen(false);
-      }
-      if (roleRef.current && !roleRef.current.contains(event.target as Node)) {
-        setIsRoleDropdownOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -123,14 +118,13 @@ export const HeaderControls: React.FC<HeaderControlsProps> = ({
           )}
         </div>
 
-        {/* LOGIN TYPE OPTION (TOP-RIGHT CORNER) */}
+        {/* LOGIN TYPE: Display only two compact buttons: Admin and User */}
         <div id="login-type-selector-wrapper" className="flex items-center">
-          {/* Segmented Pill Toggle for desktop/tablet */}
           <div
             id="login-type-toggle-group"
-            className="hidden sm:inline-flex p-1 bg-sky-100/70 dark:bg-sky-950/70 border border-sky-200/60 dark:border-cyan-400/15 rounded-xl shadow-sm backdrop-blur-md"
+            className="inline-flex p-1 bg-sky-100/70 dark:bg-sky-950/70 border border-sky-200/60 dark:border-cyan-400/15 rounded-xl shadow-xs backdrop-blur-md"
             role="radiogroup"
-            aria-label="Login Type Selector"
+            aria-label="Login Role Selection"
           >
             <button
               type="button"
@@ -138,14 +132,14 @@ export const HeaderControls: React.FC<HeaderControlsProps> = ({
               role="radio"
               aria-checked={role === 'admin'}
               onClick={() => onRoleChange('admin')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 ${
+              className={`flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg text-xs font-bold transition-all duration-200 active:scale-95 ${
                 role === 'admin'
-                  ? 'bg-gradient-to-r from-sky-700 to-sky-800 text-white shadow-sm border border-sky-600/60'
+                  ? 'bg-gradient-to-r from-sky-700 to-sky-800 text-white shadow-xs border border-sky-600/60'
                   : 'text-[#2c5970] dark:text-[#7aafcc] hover:text-[#0c3a56] dark:hover:text-white'
               }`}
             >
               <ShieldCheck className={`w-3.5 h-3.5 ${role === 'admin' ? 'text-sky-200' : 'text-slate-400'}`} />
-              <span>{adminLabel}</span>
+              <span>Admin</span>
             </button>
 
             <button
@@ -154,72 +148,15 @@ export const HeaderControls: React.FC<HeaderControlsProps> = ({
               role="radio"
               aria-checked={role === 'user'}
               onClick={() => onRoleChange('user')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 ${
+              className={`flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg text-xs font-bold transition-all duration-200 active:scale-95 ${
                 role === 'user'
-                  ? 'bg-gradient-to-r from-cyan-500 to-sky-600 text-white shadow-sm border border-cyan-400/60'
+                  ? 'bg-gradient-to-r from-cyan-500 to-sky-600 text-white shadow-xs border border-cyan-400/60'
                   : 'text-[#2c5970] dark:text-[#7aafcc] hover:text-[#0c3a56] dark:hover:text-white'
               }`}
             >
               <User className={`w-3.5 h-3.5 ${role === 'user' ? 'text-white' : 'text-slate-400'}`} />
-              <span>{userLabel}</span>
+              <span>User</span>
             </button>
-          </div>
-
-          {/* Compact Dropdown view for mobile screens */}
-          <div className="relative sm:hidden" ref={roleRef} id="login-type-mobile-dropdown">
-            <button
-              type="button"
-              id="role-dropdown-mobile-btn"
-              onClick={() => setIsRoleDropdownOpen((prev) => !prev)}
-              className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl border border-sky-200/70 dark:border-cyan-400/15 bg-white/65 dark:bg-sky-950/65 backdrop-blur-md text-[#0c3a56] dark:text-[#c8e8f8] text-xs font-semibold shadow-sm"
-            >
-              {role === 'admin' ? (
-                <ShieldCheck className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
-              ) : (
-                <User className="w-3.5 h-3.5 text-cyan-500 dark:text-cyan-400" />
-              )}
-              <span className="truncate max-w-[70px]">{role === 'admin' ? adminLabel : userLabel}</span>
-              <ChevronDown className={`w-3 h-3 text-slate-400 ${isRoleDropdownOpen ? 'rotate-180' : ''}`} />
-            </button>
-
-            {isRoleDropdownOpen && (
-              <div className="glass-dropdown absolute right-0 mt-1.5 w-36 max-w-[calc(100vw-1.5rem)] py-1 z-50">
-                <button
-                  type="button"
-                  id="mobile-role-select-admin"
-                  onClick={() => {
-                    onRoleChange('admin');
-                    setIsRoleDropdownOpen(false);
-                  }}
-                  className={`w-full flex items-center justify-between px-3 py-2 text-xs text-left ${
-                    role === 'admin' ? 'bg-teal-500/15 text-teal-800 dark:text-teal-300 font-semibold' : 'text-[#222c30] dark:text-[#edeae0]'
-                  }`}
-                >
-                  <span className="flex items-center gap-1.5">
-                    <ShieldCheck className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
-                    {adminLabel}
-                  </span>
-                  {role === 'admin' && <Check className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />}
-                </button>
-                <button
-                  type="button"
-                  id="mobile-role-select-user"
-                  onClick={() => {
-                    onRoleChange('user');
-                    setIsRoleDropdownOpen(false);
-                  }}
-                  className={`w-full flex items-center justify-between px-3 py-2 text-xs text-left ${
-                    role === 'user' ? 'bg-cyan-500/15 text-sky-800 dark:text-sky-300 font-semibold' : 'text-[#0c3a56] dark:text-[#c8e8f8]'
-                  }`}
-                >
-                  <span className="flex items-center gap-1.5">
-                    <User className="w-3.5 h-3.5 text-cyan-500 dark:text-cyan-400" />
-                    {userLabel}
-                  </span>
-                  {role === 'user' && <Check className="w-3.5 h-3.5 text-cyan-500 dark:text-cyan-400" />}
-                </button>
-              </div>
-            )}
           </div>
         </div>
       </div>

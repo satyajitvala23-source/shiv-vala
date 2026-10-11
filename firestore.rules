@@ -104,6 +104,39 @@ service cloud.firestore {
 
       // Only verified administrators can upload, modify, or delete published documents
       allow create, update, delete: if isAdmin();
+
+      match /chunks/{chunkId} {
+        allow read: if true;
+        allow write: if isAdmin();
+      }
+    }
+
+    // 7. User Documents Collection (Citizen Personal Locker)
+    match /user_documents/{docId} {
+      // User can view their own documents; Admin can view all
+      allow read: if isAuthenticated() && (
+        isAdmin() || resource.data.userId == request.auth.uid
+      );
+
+      // Authenticated users can upload documents with their own UID; Admin can also create
+      allow create: if isAuthenticated() && (
+        isAdmin() || request.resource.data.userId == request.auth.uid
+      );
+
+      // Users can update their own documents; Admin can update any
+      allow update: if isAuthenticated() && (
+        isAdmin() || (resource.data.userId == request.auth.uid && request.resource.data.userId == request.auth.uid)
+      );
+
+      // Users can delete their own documents; Admin can delete any
+      allow delete: if isAuthenticated() && (
+        isAdmin() || resource.data.userId == request.auth.uid
+      );
+
+      match /chunks/{chunkId} {
+        allow read: if isAuthenticated();
+        allow write: if isAuthenticated();
+      }
     }
   }
 }

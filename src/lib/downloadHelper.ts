@@ -108,7 +108,22 @@ export function sanitizeFileName(name: string, fallbackMime?: string): string {
   // If already has known extension, return sanitized
   if (extMatch) {
     const ext = extMatch[1].toLowerCase();
-    if (['pdf', 'jpg', 'jpeg', 'png', 'webp'].includes(ext)) {
+    if ([
+      'pdf',
+      'jpg',
+      'jpeg',
+      'png',
+      'webp',
+      'doc',
+      'docx',
+      'xls',
+      'xlsx',
+      'ppt',
+      'pptx',
+      'txt',
+      'csv',
+      'zip',
+    ].includes(ext)) {
       return clean;
     }
   }
@@ -121,6 +136,12 @@ export function sanitizeFileName(name: string, fallbackMime?: string): string {
     else if (m.includes('png')) expectedExt = '.png';
     else if (m.includes('webp')) expectedExt = '.webp';
     else if (m.includes('pdf')) expectedExt = '.pdf';
+    else if (m.includes('word') || m.includes('doc')) expectedExt = '.docx';
+    else if (m.includes('excel') || m.includes('sheet') || m.includes('xls')) expectedExt = '.xlsx';
+    else if (m.includes('presentation') || m.includes('powerpoint') || m.includes('ppt')) expectedExt = '.pptx';
+    else if (m.includes('zip') || m.includes('compressed')) expectedExt = '.zip';
+    else if (m.includes('csv')) expectedExt = '.csv';
+    else if (m.includes('text/plain') || m.includes('txt')) expectedExt = '.txt';
   }
 
   return clean + expectedExt;
@@ -140,7 +161,7 @@ export async function downloadDocumentCrossPlatform(options: {
   fileName: string;
   mimeType?: string;
 }): Promise<DownloadResult> {
-  const { fileUrl, fileName, mimeType } = options;
+  let { fileUrl, fileName, mimeType } = options;
   const deviceInfo = getDevicePlatformInfo();
   const cleanName = sanitizeFileName(fileName, mimeType);
 
@@ -150,6 +171,19 @@ export async function downloadDocumentCrossPlatform(options: {
       method: 'fallback-tab',
       message: 'No file URL provided for download.',
     };
+  }
+
+  // Handle Firestore chunked cloud storage URLs
+  if (fileUrl.startsWith('firestore_chunk://')) {
+    try {
+      const parts = fileUrl.replace('firestore_chunk://', '').split('/');
+      const collName = parts[0];
+      const docId = parts[1];
+      const { loadCloudDocumentBlobUrl } = await import('./documents');
+      fileUrl = await loadCloudDocumentBlobUrl(collName, docId, mimeType || 'application/octet-stream');
+    } catch (err: any) {
+      console.error('[DownloadHelper] Error loading Firestore chunked file:', err);
+    }
   }
 
   // Case A: Data URL (e.g. data:application/pdf;base64,... or data:image/png;base64,...)

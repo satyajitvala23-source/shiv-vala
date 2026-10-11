@@ -23,6 +23,11 @@ import {
   Globe,
   Tag,
   Share2,
+  FileSpreadsheet,
+  FileCode,
+  Archive,
+  File,
+  User,
 } from 'lucide-react';
 import {
   PublishedDocument,
@@ -32,11 +37,13 @@ import {
 } from '../../types';
 import {
   validateDocumentFile,
-  uploadDocumentToStorage,
   createPublishedDocumentDoc,
+  replacePublishedDocumentFile,
   updatePublishedDocumentDoc,
   deletePublishedDocumentDoc,
   subscribeToPublishedDocuments,
+  subscribeToAllUserDocuments,
+  deleteUserDocumentDoc,
   formatBytes,
 } from '../../lib/documents';
 import { downloadDocumentCrossPlatform } from '../../lib/downloadHelper';
@@ -59,6 +66,7 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
 }) => {
   const [activeSubTab, setActiveSubTab] = useState<'published' | 'verification'>('published');
   const [documents, setDocuments] = useState<PublishedDocument[]>([]);
+  const [citizenDocs, setCitizenDocs] = useState<PublishedDocument[]>([]);
   const [loadingDocs, setLoadingDocs] = useState<boolean>(true);
 
   // Search & Category Filter
@@ -86,11 +94,19 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
   const [docAudience, setDocAudience] = useState<'all' | 'citizens' | 'farmers' | 'students'>('all');
   const [isPublishedNow, setIsPublishedNow] = useState(true);
 
+  // Replace Document State
+  const [docToReplace, setDocToReplace] = useState<PublishedDocument | null>(null);
+  const [replacementFile, setReplacementFile] = useState<File | null>(null);
+  const [isReplacing, setIsReplacing] = useState(false);
+  const [replaceProgress, setReplaceProgress] = useState(0);
+  const [replaceError, setReplaceError] = useState<string | null>(null);
+
   // Delete Confirmation State
   const [docToDelete, setDocToDelete] = useState<PublishedDocument | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
+  const replaceFileInputRef = useRef<HTMLInputElement>(null);
 
   // Subscribe to Published Documents
   useEffect(() => {
@@ -98,12 +114,21 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
     const unsubscribe = subscribeToPublishedDocuments((docs) => {
       setDocuments(docs);
       setLoadingDocs(false);
-    }, false); // Admin sees both published and drafts
+    }, false);
 
     return () => unsubscribe();
   }, []);
 
-  // Handle File Selection (from input or camera)
+  // Subscribe to Citizen Uploaded Documents
+  useEffect(() => {
+    const unsubCitizen = subscribeToAllUserDocuments((docs) => {
+      setCitizenDocs(docs);
+    });
+
+    return () => unsubCitizen();
+  }, []);
+
+  // Handle File Selection
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -126,10 +151,9 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
       setDocTitle(baseName.charAt(0).toUpperCase() + baseName.slice(1));
     }
 
-    // Generate local preview
-    if (validation.fileType !== 'pdf') {
-      const url = URL.createObjectURL(file);
-      setFilePreviewUrl(url);
+    // Generate local preview for images
+    if (['jpg', 'jpeg', 'png', 'webp'].includes(validation.extension)) {
+      setFilePreviewUrl(URL.createObjectURL(file));
     } else {
       setFilePreviewUrl(null);
     }
@@ -155,9 +179,8 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
       setDocTitle(baseName.charAt(0).toUpperCase() + baseName.slice(1));
     }
 
-    if (validation.fileType !== 'pdf') {
-      const url = URL.createObjectURL(file);
-      setFilePreviewUrl(url);
+    if (['jpg', 'jpeg', 'png', 'webp'].includes(validation.extension)) {
+      setFilePreviewUrl(URL.createObjectURL(file));
     } else {
       setFilePreviewUrl(null);
     }
@@ -186,39 +209,36 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
     setUploadError(null);
 
     try {
-      // 1. Upload to Firebase Storage with progress tracking
-      const { fileUrl, storagePath } = await uploadDocumentToStorage(
+      const validation = validateDocumentFile(selectedFile);
+      if (!validation.valid) {
+        throw new Error(validation.error);
+      }
+
+      await createPublishedDocumentDoc(
+        {
+          title: docTitle.trim(),
+          titleGujarati: docTitleGu.trim() || undefined,
+          category: docCategory,
+          categoryLabel: getCategoryLabel(docCategory),
+          description: docDescription.trim() || 'Official document provided by Shiv Computer.',
+          descriptionGujarati: docDescriptionGu.trim() || undefined,
+          fileName: selectedFile.name,
+          fileUrl: '',
+          fileType: validation.fileType,
+          mimeType: validation.mimeType,
+          fileSize: validation.sizeFormatted,
+          fileSizeBytes: selectedFile.size,
+          uploadedAt: new Date().toISOString(),
+          isPublished: isPublishedNow,
+          downloadCount: 0,
+          viewCount: 0,
+          targetAudience: docAudience,
+        },
         selectedFile,
-        (progress) => {
-          setUploadProgress(progress);
-        }
+        (progress) => setUploadProgress(progress)
       );
 
-      const validation = validateDocumentFile(selectedFile);
-
-      // 2. Save metadata to Cloud Firestore
-      await createPublishedDocumentDoc({
-        title: docTitle.trim(),
-        titleGujarati: docTitleGu.trim() || undefined,
-        category: docCategory,
-        categoryLabel: getCategoryLabel(docCategory),
-        description: docDescription.trim() || 'Official document provided by Shiv Computer.',
-        descriptionGujarati: docDescriptionGu.trim() || undefined,
-        fileName: selectedFile.name,
-        fileUrl,
-        storagePath,
-        fileType: validation.fileType,
-        mimeType: validation.mimeType,
-        fileSize: formatBytes(selectedFile.size),
-        fileSizeBytes: selectedFile.size,
-        uploadedAt: new Date().toISOString(),
-        isPublished: isPublishedNow,
-        downloadCount: 0,
-        viewCount: 0,
-        targetAudience: docAudience,
-      });
-
-      setUploadSuccessNotice(`"${docTitle}" published successfully!`);
+      setUploadSuccessNotice(`"${docTitle}" published successfully to Cloud Storage!`);
       setTimeout(() => setUploadSuccessNotice(null), 4000);
 
       // Reset form and close modal
@@ -237,6 +257,38 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
     }
   };
 
+  // Replace File Submit
+  const handleReplaceSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!docToReplace || !replacementFile) {
+      setReplaceError('Please select a new file to replace the existing one.');
+      return;
+    }
+
+    setIsReplacing(true);
+    setReplaceProgress(0);
+    setReplaceError(null);
+
+    try {
+      await replacePublishedDocumentFile(
+        docToReplace.id,
+        replacementFile,
+        (p) => setReplaceProgress(p)
+      );
+
+      setUploadSuccessNotice(`File replaced successfully for "${docToReplace.title}"!`);
+      setTimeout(() => setUploadSuccessNotice(null), 4000);
+
+      setDocToReplace(null);
+      setReplacementFile(null);
+    } catch (err: any) {
+      setReplaceError(err?.message || 'Failed to replace file.');
+    } finally {
+      setIsReplacing(false);
+      setReplaceProgress(0);
+    }
+  };
+
   // Toggle Published Status
   const handleTogglePublished = async (docItem: PublishedDocument) => {
     await updatePublishedDocumentDoc(docItem.id, {
@@ -247,7 +299,11 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
   // Delete Document
   const handleConfirmDelete = async () => {
     if (!docToDelete) return;
-    await deletePublishedDocumentDoc(docToDelete.id, docToDelete.storagePath);
+    if (docToDelete.id.startsWith('USERDOC-')) {
+      await deleteUserDocumentDoc(docToDelete.id, docToDelete.storagePath);
+    } else {
+      await deletePublishedDocumentDoc(docToDelete.id, docToDelete.storagePath);
+    }
     setDocToDelete(null);
   };
 
@@ -262,7 +318,6 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
 
   // Inspect Applicant Document
   const handleInspectApplicantDoc = (docName: string, docSize: string, docDate: string) => {
-    // Generate a quick wrapper to view via the viewer modal
     const tempDoc: PublishedDocument = {
       id: `APP-DOC-${Date.now()}`,
       title: docName,
@@ -313,6 +368,17 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
     }
   }
 
+  const getFormatBadge = (fileType: string, fileName: string) => {
+    const ext = (fileName.split('.').pop() || fileType || '').toUpperCase();
+    if (ext === 'PDF') return 'bg-rose-50 text-rose-700 dark:bg-rose-950/60 dark:text-rose-300 border-rose-200 dark:border-rose-800';
+    if (['JPG', 'JPEG', 'PNG', 'WEBP'].includes(ext)) return 'bg-cyan-50 text-cyan-700 dark:bg-cyan-950/60 dark:text-cyan-300 border-cyan-200 dark:border-cyan-800';
+    if (['DOC', 'DOCX'].includes(ext)) return 'bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300 border-blue-200 dark:border-blue-800';
+    if (['XLS', 'XLSX', 'CSV'].includes(ext)) return 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800';
+    if (['PPT', 'PPTX'].includes(ext)) return 'bg-amber-50 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300 border-amber-200 dark:border-amber-800';
+    if (ext === 'ZIP') return 'bg-purple-50 text-purple-700 dark:bg-purple-950/60 dark:text-purple-300 border-purple-200 dark:border-purple-800';
+    return 'bg-slate-50 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border-slate-200 dark:border-slate-700';
+  };
+
   return (
     <div className="space-y-6">
       {/* Top Banner & Header */}
@@ -321,72 +387,63 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
           <div className="flex items-center gap-2">
             <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
               {language === 'gu'
-                ? 'દસ્તાવેજ વ્યવસ્થાપન અને અપલોડ સેન્ટર'
-                : 'Universal Document Management & Verification Center'}
+                ? 'દસ્તાવેજ વ્યવસ્થાપન અને ક્લાઉડ સ્ટોરેજ સેન્ટર'
+                : 'Universal Document Management & Cloud Storage'}
             </h1>
             <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 px-2.5 py-0.5 rounded-full">
               <ShieldCheck className="w-3.5 h-3.5" />
-              <span>Cross-Platform Ready</span>
+              <span>14 Formats Supported</span>
             </span>
           </div>
           <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
             {language === 'gu'
-              ? 'નાગરિકો માટે સરકારી ફોર્મ્સ અને પરિપત્રો અપલોડ કરો તથા આવેલી અરજીઓના દસ્તાવેજો ચકાસો.'
-              : 'Publish official PDF forms & photo documents across Android, iOS, Windows, Mac & Linux.'}
+              ? 'નાગરિકો માટે સરકારી ફોર્મ્સ અપલોડ કરો, બદલો (Replace), જુઓ, ડાઉનલોડ કરો અને આવેલી અરજીઓના દસ્તાવેજો ચકાસો.'
+              : 'Admin controls to upload, preview, download, replace, categorize, and delete documents with permanent cloud storage.'}
           </p>
         </div>
 
         {/* Action Buttons */}
         <div className="flex items-center gap-2">
-          {/* Mobile Direct Camera Capture */}
           <button
             type="button"
             onClick={() => {
+              setSelectedFile(null);
+              setFilePreviewUrl(null);
+              setUploadError(null);
               setIsUploadModalOpen(true);
-              setTimeout(() => cameraInputRef.current?.click(), 200);
             }}
-            className="md:hidden px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 font-semibold text-xs flex items-center gap-1.5 transition-colors border border-slate-200 dark:border-slate-700"
-            title="Scan Physical Document with Camera"
+            className="btn-glossy-primary px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow-md shadow-blue-500/20 active:scale-95"
           >
-            <Camera className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-            <span>Camera Scan</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setIsUploadModalOpen(true)}
-            className="px-4 py-2.5 rounded-xl bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold text-xs flex items-center gap-2 shadow-md shadow-blue-500/20 active:scale-95 transition-all"
-          >
-            <Plus className="w-4 h-4" />
+            <UploadCloud className="w-4 h-4" />
             <span>{language === 'gu' ? 'નવો દસ્તાવેજ અપલોડ કરો' : 'Upload New Document'}</span>
           </button>
         </div>
       </div>
 
-      {/* Success Notification */}
+      {/* Success Notice */}
       {uploadSuccessNotice && (
-        <div className="p-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-xs flex items-center gap-2 animate-in fade-in">
-          <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
-          <span>{uploadSuccessNotice}</span>
+        <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs flex items-center gap-2 animate-in fade-in">
+          <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600" />
+          <span className="font-semibold">{uploadSuccessNotice}</span>
         </div>
       )}
 
-      {/* Subtabs Selector */}
-      <div className="flex border-b border-slate-200 dark:border-slate-800">
+      {/* Sub Tabs Toggle Bar */}
+      <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-1">
         <button
           type="button"
           onClick={() => setActiveSubTab('published')}
-          className={`py-3 px-4 sm:px-6 text-xs sm:text-sm font-semibold border-b-2 transition-colors flex items-center gap-2 ${
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
             activeSubTab === 'published'
-              ? 'border-blue-600 text-blue-600 dark:text-blue-400'
-              : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
+              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
           }`}
         >
           <FileText className="w-4 h-4" />
           <span>
-            {language === 'gu' ? 'પ્રકાશિત સત્તાવાર દસ્તાવેજો' : 'Published Documents Library'}
+            {language === 'gu' ? 'પ્રકાશિત સત્તાવાર દસ્તાવેજો' : 'Published Official Documents'}
           </span>
-          <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-mono">
+          <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/20 text-white font-mono">
             {documents.length}
           </span>
         </button>
@@ -394,18 +451,18 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
         <button
           type="button"
           onClick={() => setActiveSubTab('verification')}
-          className={`py-3 px-4 sm:px-6 text-xs sm:text-sm font-semibold border-b-2 transition-colors flex items-center gap-2 ${
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
             activeSubTab === 'verification'
-              ? 'border-blue-600 text-blue-600 dark:text-blue-400'
-              : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
+              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
           }`}
         >
           <Layers className="w-4 h-4" />
           <span>
-            {language === 'gu' ? 'અરજદાર દસ્તાવેજ ચકાસણી કતાર' : 'Applicant Verification Queue'}
+            {language === 'gu' ? 'નાગરિકોના દસ્તાવેજો (Citizen Locker)' : 'Citizen Uploaded Documents & Proofs'}
           </span>
-          <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/60 text-blue-600 dark:text-blue-400 font-mono">
-            {applications.reduce((acc, app) => acc + app.uploadedDocuments.length, 0)}
+          <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/20 text-white font-mono">
+            {citizenDocs.length + applications.reduce((acc, app) => acc + app.uploadedDocuments.length, 0)}
           </span>
         </button>
       </div>
@@ -471,7 +528,9 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {filteredDocs.map((docItem) => {
-                const isDocPdf = docItem.fileType === 'pdf';
+                const ext = (docItem.fileName.split('.').pop() || '').toLowerCase();
+                const isDocPdf = docItem.fileType === 'pdf' || ext === 'pdf';
+
                 return (
                   <div
                     key={docItem.id}
@@ -484,6 +543,9 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
                           {getCategoryLabel(docItem.category)}
                         </span>
                         <div className="flex items-center gap-1.5">
+                          <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-md border ${getFormatBadge(docItem.fileType, docItem.fileName)}`}>
+                            .{ext.toUpperCase()}
+                          </span>
                           <button
                             type="button"
                             onClick={() => handleTogglePublished(docItem)}
@@ -496,9 +558,6 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
                           >
                             {docItem.isPublished ? 'Published' : 'Draft'}
                           </button>
-                          <span className="text-slate-400 font-mono text-[10px]">
-                            {docItem.fileSize}
-                          </span>
                         </div>
                       </div>
 
@@ -532,37 +591,59 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
                         </div>
                       </div>
 
-                      {/* Info footer strip */}
-                      <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400 font-mono">
-                        <span className="truncate max-w-[150px]">{docItem.fileName}</span>
-                        <span>{docItem.downloadCount} downloads</span>
+                      {/* Info footer strip: Filename, Size, Upload Date */}
+                      <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex flex-col gap-1 text-[11px] text-slate-400 font-mono">
+                        <div className="flex items-center justify-between">
+                          <span className="truncate max-w-[160px]" title={docItem.fileName}>{docItem.fileName}</span>
+                          <span className="font-semibold text-slate-700 dark:text-slate-300">{docItem.fileSize}</span>
+                        </div>
+                        <div className="flex items-center justify-between text-[10px] text-slate-400">
+                          <span>{new Date(docItem.uploadedAt).toLocaleDateString()}</span>
+                          <span>{docItem.downloadCount} downloads</span>
+                        </div>
                       </div>
                     </div>
 
-                    {/* Action Buttons */}
-                    <div className="grid grid-cols-4 gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+                    {/* Action Buttons: View, Download, Replace, Delete */}
+                    <div className="grid grid-cols-4 gap-1.5 pt-2 border-t border-slate-100 dark:border-slate-800">
                       <button
                         type="button"
                         onClick={() => setViewerDoc(docItem)}
-                        className="col-span-2 py-2 px-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors"
+                        className="py-2 px-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-semibold text-xs flex items-center justify-center gap-1 transition-colors active:scale-95"
+                        title="Preview Document"
                       >
                         <Eye className="w-3.5 h-3.5" />
-                        <span>View</span>
+                        <span className="hidden sm:inline">View</span>
                       </button>
 
                       <button
                         type="button"
                         onClick={() => handleDownload(docItem)}
-                        className="py-2 px-2.5 rounded-xl bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-100 dark:hover:bg-blue-900/60 text-blue-600 dark:text-blue-400 font-semibold text-xs flex items-center justify-center gap-1 transition-colors"
+                        className="py-2 px-2 rounded-xl bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-100 dark:hover:bg-blue-900/60 text-blue-600 dark:text-blue-400 font-semibold text-xs flex items-center justify-center gap-1 transition-colors active:scale-95"
                         title="Download Document"
                       >
                         <Download className="w-3.5 h-3.5" />
+                        <span className="hidden sm:inline">Download</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setDocToReplace(docItem);
+                          setReplacementFile(null);
+                          setReplaceError(null);
+                        }}
+                        className="py-2 px-2 rounded-xl bg-amber-50 dark:bg-amber-950/60 hover:bg-amber-100 dark:hover:bg-amber-900/60 text-amber-600 dark:text-amber-400 font-semibold text-xs flex items-center justify-center gap-1 transition-colors active:scale-95"
+                        title="Replace File"
+                      >
+                        <RefreshCw className="w-3.5 h-3.5" />
+                        <span className="hidden sm:inline">Replace</span>
                       </button>
 
                       <button
                         type="button"
                         onClick={() => setDocToDelete(docItem)}
-                        className="py-2 px-2.5 rounded-xl bg-rose-50 dark:bg-rose-950/60 hover:bg-rose-100 dark:hover:bg-rose-900/60 text-rose-600 dark:text-rose-400 font-semibold text-xs flex items-center justify-center transition-colors"
+                        className="py-2 px-2 rounded-xl bg-rose-50 dark:bg-rose-950/60 hover:bg-rose-100 dark:hover:bg-rose-900/60 text-rose-600 dark:text-rose-400 font-semibold text-xs flex items-center justify-center transition-colors active:scale-95"
                         title="Delete Document"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
@@ -577,103 +658,192 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
       )}
 
       {/* ===================================================================== */}
-      {/* SUBTAB 2: APPLICANT DOCUMENT VERIFICATION QUEUE */}
+      {/* SUBTAB 2: CITIZEN UPLOADED DOCUMENTS & APPLICANT PROOFS */}
       {/* ===================================================================== */}
       {activeSubTab === 'verification' && (
-        <div className="space-y-4">
-          {applications.length === 0 ? (
-            <div className="p-12 text-center bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 text-slate-400 text-xs">
-              No applicant documents pending verification. Real uploaded applicant proofs will appear here.
+        <div className="space-y-6">
+          {/* Section A: Direct Citizen Locker Uploads */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                  <User className="w-4 h-4 text-blue-600" />
+                  <span>Citizen Locker Uploads ({citizenDocs.length})</span>
+                </h3>
+                <p className="text-xs text-slate-400">
+                  Documents directly uploaded by registered citizens into their personal cloud lockers.
+                </p>
+              </div>
             </div>
-          ) : (
-            applications.map((app) => (
-              <div
-                key={app.id}
-                className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3"
-              >
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-mono text-xs font-bold text-blue-600 dark:text-blue-400">
-                        {app.id}
-                      </span>
-                      <span className="font-semibold text-sm text-slate-900 dark:text-white">
-                        {app.serviceName}
-                      </span>
-                    </div>
-                    <div className="text-xs text-slate-400 mt-0.5">
-                      Applicant: <strong>{app.applicantName}</strong> ({app.applicantPhone})
-                    </div>
-                  </div>
-                  <span
-                    className={`text-[11px] font-semibold px-2.5 py-0.5 rounded-full border self-start ${getStatusBadge(
-                      app.status
-                    )}`}
-                  >
-                    {getStatusLabel(app.status)}
-                  </span>
-                </div>
 
-                {/* Proof list */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pt-1">
-                  {app.uploadedDocuments.map((doc) => (
+            {citizenDocs.length === 0 ? (
+              <div className="p-8 text-center bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 text-slate-400 text-xs">
+                No citizen locker documents uploaded yet.
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                {citizenDocs.map((cdoc) => {
+                  const ext = (cdoc.fileName.split('.').pop() || '').toLowerCase();
+                  return (
                     <div
-                      key={doc.id}
-                      className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700 flex items-center justify-between"
+                      key={cdoc.id}
+                      className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xs flex flex-col justify-between space-y-3"
                     >
-                      <div className="overflow-hidden pr-2">
-                        <div className="font-medium text-xs text-slate-800 dark:text-slate-200 truncate">
-                          {doc.name}
+                      <div>
+                        <div className="flex items-center justify-between text-[11px] mb-2">
+                          <span className="font-bold text-slate-700 dark:text-slate-300 truncate max-w-[150px]">
+                            {cdoc.uploadedBy || 'Citizen'}
+                          </span>
+                          <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-md border ${getFormatBadge(cdoc.fileType, cdoc.fileName)}`}>
+                            .{ext.toUpperCase()}
+                          </span>
                         </div>
-                        <div className="text-[10px] text-slate-400">
-                          {doc.size} • {doc.date}
+
+                        <h4 className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white truncate">
+                          {cdoc.title}
+                        </h4>
+                        <div className="text-[11px] text-slate-400 font-mono truncate mt-1">
+                          {cdoc.fileName} • {cdoc.fileSize}
+                        </div>
+                        <div className="text-[10px] text-slate-400 mt-1">
+                          Uploaded: {new Date(cdoc.uploadedAt).toLocaleDateString()}
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-1.5 shrink-0">
-                        <span
-                          className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${
-                            doc.status === 'Verified'
-                              ? 'bg-emerald-100 text-emerald-800'
-                              : doc.status === 'Needs Correction'
-                              ? 'bg-amber-100 text-amber-800'
-                              : 'bg-blue-100 text-blue-800'
-                          }`}
-                        >
-                          {doc.status}
-                        </span>
-
+                      <div className="flex items-center gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
                         <button
                           type="button"
-                          onClick={() => handleInspectApplicantDoc(doc.name, doc.size, doc.date)}
-                          className="p-1.5 rounded-lg text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
-                          title="Inspect Document Proof"
+                          onClick={() => setViewerDoc(cdoc)}
+                          className="flex-1 py-1.5 px-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-xs font-semibold flex items-center justify-center gap-1"
                         >
                           <Eye className="w-3.5 h-3.5" />
+                          <span>View</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleDownload(cdoc)}
+                          className="flex-1 py-1.5 px-2 rounded-xl bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-100 text-blue-600 dark:text-blue-400 text-xs font-semibold flex items-center justify-center gap-1"
+                        >
+                          <Download className="w-3.5 h-3.5" />
+                          <span>Download</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setDocToDelete(cdoc)}
+                          className="p-1.5 rounded-xl bg-rose-50 dark:bg-rose-950/60 text-rose-600 hover:bg-rose-100"
+                          title="Delete Citizen Doc"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
                         </button>
                       </div>
                     </div>
-                  ))}
-                </div>
-
-                <div className="flex justify-end pt-2">
-                  <button
-                    type="button"
-                    onClick={() => onOpenAppReview(app)}
-                    className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
-                  >
-                    <span>Open Application Review & Verification Controls</span>
-                    <span>→</span>
-                  </button>
-                </div>
+                  );
+                })}
               </div>
-            ))
-          )}
+            )}
+          </div>
+
+          {/* Section B: Applicant Verification Proofs from Applications */}
+          <div className="space-y-3 pt-3 border-t border-slate-200 dark:border-slate-800">
+            <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <Layers className="w-4 h-4 text-emerald-600" />
+              <span>Service Application Document Attachments</span>
+            </h3>
+
+            {applications.length === 0 ? (
+              <div className="p-8 text-center bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 text-slate-400 text-xs">
+                No applicant documents pending verification.
+              </div>
+            ) : (
+              applications.map((app) => (
+                <div
+                  key={app.id}
+                  className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3"
+                >
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono text-xs font-bold text-blue-600 dark:text-blue-400">
+                          {app.id}
+                        </span>
+                        <span className="font-semibold text-sm text-slate-900 dark:text-white">
+                          {app.serviceName}
+                        </span>
+                      </div>
+                      <div className="text-xs text-slate-400 mt-0.5">
+                        Applicant: <strong>{app.applicantName}</strong> ({app.applicantPhone})
+                      </div>
+                    </div>
+                    <span
+                      className={`text-[11px] font-semibold px-2.5 py-0.5 rounded-full border self-start ${getStatusBadge(
+                        app.status
+                      )}`}
+                    >
+                      {getStatusLabel(app.status)}
+                    </span>
+                  </div>
+
+                  {/* Proof list */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pt-1">
+                    {app.uploadedDocuments.map((doc) => (
+                      <div
+                        key={doc.id}
+                        className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700 flex items-center justify-between"
+                      >
+                        <div className="overflow-hidden pr-2">
+                          <div className="font-medium text-xs text-slate-800 dark:text-slate-200 truncate">
+                            {doc.name}
+                          </div>
+                          <div className="text-[10px] text-slate-400">
+                            {doc.size} • {doc.date}
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-1.5 shrink-0">
+                          <span
+                            className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${
+                              doc.status === 'Verified'
+                                ? 'bg-emerald-100 text-emerald-800'
+                                : doc.status === 'Needs Correction'
+                                ? 'bg-amber-100 text-amber-800'
+                                : 'bg-blue-100 text-blue-800'
+                            }`}
+                          >
+                            {doc.status}
+                          </span>
+
+                          <button
+                            type="button"
+                            onClick={() => handleInspectApplicantDoc(doc.name, doc.size, doc.date)}
+                            className="p-1.5 rounded-lg text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                            title="Inspect Document Proof"
+                          >
+                            <Eye className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="flex justify-end pt-2">
+                    <button
+                      type="button"
+                      onClick={() => onOpenAppReview(app)}
+                      className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
+                    >
+                      <span>Open Application Review & Verification Controls</span>
+                      <span>→</span>
+                    </button>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
         </div>
       )}
 
       {/* ===================================================================== */}
-      {/* UPLOAD DOCUMENT MODAL */}
+      {/* 1. UPLOAD DOCUMENT MODAL */}
       {/* ===================================================================== */}
       {isUploadModalOpen && (
         <div
@@ -698,7 +868,7 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
                       : 'Upload & Publish Document'}
                   </h2>
                   <p className="text-xs text-slate-400">
-                    Supports JPG, JPEG, PNG, WebP images and PDF documents up to 20 MB.
+                    Supports 14 formats: PDF, JPG, PNG, WEBP, DOC, DOCX, XLS, XLSX, PPT, PPTX, TXT, CSV, ZIP (max 25 MB).
                   </p>
                 </div>
               </div>
@@ -706,16 +876,9 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
               <button
                 type="button"
                 onClick={() => {
-                  if (!isUploading) {
-                    setIsUploadModalOpen(false);
-                    setSelectedFile(null);
-                    setFilePreviewUrl(null);
-                    setUploadError(null);
-                  }
+                  if (!isUploading) setIsUploadModalOpen(false);
                 }}
-                disabled={isUploading}
-                aria-label="Close upload modal"
-                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors"
+                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-white"
               >
                 <XCircle className="w-5 h-5" />
               </button>
@@ -734,7 +897,7 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
               <input
                 ref={fileInputRef}
                 type="file"
-                accept=".pdf,image/png,image/jpeg,image/webp"
+                accept=".pdf,.jpg,.jpeg,.png,.webp,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.zip"
                 onChange={handleFileChange}
                 className="hidden"
               />
@@ -761,11 +924,7 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
                   <div className="space-y-3">
                     <div className="flex items-center justify-center gap-3">
                       <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
-                        {selectedFile.type.includes('pdf') ? (
-                          <FileText className="w-6 h-6" />
-                        ) : (
-                          <ImageIcon className="w-6 h-6" />
-                        )}
+                        <FileText className="w-6 h-6" />
                       </div>
                       <div className="text-left">
                         <div className="font-semibold text-xs sm:text-sm text-slate-900 dark:text-white truncate max-w-xs">
@@ -777,25 +936,15 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
                       </div>
                     </div>
 
-                    {filePreviewUrl && (
-                      <div className="mt-2 flex justify-center">
-                        <img
-                          src={filePreviewUrl}
-                          alt="Upload preview"
-                          className="h-28 max-w-xs rounded-lg object-contain shadow-xs border border-slate-200 dark:border-slate-700"
-                        />
-                      </div>
-                    )}
-
                     <div className="flex items-center justify-center gap-2 pt-1">
                       <button
                         type="button"
                         onClick={() => fileInputRef.current?.click()}
-                        className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline"
+                        className="text-xs font-semibold text-blue-600 hover:underline"
                       >
                         Change File
                       </button>
-                      <span className="text-slate-300 dark:text-slate-700">•</span>
+                      <span className="text-slate-300">•</span>
                       <button
                         type="button"
                         onClick={() => {
@@ -818,7 +967,7 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
                         Drag and drop your file here, or browse
                       </p>
                       <p className="text-[11px] text-slate-400 mt-0.5">
-                        PDF, JPG, JPEG, PNG, or WebP (max 20 MB)
+                        PDF, JPG, JPEG, PNG, WEBP, DOC, DOCX, XLS, XLSX, PPT, PPTX, TXT, CSV, ZIP (max 25 MB)
                       </p>
                     </div>
 
@@ -847,7 +996,7 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
               {isUploading && (
                 <div className="space-y-1.5 p-3 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800">
                   <div className="flex items-center justify-between text-xs text-blue-700 dark:text-blue-300 font-medium">
-                    <span>Uploading to Firebase Cloud Storage...</span>
+                    <span>Uploading to Persistent Cloud Storage...</span>
                     <span className="font-mono">{uploadProgress}%</span>
                   </div>
                   <div className="w-full h-2 rounded-full bg-blue-200 dark:bg-blue-900 overflow-hidden">
@@ -898,14 +1047,14 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
                   <select
                     value={docCategory}
                     onChange={(e) => setDocCategory(e.target.value as DocumentCategory)}
-                    className="w-full px-3.5 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-hidden"
+                    className="w-full px-3.5 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-hidden focus:border-blue-500"
                   >
-                    <option value="forms">Official Forms & Affidavits (ફોર્મ્સ અને સોગંદનામા)</option>
-                    <option value="certificates">Government Certificates (સરકારી પ્રમાણપત્રો)</option>
-                    <option value="revenue">Revenue & 7/12 Records (મહેસૂલ અને જમીન)</option>
-                    <option value="agriculture">Agriculture Schemes (ખેતીવાડી યોજનાઓ)</option>
-                    <option value="notices">Official Circulars (પરિપત્રો અને નોટિસ)</option>
-                    <option value="general">General (સામાન્ય)</option>
+                    <option value="forms">Official Application Forms (અરજી ફોર્મ્સ)</option>
+                    <option value="certificates">Government Certificates (પ્રમાણપત્રો)</option>
+                    <option value="revenue">Revenue & Land Extracts (મહેસૂલ અને ૭/૧૨)</option>
+                    <option value="agriculture">Farmer Subsidy Schemes (ખેતીવાડી સહાય)</option>
+                    <option value="notices">Official Notices & Circulars (પરિપત્રો)</option>
+                    <option value="general">General Documentation (સામાન્ય)</option>
                   </select>
                 </div>
 
@@ -916,17 +1065,17 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
                   <select
                     value={docAudience}
                     onChange={(e) => setDocAudience(e.target.value as any)}
-                    className="w-full px-3.5 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-hidden"
+                    className="w-full px-3.5 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-hidden focus:border-blue-500"
                   >
                     <option value="all">All Citizens (બધા નાગરિકો)</option>
-                    <option value="citizens">General Public (સામાન્ય નાગરિકો)</option>
-                    <option value="farmers">Farmers (iKhedut ખેડૂત મિત્રો)</option>
-                    <option value="students">Students (વિદ્યાર્થીઓ)</option>
+                    <option value="citizens">General Citizens</option>
+                    <option value="farmers">Farmers & Landowners (ખેડૂતો)</option>
+                    <option value="students">Students & Youths (વિદ્યાર્થીઓ)</option>
                   </select>
                 </div>
               </div>
 
-              {/* Description */}
+              {/* Descriptions */}
               <div>
                 <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                   Description / Instructions
@@ -935,42 +1084,39 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
                   rows={2}
                   value={docDescription}
                   onChange={(e) => setDocDescription(e.target.value)}
-                  placeholder="Instructions for applicants, required proofs to attach, etc."
+                  placeholder="Official instructions for filling or submitting this form..."
                   className="w-full px-3.5 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-hidden focus:border-blue-500"
                 />
               </div>
 
-              {/* Publish Toggle */}
+              {/* Publish State */}
               <div className="flex items-center gap-2 pt-1">
                 <input
                   type="checkbox"
-                  id="publishImmediately"
+                  id="publish-now-checkbox"
                   checked={isPublishedNow}
                   onChange={(e) => setIsPublishedNow(e.target.checked)}
-                  className="rounded text-blue-600 focus:ring-blue-500 w-4 h-4"
+                  className="rounded text-blue-600 focus:ring-blue-500"
                 />
-                <label
-                  htmlFor="publishImmediately"
-                  className="text-xs font-medium text-slate-700 dark:text-slate-300 cursor-pointer"
-                >
-                  Publish immediately (available in User Panel and Citizen Downloads)
+                <label htmlFor="publish-now-checkbox" className="text-xs text-slate-700 dark:text-slate-300 cursor-pointer font-medium">
+                  Make available immediately in public library (isPublished: true)
                 </label>
               </div>
 
-              {/* Modal Buttons */}
+              {/* Submit Buttons */}
               <div className="flex items-center justify-end gap-2 pt-4 border-t border-slate-200 dark:border-slate-800">
                 <button
                   type="button"
-                  disabled={isUploading}
                   onClick={() => setIsUploadModalOpen(false)}
-                  className="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold transition-colors"
+                  disabled={isUploading}
+                  className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isUploading || !selectedFile}
-                  className="px-5 py-2 rounded-xl bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold text-xs flex items-center gap-2 shadow-md shadow-blue-500/20 active:scale-95 transition-all disabled:opacity-50"
+                  className="btn-glossy-primary px-5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 disabled:opacity-50"
                 >
                   <UploadCloud className="w-4 h-4" />
                   <span>{isUploading ? 'Uploading...' : 'Publish Document'}</span>
@@ -982,43 +1128,116 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
       )}
 
       {/* ===================================================================== */}
-      {/* DELETE CONFIRMATION MODAL */}
+      {/* 2. REPLACE FILE MODAL */}
       {/* ===================================================================== */}
-      {docToDelete && (
+      {docToReplace && (
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in"
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/70 backdrop-blur-md animate-in fade-in"
         >
-          <div className="glass-card max-w-md w-full p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl space-y-4">
+          <div
+            className="w-full max-w-md rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden p-6 space-y-4"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-rose-500/10 text-rose-600 dark:text-rose-400">
-                <Trash2 className="w-5 h-5" />
+              <div className="p-2.5 rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400">
+                <RefreshCw className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-bold text-sm text-slate-900 dark:text-white">
-                  Delete Published Document?
+                <h3 className="font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+                  Replace Document File
                 </h3>
-                <p className="text-xs text-slate-400">
-                  This will permanently remove "{docToDelete.title}" from the cloud.
+                <p className="text-xs text-slate-400 truncate max-w-xs font-medium">
+                  {docToReplace.title}
                 </p>
               </div>
             </div>
 
-            <div className="flex justify-end gap-2 pt-2">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              Upload an updated file (PDF, Office, Image, Archive, or Data). The existing record metadata, view count, and categories will remain intact.
+            </p>
+
+            {replaceError && (
+              <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 text-xs flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 shrink-0" />
+                <span>{replaceError}</span>
+              </div>
+            )}
+
+            <input
+              ref={replaceFileInputRef}
+              type="file"
+              accept=".pdf,.jpg,.jpeg,.png,.webp,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.zip"
+              onChange={(e) => {
+                const f = e.target.files?.[0];
+                if (f) {
+                  const val = validateDocumentFile(f);
+                  if (val.valid) {
+                    setReplacementFile(f);
+                    setReplaceError(null);
+                  } else {
+                    setReplaceError(val.error || 'Invalid file');
+                  }
+                }
+              }}
+              className="hidden"
+            />
+
+            <div className="p-4 rounded-2xl border-2 border-dashed border-slate-300 dark:border-slate-700 text-center bg-slate-50 dark:bg-slate-800/40">
+              {replacementFile ? (
+                <div className="space-y-1 text-xs">
+                  <div className="font-semibold text-slate-900 dark:text-white truncate">
+                    {replacementFile.name}
+                  </div>
+                  <div className="text-slate-400">{formatBytes(replacementFile.size)}</div>
+                  <button
+                    type="button"
+                    onClick={() => replaceFileInputRef.current?.click()}
+                    className="text-xs text-blue-600 font-semibold underline mt-1"
+                  >
+                    Choose different file
+                  </button>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => replaceFileInputRef.current?.click()}
+                  className="px-4 py-2 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-semibold shadow-xs"
+                >
+                  Select Replacement File
+                </button>
+              )}
+            </div>
+
+            {isReplacing && (
+              <div className="space-y-1">
+                <div className="flex justify-between text-xs text-blue-600 font-medium">
+                  <span>Uploading to Cloud Storage...</span>
+                  <span>{replaceProgress}%</span>
+                </div>
+                <div className="w-full h-2 rounded-full bg-blue-100 dark:bg-blue-900 overflow-hidden">
+                  <div className="h-full bg-blue-600" style={{ width: `${replaceProgress}%` }} />
+                </div>
+              </div>
+            )}
+
+            <div className="flex items-center justify-end gap-2 pt-2">
               <button
                 type="button"
-                onClick={() => setDocToDelete(null)}
-                className="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                onClick={() => setDocToReplace(null)}
+                disabled={isReplacing}
+                className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
               >
                 Cancel
               </button>
               <button
                 type="button"
-                onClick={handleConfirmDelete}
-                className="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold transition-colors shadow-xs"
+                onClick={handleReplaceSubmit}
+                disabled={isReplacing || !replacementFile}
+                className="px-5 py-2 rounded-xl bg-blue-600 text-white text-xs font-semibold shadow-md shadow-blue-500/20 active:scale-95 disabled:opacity-50"
               >
-                Yes, Delete
+                {isReplacing ? 'Updating...' : 'Confirm Replace'}
               </button>
             </div>
           </div>
@@ -1026,7 +1245,51 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
       )}
 
       {/* ===================================================================== */}
-      {/* VIEWER MODAL */}
+      {/* 3. DELETE CONFIRMATION MODAL */}
+      {/* ===================================================================== */}
+      {docToDelete && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/70 backdrop-blur-md animate-in fade-in"
+        >
+          <div
+            className="w-full max-w-sm rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl p-6 text-center space-y-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="w-12 h-12 rounded-2xl bg-rose-500/10 text-rose-600 dark:text-rose-400 flex items-center justify-center mx-auto">
+              <Trash2 className="w-6 h-6" />
+            </div>
+            <div>
+              <h3 className="font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+                Delete document?
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 truncate">
+                "{docToDelete.title}"
+              </p>
+            </div>
+            <div className="flex items-center justify-center gap-2 pt-1">
+              <button
+                type="button"
+                onClick={() => setDocToDelete(null)}
+                className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleConfirmDelete}
+                className="px-5 py-2 rounded-xl bg-rose-600 text-white text-xs font-semibold hover:bg-rose-700 shadow-md shadow-rose-500/20 active:scale-95"
+              >
+                Confirm Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ===================================================================== */}
+      {/* 4. DOCUMENT VIEWER MODAL */}
       {/* ===================================================================== */}
       <DocumentViewerModal
         document={viewerDoc}

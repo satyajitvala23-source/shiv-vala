@@ -88,6 +88,24 @@ export type DocumentCategory =
   | 'notices'
   | 'general';
 
+export type SupportedFileType =
+  | 'pdf'
+  | 'image'
+  | 'jpeg'
+  | 'jpg'
+  | 'png'
+  | 'webp'
+  | 'doc'
+  | 'docx'
+  | 'xls'
+  | 'xlsx'
+  | 'ppt'
+  | 'pptx'
+  | 'txt'
+  | 'csv'
+  | 'zip'
+  | 'other';
+
 export interface PublishedDocument {
   id: string;
   title: string;
@@ -99,7 +117,7 @@ export interface PublishedDocument {
   fileName: string;
   fileUrl: string;
   storagePath?: string;
-  fileType: 'pdf' | 'image' | 'jpeg' | 'png' | 'webp';
+  fileType: SupportedFileType;
   mimeType: string;
   fileSize: string;
   fileSizeBytes: number;
@@ -107,13 +125,17 @@ export interface PublishedDocument {
   updatedAt?: string;
   uploadedBy?: string;
   uploadedByEmail?: string;
+  userId?: string; // UID if uploaded by user
   isPublished: boolean;
   downloadCount: number;
   viewCount: number;
   targetAudience: 'all' | 'citizens' | 'farmers' | 'students';
   tags?: string[];
   thumbnailUrl?: string;
+  storageType?: 'firebase_storage' | 'firestore_cloud_chunks';
 }
+
+export type AppDocument = PublishedDocument;
 
 export interface CustomerUser {
   id: string;
