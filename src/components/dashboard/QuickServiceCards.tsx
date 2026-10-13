@@ -9,19 +9,18 @@ import {
   Compass,
   Award,
   ClipboardList,
-  Sparkles,
-  ArrowRight,
   Zap,
+  Sparkles,
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { ServiceItem } from '../../types';
 
 interface QuickServiceCardsProps {
-  onSelectService: (service: ServiceItem) => void;
+  onSelectService?: (service: ServiceItem) => void;
 }
 
 export const QuickServiceCards: React.FC<QuickServiceCardsProps> = ({ onSelectService }) => {
-  const { language, services } = useApp();
+  const { language } = useApp();
 
   // The 10 services highlighted by the user brief
   const coreServicesConfig = [
@@ -147,26 +146,6 @@ export const QuickServiceCards: React.FC<QuickServiceCardsProps> = ({ onSelectSe
     },
   ];
 
-  const handleCardClick = (cfg: typeof coreServicesConfig[0]) => {
-    // Look for matching service in services array, or create a valid runtime service item
-    const matched = services.find((s) => s.id === cfg.id || s.name.toLowerCase().includes(cfg.titleEn.toLowerCase()));
-    if (matched) {
-      onSelectService(matched);
-    } else {
-      onSelectService({
-        id: cfg.id,
-        name: `${cfg.titleEn} (${cfg.titleGu})`,
-        category: 'general',
-        description: cfg.descEn,
-        fee: parseInt(cfg.fee.replace(/[^0-9]/g, ''), 10) || 100,
-        processingTime: cfg.badgeEn,
-        requiredDocuments: ['Aadhaar Card', 'Passport Photograph / Relevant details'],
-        enabled: true,
-        department: 'Shiv Computer Services',
-      });
-    }
-  };
-
   return (
     <div className="space-y-4">
       {/* Header bar with iPhone glossy styling */}
@@ -183,14 +162,14 @@ export const QuickServiceCards: React.FC<QuickServiceCardsProps> = ({ onSelectSe
           </div>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 ml-4">
             {language === 'gu'
-              ? 'રોયલ બ્લૂ અને પીળા એક્સેન્ટ સાથેના પ્રીમિયમ ગ્લાસ કાર્ડ્સ. અરજી કરવા માટે કોઈપણ સેવા પર ક્લિક કરો.'
-              : 'Premium glossy iPhone-style service cards with yellow highlights. Tap any service to apply.'}
+              ? 'રોયલ બ્લૂ અને પીળા એક્સેન્ટ સાથેના પ્રીમિયમ ગ્લાસ કાર્ડ્સ. સેવા વિગતો અને શુલ્ક.'
+              : 'Official center services, processing turnaround times, and verified fee structure.'}
           </p>
         </div>
 
         <div className="flex items-center gap-1.5 self-start sm:self-auto text-xs text-blue-700 dark:text-blue-300 font-medium">
           <Zap className="w-3.5 h-3.5 text-amber-500 fill-amber-400" />
-          <span>{language === 'gu' ? 'ત્વરિત અરજી અને પ્રોસેસિંગ' : 'Instant Center Assistance'}</span>
+          <span>{language === 'gu' ? 'કેન્દ્ર સહાય ઉપલબ્ધ' : 'Center Services & Inquiries'}</span>
         </div>
       </div>
 
@@ -201,16 +180,7 @@ export const QuickServiceCards: React.FC<QuickServiceCardsProps> = ({ onSelectSe
           return (
             <div
               key={item.id}
-              onClick={() => handleCardClick(item)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  handleCardClick(item);
-                }
-              }}
-              className="service-gloss-card p-4 flex flex-col justify-between cursor-pointer group select-none text-left"
+              className="service-gloss-card p-4 flex flex-col justify-between select-none text-left"
             >
               {/* Top Bar: Icon + Yellow Accent Badge */}
               <div>
@@ -229,7 +199,7 @@ export const QuickServiceCards: React.FC<QuickServiceCardsProps> = ({ onSelectSe
                 </div>
 
                 {/* Title */}
-                <h3 className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-sky-400 transition-colors line-clamp-1">
+                <h3 className="font-bold text-sm text-slate-900 dark:text-white transition-colors line-clamp-1">
                   {language === 'gu' ? item.titleGu : item.titleEn}
                 </h3>
 
@@ -239,7 +209,7 @@ export const QuickServiceCards: React.FC<QuickServiceCardsProps> = ({ onSelectSe
                 </p>
               </div>
 
-              {/* Bottom Row: Fee & Action */}
+              {/* Bottom Row: Fee & Service details */}
               <div className="mt-3 pt-3 border-t border-slate-100 dark:border-white/10 flex items-center justify-between">
                 <div>
                   <span className="text-[10px] text-slate-400 block uppercase font-medium">
@@ -250,9 +220,8 @@ export const QuickServiceCards: React.FC<QuickServiceCardsProps> = ({ onSelectSe
                   </span>
                 </div>
 
-                <div className="inline-flex items-center gap-1 text-[11px] font-bold text-blue-600 dark:text-sky-400 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
-                  <span>{language === 'gu' ? 'અરજી કરો' : 'Apply'}</span>
-                  <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                <div className="inline-flex items-center gap-1 text-[10px] font-semibold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 px-2 py-1 rounded-lg">
+                  <span>{language === 'gu' ? 'ઓફિસ સેવા' : 'In-Office'}</span>
                 </div>
               </div>
             </div>

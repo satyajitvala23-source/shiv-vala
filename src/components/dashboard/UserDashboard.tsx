@@ -32,6 +32,7 @@ import { QuickServiceCards } from './QuickServiceCards';
 import { AnimatedCounter } from '../AnimatedCounter';
 import { UserDocumentHub } from './UserDocumentHub';
 import { sendPasswordReset } from '../../lib/firebase';
+import { GlassFooter } from '../GlassFooter';
 
 type UserTab = 'dashboard' | 'documents' | 'services' | 'myApplications' | 'myProfile';
 
@@ -606,6 +607,10 @@ export const UserDashboard: React.FC = () => {
               </div>
             </div>
           )}
+          {/* Dedicated Glass Footer on User Dashboard */}
+          <div className="pt-8">
+            <GlassFooter />
+          </div>
         </main>
       </div>
 

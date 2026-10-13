@@ -1,11 +1,22 @@
 export type LoginRole = 'admin' | 'user';
 
 export type CurrentView =
+  | 'home'
+  | 'services'
+  | 'forms'
+  | 'agriculture-forms'
+  | 'documents'
+  | 'payments'
+  | 'applications'
+  | 'calculator'
+  | 'about'
+  | 'contact'
   | 'login'
   | 'register'
   | 'admin-login'
   | 'admin-dashboard'
-  | 'user-dashboard';
+  | 'user-dashboard'
+  | 'profile';
 
 export type LanguageCode = 'en' | 'gu';
 

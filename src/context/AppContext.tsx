@@ -151,7 +151,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [theme, setTheme] = useState<ThemeMode>(() => {
     try {
       const savedTheme = localStorage.getItem('sc_theme');
-      if (savedTheme === 'dark' || savedTheme === 'light') {
+      if (savedTheme === 'light') {
         return savedTheme;
       }
     } catch {
@@ -230,38 +230,97 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setIsAuthenticated(true);
         setSelectedRole(role || 'user');
 
-        // Route appropriately based on role
-        const hash = window.location.hash.toLowerCase();
+        // Route appropriately based on role & hash
+        const rawHash = window.location.hash.replace(/^#\/?/, '').toLowerCase();
         if (role === 'admin') {
-          if (hash.includes('user-dashboard')) {
+          if (rawHash === 'user-dashboard') {
             setCurrentView('user-dashboard');
+          } else if (rawHash.startsWith('admin-dashboard')) {
+            setCurrentView('admin-dashboard');
+          } else if (rawHash && !['login', 'admin-login', 'register'].includes(rawHash)) {
+            setCurrentView(rawHash as CurrentView);
           } else {
             setCurrentView('admin-dashboard');
           }
         } else {
-          // Normal user: strictly restricted to user dashboard
-          setCurrentView('user-dashboard');
+          // Normal user: strictly restricted from admin dashboard
+          if (rawHash.startsWith('admin-dashboard')) {
+            setCurrentView('user-dashboard');
+          } else if (rawHash && !['login', 'admin-login', 'register'].includes(rawHash)) {
+            setCurrentView(rawHash as CurrentView);
+          } else {
+            setCurrentView('user-dashboard');
+          }
         }
       } else {
-        // Enforce sign in / sign up before website open
         setIsAuthenticated(false);
         setAuthRole(null);
-        const hash = window.location.hash.toLowerCase();
-        if (hash.includes('register')) {
+        const rawHash = window.location.hash.replace(/^#\/?/, '').toLowerCase();
+        if (rawHash === 'register') {
           setCurrentView('register');
           setSelectedRole('user');
-        } else if (hash.includes('admin-login')) {
+        } else if (rawHash === 'admin-login') {
           setCurrentView('admin-login');
           setSelectedRole('admin');
-        } else {
+        } else if (rawHash === 'login') {
           setCurrentView('login');
           setSelectedRole('user');
+        } else if (['admin-dashboard', 'user-dashboard'].includes(rawHash)) {
+          // Protected views require login
+          setCurrentView('login');
+          setSelectedRole('user');
+        } else if (rawHash && ['services', 'forms', 'agriculture-forms', 'documents', 'payments', 'applications', 'calculator', 'about', 'contact', 'home'].includes(rawHash)) {
+          setCurrentView(rawHash as CurrentView);
+        } else {
+          // Default to home page
+          setCurrentView('home');
         }
       }
       setAuthLoading(false);
     });
 
-    return () => unsubscribe();
+    // Listen for browser hash changes
+    const handleHashChange = () => {
+      const rawHash = window.location.hash.replace(/^#\/?/, '').toLowerCase();
+      if (!rawHash) {
+        setCurrentView('home');
+        return;
+      }
+
+      if (['services', 'forms', 'agriculture-forms', 'documents', 'payments', 'applications', 'calculator', 'about', 'contact', 'home'].includes(rawHash)) {
+        setCurrentView(rawHash as CurrentView);
+      } else if (rawHash === 'register') {
+        setCurrentView('register');
+        setSelectedRole('user');
+      } else if (rawHash === 'admin-login') {
+        setCurrentView('admin-login');
+        setSelectedRole('admin');
+      } else if (rawHash === 'login') {
+        setCurrentView('login');
+        setSelectedRole('user');
+      } else if (rawHash === 'admin-dashboard') {
+        if (auth.currentUser) {
+          setCurrentView('admin-dashboard');
+        } else {
+          setCurrentView('admin-login');
+        }
+      } else if (rawHash === 'user-dashboard') {
+        if (auth.currentUser) {
+          setCurrentView('user-dashboard');
+        } else {
+          setCurrentView('login');
+        }
+      } else if (rawHash === 'profile') {
+        setCurrentView('profile');
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+
+    return () => {
+      unsubscribe();
+      window.removeEventListener('hashchange', handleHashChange);
+    };
   }, []);
 
   // 2. Subscribe to real-time Users list from Firestore for Admin Directory

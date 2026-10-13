@@ -338,26 +338,28 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         transition={{ duration: 0.35, ease: 'easeOut' }}
         className="iphone-glass-card p-4 sm:p-8 relative overflow-hidden w-full max-w-full min-w-0"
       >
-        {/* Shiv Computer Branding */}
-        <BrandLogo brandName={t.brandName} tagline={t.brandTagline} />
+        {/* Shiv Computer Branding - Clean emblem presentation */}
+        <BrandLogo brandName="Shiv Computer" tagline={t.brandTagline} size="md" hideTitle={false} />
 
         {/* Dynamic Heading & Role Badge */}
-        <div className="mt-5 mb-5 text-center">
+        <div className="mt-4 mb-5 text-center">
           <div
             id={`role-indicator-badge-${role}`}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold mb-2.5 bg-sky-500/15 dark:bg-cyan-950/60 text-sky-800 dark:text-cyan-300 border border-sky-400/30 dark:border-cyan-500/30 shadow-xs backdrop-blur-md"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold mb-2.5 bg-sky-500/15 text-sky-900 border border-sky-400/35 shadow-xs backdrop-blur-md"
           >
             {role === 'admin' ? (
-              <ShieldCheck className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
+              <ShieldCheck className="w-3.5 h-3.5 text-sky-700" />
             ) : (
-              <UserCheck className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
+              <UserCheck className="w-3.5 h-3.5 text-sky-700" />
             )}
+            <span className="font-bold text-sky-900">Shiv Computer</span>
+            <span className="text-sky-400 font-normal">|</span>
             <span>{role === 'admin' ? t.adminBadge : t.userBadge}</span>
           </div>
 
           <h2
             id="login-heading"
-            className="text-xl sm:text-2xl font-bold tracking-tight text-[#0c3a56] dark:text-[#f0f8ff]"
+            className="text-xl sm:text-2xl font-black tracking-tight text-slate-900"
           >
             {role === 'admin'
               ? t.adminHeading
@@ -367,7 +369,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           </h2>
           <p
             id="login-subtitle"
-            className="text-xs sm:text-sm text-[#2c5970] dark:text-[#a0c4dc] mt-1 max-w-xs mx-auto"
+            className="text-xs sm:text-sm text-slate-600 mt-1 max-w-xs mx-auto font-medium"
           >
             {role === 'admin'
               ? t.adminSubtitle
@@ -381,7 +383,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         {role === 'user' && (
           <div
             id="auth-mode-tab-bar"
-            className="flex p-1 bg-sky-100/70 dark:bg-sky-950/70 border border-sky-200/80 dark:border-cyan-400/20 rounded-2xl mb-5 text-xs font-semibold backdrop-blur-md"
+            className="flex p-1 bg-white/40 border border-white/50 rounded-2xl mb-5 text-xs font-semibold backdrop-blur-md"
           >
             <button
               type="button"
@@ -393,10 +395,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                 setStatusMessage(null);
                 setErrors({});
               }}
-              className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl transition-all ${
+              className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl transition-all cursor-pointer ${
                 authMode === 'login'
                   ? 'btn-glossy-primary shadow-xs'
-                  : 'text-[#2c5970] dark:text-[#a0c4dc] hover:text-[#0c3a56] dark:hover:text-white'
+                  : 'text-slate-700 hover:text-slate-900'
               }`}
             >
               <LogIn className="w-3.5 h-3.5" />
@@ -412,10 +414,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                 setStatusMessage(null);
                 setErrors({});
               }}
-              className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl transition-all ${
+              className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl transition-all cursor-pointer ${
                 authMode === 'register'
                   ? 'btn-glossy-primary shadow-xs'
-                  : 'text-[#2c5970] dark:text-[#a0c4dc] hover:text-[#0c3a56] dark:hover:text-white'
+                  : 'text-slate-700 hover:text-slate-900'
               }`}
             >
               <UserPlus className="w-3.5 h-3.5" />
@@ -458,16 +460,16 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             <div>
               <label
                 htmlFor="login-identifier-input"
-                className="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5"
+                className="block text-xs sm:text-sm font-semibold text-slate-800 mb-1.5"
               >
                 {role === 'admin' ? t.adminUsernameLabel : t.userIdentifierLabel}
               </label>
               <div className="relative rounded-xl shadow-xs">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
                   {role === 'admin' ? (
-                    <User className="w-4 h-4" />
+                    <User className="w-4 h-4 text-sky-600" />
                   ) : (
-                    <Mail className="w-4 h-4" />
+                    <Mail className="w-4 h-4 text-sky-600" />
                   )}
                 </div>
                 <input
@@ -486,15 +488,15 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                       : t.userIdentifierPlaceholder
                   }
                   disabled={isLoading}
-                  className={`w-full pl-10 pr-3.5 py-2.5 sm:py-3 bg-white/90 dark:bg-[#182227] border text-xs sm:text-sm text-[#161e22] dark:text-[#f7f6f0] rounded-xl transition-all duration-200 outline-none ${
+                  className={`w-full pl-10 pr-3.5 py-2.5 sm:py-3 bg-white/55 hover:bg-white/70 focus:bg-white/90 border text-xs sm:text-sm text-slate-900 placeholder-slate-500 rounded-xl transition-all duration-200 outline-none backdrop-blur-md ${
                     errors.identifier
                       ? 'border-amber-400 focus:border-amber-500 focus:ring-3 focus:ring-amber-500/20'
-                      : 'border-[#d8e0dc] dark:border-[#263339] hover:border-emerald-500/40 focus:border-emerald-600 focus:ring-3 focus:ring-emerald-600/15'
+                      : 'border-white/60 hover:border-cyan-400/50 focus:border-cyan-500 focus:ring-3 focus:ring-cyan-500/20'
                   }`}
                 />
               </div>
               {errors.identifier && (
-                <p className="mt-1.5 text-xs text-amber-600 dark:text-amber-400 flex items-center gap-1 font-medium">
+                <p className="mt-1.5 text-xs text-amber-700 flex items-center gap-1 font-medium">
                   <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                   <span>{errors.identifier}</span>
                 </p>
@@ -506,14 +508,14 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               <div className="flex items-center justify-between mb-1.5">
                 <label
                   htmlFor="login-password-input"
-                  className="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300"
+                  className="block text-xs sm:text-sm font-semibold text-slate-800"
                 >
                   {t.passwordLabel}
                 </label>
               </div>
               <div className="relative rounded-xl shadow-xs">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                  <Lock className="w-4 h-4" />
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+                  <Lock className="w-4 h-4 text-sky-600" />
                 </div>
                 <input
                   id="login-password-input"
@@ -527,24 +529,24 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                   }}
                   placeholder={t.passwordPlaceholder}
                   disabled={isLoading}
-                  className={`w-full pl-10 pr-11 py-2.5 sm:py-3 bg-white/90 dark:bg-[#182227] border text-xs sm:text-sm text-[#161e22] dark:text-[#f7f6f0] rounded-xl transition-all duration-200 outline-none ${
+                  className={`w-full pl-10 pr-11 py-2.5 sm:py-3 bg-white/55 hover:bg-white/70 focus:bg-white/90 border text-xs sm:text-sm text-slate-900 placeholder-slate-500 rounded-xl transition-all duration-200 outline-none backdrop-blur-md ${
                     errors.password
                       ? 'border-amber-400 focus:border-amber-500 focus:ring-3 focus:ring-amber-500/20'
-                      : 'border-[#d8e0dc] dark:border-[#263339] hover:border-emerald-500/40 focus:border-emerald-600 focus:ring-3 focus:ring-emerald-600/15'
+                      : 'border-white/60 hover:border-cyan-400/50 focus:border-cyan-500 focus:ring-3 focus:ring-cyan-500/20'
                   }`}
                 />
                 <button
                   type="button"
                   id="toggle-password-visibility-btn"
                   onClick={() => setShowPassword((prev) => !prev)}
-                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
+                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-500 hover:text-slate-700 transition-colors cursor-pointer"
                   title={showPassword ? t.hidePassword : t.showPassword}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
               {errors.password && (
-                <p className="mt-1.5 text-xs text-amber-600 dark:text-amber-400 flex items-center gap-1 font-medium">
+                <p className="mt-1.5 text-xs text-amber-700 flex items-center gap-1 font-medium">
                   <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                   <span>{errors.password}</span>
                 </p>
@@ -562,16 +564,16 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                   type="checkbox"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
-                  className="w-4 h-4 rounded-md border-[#d8e0dc] dark:border-[#263339] text-emerald-600 focus:ring-emerald-500/20 cursor-pointer"
+                  className="w-4 h-4 rounded-md border-slate-300 text-sky-600 focus:ring-sky-500/20 cursor-pointer"
                 />
-                <span className="text-[#3a4750] dark:text-[#cbd5d0] font-medium">{t.rememberMe}</span>
+                <span className="text-slate-700 font-semibold">{t.rememberMe}</span>
               </label>
 
               <button
                 type="button"
                 id="forgot-password-link"
                 onClick={() => onForgotPasswordClick(identifier.trim())}
-                className="text-xs sm:text-sm font-semibold text-emerald-700 dark:text-emerald-400 hover:text-emerald-800 dark:hover:text-emerald-300 hover:underline transition-colors"
+                className="text-xs sm:text-sm font-bold text-sky-700 hover:text-sky-900 hover:underline transition-colors cursor-pointer"
               >
                 {t.forgotPassword}
               </button>
@@ -670,13 +672,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             <div>
               <label
                 htmlFor="reg-fullname-input"
-                className="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1"
+                className="block text-xs sm:text-sm font-semibold text-slate-800 mb-1"
               >
                 {t.fullNameLabel}
               </label>
               <div className="relative rounded-xl shadow-xs">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                  <User className="w-4 h-4" />
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+                  <User className="w-4 h-4 text-sky-600" />
                 </div>
                 <input
                   id="reg-fullname-input"
@@ -689,15 +691,15 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                   }}
                   placeholder={t.fullNamePlaceholder}
                   disabled={isLoading}
-                  className={`w-full pl-10 pr-3.5 py-2.5 bg-white/90 dark:bg-[#182227] border text-xs sm:text-sm text-[#161e22] dark:text-[#f7f6f0] rounded-xl transition-all duration-200 outline-none ${
+                  className={`w-full pl-10 pr-3.5 py-2.5 bg-white/55 hover:bg-white/70 focus:bg-white/90 border text-xs sm:text-sm text-slate-900 placeholder-slate-500 rounded-xl transition-all duration-200 outline-none backdrop-blur-md ${
                     errors.name
                       ? 'border-amber-400 focus:border-amber-500 focus:ring-3 focus:ring-amber-500/20'
-                      : 'border-[#d8e0dc] dark:border-[#263339] hover:border-emerald-500/40 focus:border-emerald-600 focus:ring-3 focus:ring-emerald-600/15'
+                      : 'border-white/60 hover:border-cyan-400/50 focus:border-cyan-500 focus:ring-3 focus:ring-cyan-500/20'
                   }`}
                 />
               </div>
               {errors.name && (
-                <p className="mt-1 text-xs text-amber-600 dark:text-amber-400 flex items-center gap-1 font-medium">
+                <p className="mt-1 text-xs text-amber-700 flex items-center gap-1 font-medium">
                   <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                   <span>{errors.name}</span>
                 </p>
@@ -708,13 +710,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             <div>
               <label
                 htmlFor="reg-email-input"
-                className="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1"
+                className="block text-xs sm:text-sm font-semibold text-slate-800 mb-1"
               >
                 {t.emailLabel}
               </label>
               <div className="relative rounded-xl shadow-xs">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                  <Mail className="w-4 h-4" />
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+                  <Mail className="w-4 h-4 text-sky-600" />
                 </div>
                 <input
                   id="reg-email-input"
@@ -727,15 +729,15 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                   }}
                   placeholder={t.emailPlaceholder}
                   disabled={isLoading}
-                  className={`w-full pl-10 pr-3.5 py-2.5 bg-white/90 dark:bg-[#182227] border text-xs sm:text-sm text-[#161e22] dark:text-[#f7f6f0] rounded-xl transition-all duration-200 outline-none ${
+                  className={`w-full pl-10 pr-3.5 py-2.5 bg-white/55 hover:bg-white/70 focus:bg-white/90 border text-xs sm:text-sm text-slate-900 placeholder-slate-500 rounded-xl transition-all duration-200 outline-none backdrop-blur-md ${
                     errors.email
                       ? 'border-amber-400 focus:border-amber-500 focus:ring-3 focus:ring-amber-500/20'
-                      : 'border-[#d8e0dc] dark:border-[#263339] hover:border-emerald-500/40 focus:border-emerald-600 focus:ring-3 focus:ring-emerald-600/15'
+                      : 'border-white/60 hover:border-cyan-400/50 focus:border-cyan-500 focus:ring-3 focus:ring-cyan-500/20'
                   }`}
                 />
               </div>
               {errors.email && (
-                <p className="mt-1 text-xs text-amber-600 dark:text-amber-400 flex items-center gap-1 font-medium">
+                <p className="mt-1 text-xs text-amber-700 flex items-center gap-1 font-medium">
                   <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                   <span>{errors.email}</span>
                 </p>
@@ -746,13 +748,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             <div>
               <label
                 htmlFor="reg-mobile-input"
-                className="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1"
+                className="block text-xs sm:text-sm font-semibold text-slate-800 mb-1"
               >
                 {t.mobileLabel}
               </label>
               <div className="relative rounded-xl shadow-xs">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                  <Phone className="w-4 h-4" />
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+                  <Phone className="w-4 h-4 text-sky-600" />
                 </div>
                 <input
                   id="reg-mobile-input"
@@ -767,15 +769,15 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                   }}
                   placeholder={t.mobilePlaceholder}
                   disabled={isLoading}
-                  className={`w-full pl-10 pr-3.5 py-2.5 bg-white/90 dark:bg-[#182227] border text-xs sm:text-sm text-[#161e22] dark:text-[#f7f6f0] rounded-xl transition-all duration-200 outline-none ${
+                  className={`w-full pl-10 pr-3.5 py-2.5 bg-white/55 hover:bg-white/70 focus:bg-white/90 border text-xs sm:text-sm text-slate-900 placeholder-slate-500 rounded-xl transition-all duration-200 outline-none backdrop-blur-md ${
                     errors.mobile
                       ? 'border-amber-400 focus:border-amber-500 focus:ring-3 focus:ring-amber-500/20'
-                      : 'border-[#d8e0dc] dark:border-[#263339] hover:border-emerald-500/40 focus:border-emerald-600 focus:ring-3 focus:ring-emerald-600/15'
+                      : 'border-white/60 hover:border-cyan-400/50 focus:border-cyan-500 focus:ring-3 focus:ring-cyan-500/20'
                   }`}
                 />
               </div>
               {errors.mobile && (
-                <p className="mt-1 text-xs text-amber-600 dark:text-amber-400 flex items-center gap-1 font-medium">
+                <p className="mt-1 text-xs text-amber-700 flex items-center gap-1 font-medium">
                   <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                   <span>{errors.mobile}</span>
                 </p>
@@ -786,13 +788,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             <div>
               <label
                 htmlFor="reg-password-input"
-                className="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1"
+                className="block text-xs sm:text-sm font-semibold text-slate-800 mb-1"
               >
                 {t.passwordLabel}
               </label>
               <div className="relative rounded-xl shadow-xs">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                  <Lock className="w-4 h-4" />
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+                  <Lock className="w-4 h-4 text-sky-600" />
                 </div>
                 <input
                   id="reg-password-input"
@@ -805,22 +807,22 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                   }}
                   placeholder="Min 6 characters"
                   disabled={isLoading}
-                  className={`w-full pl-10 pr-11 py-2.5 bg-white/90 dark:bg-[#182227] border text-xs sm:text-sm text-[#161e22] dark:text-[#f7f6f0] rounded-xl transition-all duration-200 outline-none ${
+                  className={`w-full pl-10 pr-11 py-2.5 bg-white/55 hover:bg-white/70 focus:bg-white/90 border text-xs sm:text-sm text-slate-900 placeholder-slate-500 rounded-xl transition-all duration-200 outline-none backdrop-blur-md ${
                     errors.password
                       ? 'border-amber-400 focus:border-amber-500 focus:ring-3 focus:ring-amber-500/20'
-                      : 'border-[#d8e0dc] dark:border-[#263339] hover:border-emerald-500/40 focus:border-emerald-600 focus:ring-3 focus:ring-emerald-600/15'
+                      : 'border-white/60 hover:border-cyan-400/50 focus:border-cyan-500 focus:ring-3 focus:ring-cyan-500/20'
                   }`}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword((prev) => !prev)}
-                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
+                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-500 hover:text-slate-700 transition-colors cursor-pointer"
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
               {errors.password && (
-                <p className="mt-1 text-xs text-amber-600 dark:text-amber-400 flex items-center gap-1 font-medium">
+                <p className="mt-1 text-xs text-amber-700 flex items-center gap-1 font-medium">
                   <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                   <span>{errors.password}</span>
                 </p>
@@ -831,13 +833,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             <div>
               <label
                 htmlFor="reg-confirm-password-input"
-                className="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1"
+                className="block text-xs sm:text-sm font-semibold text-slate-800 mb-1"
               >
                 {t.confirmPasswordLabel}
               </label>
               <div className="relative rounded-xl shadow-xs">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                  <Lock className="w-4 h-4" />
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+                  <Lock className="w-4 h-4 text-sky-600" />
                 </div>
                 <input
                   id="reg-confirm-password-input"
@@ -850,22 +852,22 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                   }}
                   placeholder={t.confirmPasswordPlaceholder}
                   disabled={isLoading}
-                  className={`w-full pl-10 pr-11 py-2.5 bg-white/90 dark:bg-[#182227] border text-xs sm:text-sm text-[#161e22] dark:text-[#f7f6f0] rounded-xl transition-all duration-200 outline-none ${
+                  className={`w-full pl-10 pr-11 py-2.5 bg-white/55 hover:bg-white/70 focus:bg-white/90 border text-xs sm:text-sm text-slate-900 placeholder-slate-500 rounded-xl transition-all duration-200 outline-none backdrop-blur-md ${
                     errors.confirmPassword
                       ? 'border-amber-400 focus:border-amber-500 focus:ring-3 focus:ring-amber-500/20'
-                      : 'border-[#d8e0dc] dark:border-[#263339] hover:border-emerald-500/40 focus:border-emerald-600 focus:ring-3 focus:ring-emerald-600/15'
+                      : 'border-white/60 hover:border-cyan-400/50 focus:border-cyan-500 focus:ring-3 focus:ring-cyan-500/20'
                   }`}
                 />
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword((prev) => !prev)}
-                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
+                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-500 hover:text-slate-700 transition-colors cursor-pointer"
                 >
                   {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
               {errors.confirmPassword && (
-                <p className="mt-1 text-xs text-amber-600 dark:text-amber-400 flex items-center gap-1 font-medium">
+                <p className="mt-1 text-xs text-amber-700 flex items-center gap-1 font-medium">
                   <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                   <span>{errors.confirmPassword}</span>
                 </p>

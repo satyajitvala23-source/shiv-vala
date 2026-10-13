@@ -117,30 +117,30 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
               className="w-full h-full object-contain filter drop-shadow-md relative z-5 transition-transform duration-300 group-hover:scale-105"
               referrerPolicy="no-referrer"
             />
-            <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-amber-400 border-2 border-white dark:border-slate-900 z-20 shadow-xs shadow-amber-500/60" />
+            <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-cyan-500 border-2 border-white z-20 shadow-xs shadow-cyan-500/60" />
           </div>
           <div className="min-w-0">
             <div className="flex items-center gap-1.5 sm:gap-2">
-              <span className="font-extrabold text-sm sm:text-lg text-slate-900 dark:text-white tracking-tight flex items-center gap-1 sm:gap-1.5 truncate">
-                <span className="bg-linear-to-r from-blue-700 via-blue-600 to-indigo-600 dark:from-blue-400 dark:via-sky-300 dark:to-white bg-clip-text text-transparent truncate">
+              <span className="font-extrabold text-sm sm:text-lg text-slate-900 tracking-tight flex items-center gap-1 sm:gap-1.5 truncate">
+                <span className="bg-linear-to-r from-sky-900 via-sky-700 to-cyan-600 bg-clip-text text-transparent truncate">
                   Shiv Computer
                 </span>
-                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-amber-400 inline-block align-middle shrink-0" />
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-cyan-500 inline-block align-middle shrink-0" />
               </span>
               {role === 'admin' ? (
                 <div
                   id="header-role-badge"
-                  className="hidden md:inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-amber-400/15 text-amber-800 dark:text-amber-300 border border-amber-400/30 shadow-2xs backdrop-blur-xs whitespace-nowrap"
+                  className="hidden md:inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-sky-500/15 text-sky-900 border border-sky-400/35 shadow-2xs backdrop-blur-xs whitespace-nowrap"
                 >
-                  <ShieldCheck className="w-3 h-3 text-amber-500" />
+                  <ShieldCheck className="w-3 h-3 text-sky-600" />
                   <span>Admin</span>
                 </div>
               ) : (
                 <div
                   id="header-role-badge"
-                  className="hidden md:inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-700 dark:text-blue-300 border border-blue-500/20 shadow-2xs backdrop-blur-xs whitespace-nowrap"
+                  className="hidden md:inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-sky-500/15 text-sky-900 border border-sky-400/35 shadow-2xs backdrop-blur-xs whitespace-nowrap"
                 >
-                  <UserCheck className="w-3 h-3 text-blue-600 dark:text-blue-400" />
+                  <UserCheck className="w-3 h-3 text-sky-600" />
                   <span>User</span>
                 </div>
               )}

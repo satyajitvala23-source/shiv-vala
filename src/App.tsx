@@ -3,7 +3,18 @@ import { AppProvider, useApp } from './context/AppContext';
 import { AdminDashboard } from './components/dashboard/AdminDashboard';
 import { UserDashboard } from './components/dashboard/UserDashboard';
 import { LoginForm } from './components/LoginForm';
-import { HeaderControls } from './components/HeaderControls';
+import { GlassNavbar } from './components/GlassNavbar';
+import { GlassFooter } from './components/GlassFooter';
+import { HomePage } from './components/pages/HomePage';
+import { ServicesPage } from './components/pages/ServicesPage';
+import { FormsPage } from './components/pages/FormsPage';
+import { DocumentsPage } from './components/pages/DocumentsPage';
+import { PaymentsPage } from './components/pages/PaymentsPage';
+import { ApplicationsPage } from './components/pages/ApplicationsPage';
+import { CalculatorPage } from './components/pages/CalculatorPage';
+import { AboutPage } from './components/pages/AboutPage';
+import { ContactPage } from './components/pages/ContactPage';
+import { ProfilePage } from './components/pages/ProfilePage';
 import { ForgotPasswordModal } from './components/ForgotPasswordModal';
 import { ResetPasswordModal } from './components/ResetPasswordModal';
 import { DynamicGlassBackground } from './components/DynamicGlassBackground';
@@ -18,7 +29,6 @@ function AppContent() {
     selectedRole,
     setSelectedRole,
     language,
-    setLanguage,
     t,
   } = useApp();
 
@@ -55,43 +65,101 @@ function AppContent() {
 
   if (authLoading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-[#ddf3fd] to-[#aed9f4] dark:from-[#050e1a] dark:to-[#060f1c] text-sky-700 dark:text-sky-300">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-11 h-11 rounded-full border-[3px] border-cyan-400/25 border-t-cyan-400 border-r-sky-500 animate-spin" />
-          <p className="text-xs font-semibold tracking-widest uppercase text-sky-600/80 dark:text-sky-400/80">
-            {language === 'gu' ? 'શિવ કમ્પ્યુટર પોર્ટલ લોડ થઈ રહ્યું છે...' : 'Loading Shiv Portal...'}
+      <div className="min-h-screen flex flex-col items-center justify-center bg-sky-50 text-cyan-700">
+        <DynamicGlassBackground />
+        <div className="flex flex-col items-center gap-4 relative z-10">
+          <div className="w-12 h-12 rounded-full border-[3px] border-cyan-400/35 border-t-cyan-500 border-r-sky-500 animate-spin" />
+          <p className="text-xs font-semibold tracking-widest uppercase text-cyan-800">
+            {language === 'gu' ? 'શિવ કમ્પ્યુટર પોર્ટલ લોડ થઈ રહ્યું છે...' : 'Loading Shiv Computer Platform...'}
           </p>
         </div>
       </div>
     );
   }
 
-  // Gatekeeper: Enforce Sign In / Sign Up for Admin or User before website open
-  if (!isAuthenticated || currentView === 'login' || currentView === 'register' || currentView === 'admin-login') {
+  // Admin Dashboard View — Strict RBAC protection: Only users with role === 'admin' can access Admin Dashboard
+  if (currentView === 'admin-dashboard') {
+    if (authRole !== 'admin') {
+      // Not admin: redirect to admin login
+      return (
+        <div className="min-h-screen flex flex-col relative text-slate-800">
+          <DynamicGlassBackground />
+          <GlassNavbar />
+          <main className="flex-1 flex items-center justify-center py-24 sm:py-28 px-4">
+            <LoginForm
+              role="admin"
+              t={t}
+              onForgotPasswordClick={(id) => {
+                setForgotInitialIdentifier(id || '');
+                setIsForgotModalOpen(true);
+              }}
+              onBackToHomeClick={() => {
+                setCurrentView('home');
+                window.location.hash = '#/home';
+              }}
+              onLoginSuccess={() => {
+                setCurrentView('admin-dashboard');
+                window.location.hash = '#/admin-dashboard';
+              }}
+            />
+          </main>
+        </div>
+      );
+    }
+    return (
+      <>
+        <DynamicGlassBackground />
+        <AdminDashboard />
+      </>
+    );
+  }
+
+  // User Dashboard View — Authenticated User Portal
+  if (currentView === 'user-dashboard') {
+    if (!isAuthenticated) {
+      // Not logged in: prompt login
+      return (
+        <div className="min-h-screen flex flex-col relative text-slate-800">
+          <DynamicGlassBackground />
+          <GlassNavbar />
+          <main className="flex-1 flex items-center justify-center py-24 sm:py-28 px-4">
+            <LoginForm
+              role="user"
+              t={t}
+              onForgotPasswordClick={(id) => {
+                setForgotInitialIdentifier(id || '');
+                setIsForgotModalOpen(true);
+              }}
+              onBackToHomeClick={() => {
+                setCurrentView('home');
+                window.location.hash = '#/home';
+              }}
+              onLoginSuccess={() => {
+                setCurrentView('user-dashboard');
+                window.location.hash = '#/user-dashboard';
+              }}
+            />
+          </main>
+        </div>
+      );
+    }
+    return (
+      <>
+        <DynamicGlassBackground />
+        <UserDashboard />
+      </>
+    );
+  }
+
+  // Dedicated Login / Register View
+  if (currentView === 'login' || currentView === 'register' || currentView === 'admin-login') {
     const activeAuthRole = currentView === 'admin-login' ? 'admin' : (currentView === 'register' ? 'user' : selectedRole);
 
     return (
-      <div className="min-h-screen flex flex-col relative text-[#0c3a56] dark:text-[#c8e8f8] transition-colors duration-300">
+      <div className="min-h-screen flex flex-col relative text-slate-800">
         <DynamicGlassBackground />
-        <HeaderControls
-          role={activeAuthRole}
-          onRoleChange={(newRole) => {
-            setSelectedRole(newRole);
-            if (newRole === 'admin') {
-              setCurrentView('admin-login');
-              window.location.hash = '#/admin-login';
-            } else {
-              setCurrentView('login');
-              window.location.hash = '#/login';
-            }
-          }}
-          language={language}
-          onLanguageChange={setLanguage}
-          adminLabel={t.adminBadge}
-          userLabel={t.userBadge}
-        />
-
-        <main className="flex-1 flex items-center justify-center py-6 sm:py-10 px-4">
+        <GlassNavbar />
+        <main className="flex-1 flex items-center justify-center py-24 sm:py-28 px-4">
           <LoginForm
             role={activeAuthRole}
             t={t}
@@ -100,15 +168,8 @@ function AppContent() {
               setIsForgotModalOpen(true);
             }}
             onBackToHomeClick={() => {
-              if (activeAuthRole === 'admin') {
-                setSelectedRole('user');
-                setCurrentView('login');
-                window.location.hash = '#/login';
-              } else {
-                setSelectedRole('admin');
-                setCurrentView('admin-login');
-                window.location.hash = '#/admin-login';
-              }
+              setCurrentView('home');
+              window.location.hash = '#/home';
             }}
             onLoginSuccess={(role) => {
               if (role === 'admin') {
@@ -156,18 +217,59 @@ function AppContent() {
     );
   }
 
-  // Strict RBAC protection: Only users with role === 'admin' can access Admin Dashboard
-  // Normal users (authRole === 'user') are ALWAYS routed to UserDashboard, never AdminDashboard.
-  // Even if URL is manually changed to #/admin-dashboard, the authRole check prevents access.
-  const isAdminView = currentView === 'admin-dashboard' && authRole === 'admin';
+  // Content for public routes
+  let pageContent: React.ReactNode = null;
+  switch (currentView) {
+    case 'services':
+      pageContent = <ServicesPage />;
+      break;
+    case 'forms':
+    case 'agriculture-forms':
+      pageContent = <FormsPage />;
+      break;
+    case 'documents':
+      pageContent = <DocumentsPage />;
+      break;
+    case 'payments':
+      pageContent = <PaymentsPage />;
+      break;
+    case 'applications':
+      pageContent = <ApplicationsPage />;
+      break;
+    case 'calculator':
+      pageContent = <CalculatorPage />;
+      break;
+    case 'about':
+      pageContent = <AboutPage />;
+      break;
+    case 'contact':
+      pageContent = <ContactPage />;
+      break;
+    case 'profile':
+      pageContent = <ProfilePage />;
+      break;
+    case 'home':
+    default:
+      pageContent = (
+        <HomePage
+          onForgotPasswordClick={(id) => {
+            setForgotInitialIdentifier(id || '');
+            setIsForgotModalOpen(true);
+          }}
+        />
+      );
+      break;
+  }
+
   return (
-    <>
+    <div className="min-h-screen flex flex-col relative text-slate-800">
       <DynamicGlassBackground />
-      {isAdminView ? (
-        <AdminDashboard />
-      ) : (
-        <UserDashboard />
-      )}
+      <GlassNavbar />
+      <main className="flex-1 min-w-0">
+        {pageContent}
+      </main>
+      <GlassFooter />
+
       <ForgotPasswordModal
         isOpen={isForgotModalOpen}
         onClose={() => setIsForgotModalOpen(false)}
@@ -175,6 +277,7 @@ function AppContent() {
         language={language}
         t={t}
       />
+
       <ResetPasswordModal
         isOpen={isResetModalOpen}
         oobCode={resetCode || ''}
@@ -197,7 +300,7 @@ function AppContent() {
         language={language}
         t={t}
       />
-    </>
+    </div>
   );
 }
 

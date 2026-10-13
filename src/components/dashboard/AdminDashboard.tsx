@@ -38,6 +38,7 @@ import { ServiceModal } from './ServiceModal';
 import { OfficeAddressCard } from './OfficeAddressCard';
 import { AnimatedCounter } from '../AnimatedCounter';
 import { AdminDocumentManager } from './AdminDocumentManager';
+import { GlassFooter } from '../GlassFooter';
 
 type AdminTab = 'dashboard' | 'documents' | 'applications' | 'services' | 'users' | 'settings';
 
@@ -770,6 +771,11 @@ export const AdminDashboard: React.FC = () => {
               <OfficeAddressCard highlightAdmin={true} />
             </div>
           )}
+
+          {/* Dedicated Glass Footer on Admin Dashboard */}
+          <div className="pt-8">
+            <GlassFooter />
+          </div>
         </main>
       </div>
 
