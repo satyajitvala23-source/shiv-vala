@@ -80,12 +80,11 @@ function AppContent() {
   // Admin Dashboard View — Strict RBAC protection: Only users with role === 'admin' can access Admin Dashboard
   if (currentView === 'admin-dashboard') {
     if (authRole !== 'admin') {
-      // Not admin: redirect to admin login
+      // Not admin: redirect to admin login (clean login page, no top navbar)
       return (
         <div className="min-h-screen flex flex-col relative text-slate-800">
           <DynamicGlassBackground />
-          <GlassNavbar />
-          <main className="flex-1 flex items-center justify-center py-24 sm:py-28 px-4">
+          <main className="flex-1 flex items-center justify-center py-10 sm:py-16 px-4">
             <LoginForm
               role="admin"
               t={t}
@@ -117,12 +116,11 @@ function AppContent() {
   // User Dashboard View — Authenticated User Portal
   if (currentView === 'user-dashboard') {
     if (!isAuthenticated) {
-      // Not logged in: prompt login
+      // Not logged in: prompt login (clean login page, no top navbar)
       return (
         <div className="min-h-screen flex flex-col relative text-slate-800">
           <DynamicGlassBackground />
-          <GlassNavbar />
-          <main className="flex-1 flex items-center justify-center py-24 sm:py-28 px-4">
+          <main className="flex-1 flex items-center justify-center py-10 sm:py-16 px-4">
             <LoginForm
               role="user"
               t={t}
@@ -151,15 +149,15 @@ function AppContent() {
     );
   }
 
-  // Dedicated Login / Register View
+  // Dedicated Login / Register View — Clean page with NO top navigation bar
   if (currentView === 'login' || currentView === 'register' || currentView === 'admin-login') {
     const activeAuthRole = currentView === 'admin-login' ? 'admin' : (currentView === 'register' ? 'user' : selectedRole);
 
     return (
       <div className="min-h-screen flex flex-col relative text-slate-800">
         <DynamicGlassBackground />
-        <GlassNavbar />
-        <main className="flex-1 flex items-center justify-center py-24 sm:py-28 px-4">
+        {/* No GlassNavbar here — login page is intentionally clean and distraction-free */}
+        <main className="flex-1 flex items-center justify-center py-10 sm:py-16 px-4">
           <LoginForm
             role={activeAuthRole}
             t={t}
