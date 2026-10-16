@@ -345,19 +345,19 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         <div className="mt-4 mb-5 text-center">
           <div
             id={`role-indicator-badge-${role}`}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold mb-2.5 bg-sky-500/15 text-sky-900 border border-sky-400/35 shadow-xs backdrop-blur-md"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold mb-2.5 bg-sky-500/15 text-sky-900 dark:text-sky-300 border border-sky-400/35 dark:border-sky-400/25 shadow-xs backdrop-blur-md"
           >
             {role === 'admin' ? (
-              <ShieldCheck className="w-3.5 h-3.5 text-sky-700" />
+              <ShieldCheck className="w-3.5 h-3.5 text-sky-700 dark:text-sky-400" />
             ) : (
-              <UserCheck className="w-3.5 h-3.5 text-sky-700" />
+              <UserCheck className="w-3.5 h-3.5 text-sky-700 dark:text-sky-400" />
             )}
             <span>{role === 'admin' ? t.adminBadge : t.userBadge}</span>
           </div>
 
           <h2
             id="login-heading"
-            className="text-xl sm:text-2xl font-black tracking-tight text-slate-900"
+            className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 dark:text-white"
           >
             {role === 'admin'
               ? t.adminHeading
@@ -367,7 +367,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           </h2>
           <p
             id="login-subtitle"
-            className="text-xs sm:text-sm text-slate-600 mt-1 max-w-xs mx-auto font-medium"
+            className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-1 max-w-xs mx-auto font-medium"
           >
             {role === 'admin'
               ? t.adminSubtitle
@@ -381,7 +381,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         {role === 'user' && (
           <div
             id="auth-mode-tab-bar"
-            className="flex p-1 bg-white/40 border border-white/50 rounded-2xl mb-5 text-xs font-semibold backdrop-blur-md"
+            className="flex p-1 bg-white/40 dark:bg-slate-800/60 border border-white/50 dark:border-white/10 rounded-2xl mb-5 text-xs font-semibold backdrop-blur-md"
           >
             <button
               type="button"
@@ -396,7 +396,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl transition-all cursor-pointer ${
                 authMode === 'login'
                   ? 'btn-glossy-primary shadow-xs'
-                  : 'text-slate-700 hover:text-slate-900'
+                  : 'text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               <LogIn className="w-3.5 h-3.5" />
@@ -415,7 +415,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl transition-all cursor-pointer ${
                 authMode === 'register'
                   ? 'btn-glossy-primary shadow-xs'
-                  : 'text-slate-700 hover:text-slate-900'
+                  : 'text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               <UserPlus className="w-3.5 h-3.5" />
@@ -458,16 +458,16 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             <div>
               <label
                 htmlFor="login-identifier-input"
-                className="block text-xs sm:text-sm font-semibold text-slate-800 mb-1.5"
+                className="block text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200 mb-1.5"
               >
                 {role === 'admin' ? t.adminUsernameLabel : t.userIdentifierLabel}
               </label>
               <div className="relative rounded-xl shadow-xs">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
                   {role === 'admin' ? (
-                    <User className="w-4 h-4 text-sky-600" />
+                    <User className="w-4 h-4 text-sky-600 dark:text-sky-400" />
                   ) : (
-                    <Mail className="w-4 h-4 text-sky-600" />
+                    <Mail className="w-4 h-4 text-sky-600 dark:text-sky-400" />
                   )}
                 </div>
                 <input
@@ -486,15 +486,15 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                       : t.userIdentifierPlaceholder
                   }
                   disabled={isLoading}
-                  className={`w-full pl-10 pr-3.5 py-2.5 sm:py-3 bg-white/55 hover:bg-white/70 focus:bg-white/90 border text-xs sm:text-sm text-slate-900 placeholder-slate-500 rounded-xl transition-all duration-200 outline-none backdrop-blur-md ${
+                  className={`w-full pl-10 pr-3.5 py-2.5 sm:py-3 bg-white/55 dark:bg-slate-900/65 hover:bg-white/70 dark:hover:bg-slate-900/80 focus:bg-white/90 dark:focus:bg-slate-900/95 border text-xs sm:text-sm text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 rounded-xl transition-all duration-200 outline-none backdrop-blur-md ${
                     errors.identifier
                       ? 'border-amber-400 focus:border-amber-500 focus:ring-3 focus:ring-amber-500/20'
-                      : 'border-white/60 hover:border-cyan-400/50 focus:border-cyan-500 focus:ring-3 focus:ring-cyan-500/20'
+                      : 'border-white/60 dark:border-white/10 hover:border-cyan-400/50 dark:hover:border-cyan-400/40 focus:border-cyan-500 focus:ring-3 focus:ring-cyan-500/20'
                   }`}
                 />
               </div>
               {errors.identifier && (
-                <p className="mt-1.5 text-xs text-amber-700 flex items-center gap-1 font-medium">
+                <p className="mt-1.5 text-xs text-amber-700 dark:text-amber-400 flex items-center gap-1 font-medium">
                   <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                   <span>{errors.identifier}</span>
                 </p>
@@ -506,14 +506,14 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               <div className="flex items-center justify-between mb-1.5">
                 <label
                   htmlFor="login-password-input"
-                  className="block text-xs sm:text-sm font-semibold text-slate-800"
+                  className="block text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200"
                 >
                   {t.passwordLabel}
                 </label>
               </div>
               <div className="relative rounded-xl shadow-xs">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
-                  <Lock className="w-4 h-4 text-sky-600" />
+                  <Lock className="w-4 h-4 text-sky-600 dark:text-sky-400" />
                 </div>
                 <input
                   id="login-password-input"
@@ -527,24 +527,24 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                   }}
                   placeholder={t.passwordPlaceholder}
                   disabled={isLoading}
-                  className={`w-full pl-10 pr-11 py-2.5 sm:py-3 bg-white/55 hover:bg-white/70 focus:bg-white/90 border text-xs sm:text-sm text-slate-900 placeholder-slate-500 rounded-xl transition-all duration-200 outline-none backdrop-blur-md ${
+                  className={`w-full pl-10 pr-11 py-2.5 sm:py-3 bg-white/55 dark:bg-slate-900/65 hover:bg-white/70 dark:hover:bg-slate-900/80 focus:bg-white/90 dark:focus:bg-slate-900/95 border text-xs sm:text-sm text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 rounded-xl transition-all duration-200 outline-none backdrop-blur-md ${
                     errors.password
                       ? 'border-amber-400 focus:border-amber-500 focus:ring-3 focus:ring-amber-500/20'
-                      : 'border-white/60 hover:border-cyan-400/50 focus:border-cyan-500 focus:ring-3 focus:ring-cyan-500/20'
+                      : 'border-white/60 dark:border-white/10 hover:border-cyan-400/50 dark:hover:border-cyan-400/40 focus:border-cyan-500 focus:ring-3 focus:ring-cyan-500/20'
                   }`}
                 />
                 <button
                   type="button"
                   id="toggle-password-visibility-btn"
                   onClick={() => setShowPassword((prev) => !prev)}
-                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-500 hover:text-slate-700 transition-colors cursor-pointer"
+                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors cursor-pointer"
                   title={showPassword ? t.hidePassword : t.showPassword}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
               {errors.password && (
-                <p className="mt-1.5 text-xs text-amber-700 flex items-center gap-1 font-medium">
+                <p className="mt-1.5 text-xs text-amber-700 dark:text-amber-400 flex items-center gap-1 font-medium">
                   <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                   <span>{errors.password}</span>
                 </p>
@@ -562,16 +562,16 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                   type="checkbox"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
-                  className="w-4 h-4 rounded-md border-slate-300 text-sky-600 focus:ring-sky-500/20 cursor-pointer"
+                  className="w-4 h-4 rounded-md border-slate-300 dark:border-slate-700 text-sky-600 focus:ring-sky-500/20 cursor-pointer"
                 />
-                <span className="text-slate-700 font-semibold">{t.rememberMe}</span>
+                <span className="text-slate-700 dark:text-slate-300 font-semibold">{t.rememberMe}</span>
               </label>
 
               <button
                 type="button"
                 id="forgot-password-link"
                 onClick={() => onForgotPasswordClick(identifier.trim())}
-                className="text-xs sm:text-sm font-bold text-sky-700 hover:text-sky-900 hover:underline transition-colors cursor-pointer"
+                className="text-xs sm:text-sm font-bold text-sky-700 dark:text-sky-400 hover:text-sky-900 dark:hover:text-sky-300 hover:underline transition-colors cursor-pointer"
               >
                 {t.forgotPassword}
               </button>

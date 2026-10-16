@@ -5,6 +5,7 @@ import {
   Moon,
   Check,
   ChevronDown,
+  ChevronUp,
   LogOut,
   ShieldCheck,
   UserCheck,
@@ -52,8 +53,10 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
     notifications,
     markNotificationAsRead,
     logout,
-    setCurrentView,
     currentView,
+    isNavbarVisible,
+    setIsNavbarVisible,
+    navigateToView,
   } = useApp();
 
   const [isLangOpen, setIsLangOpen] = useState(false);
@@ -111,25 +114,14 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   const defaultSearchPlaceholder =
     language === 'gu' ? 'સેવા / ફોર્મ શોધો...' : 'Search forms & services...';
 
-  // Navigate to a public page from dashboard
-  const navigateTo = (view: CurrentView) => {
-    setCurrentView(view);
-    window.location.hash = `#/${view}`;
+  // Navigate to any view: closes mobile drawer and auto-collapses top navbar as requested
+  const handleNavClick = (view: CurrentView) => {
     setIsMobileNavOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    navigateToView(view);
+    setIsNavbarVisible(false);
   };
 
-  // Go back to the appropriate dashboard
-  const goToDashboard = () => {
-    const dashView = role === 'admin' ? 'admin-dashboard' : 'user-dashboard';
-    setCurrentView(dashView);
-    window.location.hash = `#/${dashView}`;
-    setIsMobileNavOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  // Navigation links — same as public GlassNavbar
-  // Admin sees all; regular users see the same public-facing links (no admin-only pages)
+  // Navigation links — matching public GlassNavbar
   const navLinks: { id: CurrentView; label: string; labelGu: string; icon: React.ReactNode }[] = [
     { id: 'home', label: 'Home', labelGu: 'હોમ', icon: <Home className="w-3.5 h-3.5" /> },
     { id: 'services', label: 'Services', labelGu: 'સેવાઓ', icon: <Briefcase className="w-3.5 h-3.5" /> },
@@ -140,6 +132,40 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
     { id: 'about', label: 'About', labelGu: 'અમારા વિશે', icon: <Info className="w-3.5 h-3.5" /> },
     { id: 'contact', label: 'Contact', labelGu: 'સંપર્ક', icon: <Phone className="w-3.5 h-3.5" /> },
   ];
+
+  // If navbar is collapsed, render small floating menu hamburger button
+  if (!isNavbarVisible) {
+    return (
+      <div className="fixed top-3 left-3 sm:left-5 z-50 flex items-center gap-2">
+        {onToggleSidebar && (
+          <button
+            type="button"
+            id="dashboard-floating-sidebar-btn"
+            onClick={onToggleSidebar}
+            className="lg:hidden flex items-center gap-1.5 px-3 py-2 rounded-2xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-lg shadow-sky-950/10 text-slate-800 dark:text-slate-100 hover:bg-white dark:hover:bg-slate-900 active:scale-95 transition-all cursor-pointer"
+            aria-label="Toggle Sidebar"
+            title={language === 'gu' ? 'સાઇડબાર' : 'Sidebar'}
+          >
+            {isSidebarOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4 text-sky-600 dark:text-sky-400" />}
+            <span className="text-xs font-semibold">{language === 'gu' ? 'સાઇડબાર' : 'Sidebar'}</span>
+          </button>
+        )}
+        <button
+          id="dashboard-show-nav-btn"
+          type="button"
+          onClick={() => setIsNavbarVisible(true)}
+          className="flex items-center gap-2 px-3 py-2 rounded-2xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-lg shadow-sky-950/10 text-slate-800 dark:text-slate-100 hover:bg-white dark:hover:bg-slate-900 hover:scale-105 active:scale-95 transition-all cursor-pointer group"
+          aria-label="Open Navigation Menu"
+          title={language === 'gu' ? 'નેવિગેશન મેનૂ ખોલો' : 'Open Navigation Menu'}
+        >
+          <Menu className="w-4 h-4 text-sky-600 dark:text-sky-400 group-hover:rotate-90 transition-transform duration-300" />
+          <span className="text-xs font-bold bg-linear-to-r from-sky-900 via-sky-700 to-cyan-600 dark:from-sky-300 dark:to-cyan-400 bg-clip-text text-transparent">
+            {language === 'gu' ? 'મેનૂ' : 'Menu'}
+          </span>
+        </button>
+      </div>
+    );
+  }
 
   return (
     <header
@@ -164,29 +190,22 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
             {isSidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
 
-          {/* Brand Logo */}
+          {/* Official Shiv Computer Logo (Prominent 55-60px tall, no extra text, navigates to Home) */}
           <button
             type="button"
-            onClick={goToDashboard}
-            className="flex items-center gap-2 group cursor-pointer focus:outline-none shrink-0"
-            aria-label="Go to dashboard"
+            id="dash-header-logo-btn"
+            onClick={() => handleNavClick('home')}
+            className="flex items-center group cursor-pointer focus:outline-none shrink-0"
+            aria-label="Go to Home"
+            title="Shiv Computer — Home"
           >
-            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-transparent p-0.5 flex items-center justify-center relative shrink-0 transition-transform duration-300 group-hover:scale-105">
+            <div className="h-11 sm:h-13 md:h-[58px] w-auto max-w-[160px] flex items-center justify-center relative shrink-0 transition-transform duration-300 group-hover:scale-105">
               <img
                 src="/logo.png"
                 alt="Shiv Computer Logo"
-                className="w-full h-full object-contain filter drop-shadow-md"
+                className="h-full w-auto object-contain filter drop-shadow-md"
                 referrerPolicy="no-referrer"
               />
-              <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-cyan-500 border-2 border-white dark:border-slate-900 z-10 shadow-xs shadow-cyan-500/60" />
-            </div>
-            <div className="hidden sm:flex flex-col">
-              <span className="font-extrabold text-sm sm:text-base bg-linear-to-r from-sky-900 via-sky-700 to-cyan-600 bg-clip-text text-transparent tracking-tight group-hover:from-sky-800 group-hover:to-cyan-500 transition-all">
-                Shiv Computer
-              </span>
-              <span className="text-[10px] text-sky-700/80 font-semibold tracking-wide leading-none">
-                Digital Gujarat &amp; CSC Center
-              </span>
             </div>
           </button>
 
@@ -215,7 +234,8 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
           {/* Dashboard shortcut */}
           <button
             type="button"
-            onClick={goToDashboard}
+            id="dash-header-nav-dashboard"
+            onClick={() => handleNavClick(role === 'admin' ? 'admin-dashboard' : 'user-dashboard')}
             className={`px-2.5 py-1.5 rounded-xl text-[11px] font-semibold transition-all duration-200 flex items-center gap-1.5 cursor-pointer ${
               (currentView === 'admin-dashboard' || currentView === 'user-dashboard')
                 ? 'bg-sky-500/20 text-sky-900 dark:text-sky-200 border border-sky-400/40 shadow-xs shadow-sky-500/10'
@@ -231,8 +251,9 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
             return (
               <button
                 key={link.id}
+                id={`dash-header-nav-${link.id}`}
                 type="button"
-                onClick={() => navigateTo(link.id)}
+                onClick={() => handleNavClick(link.id)}
                 className={`px-2.5 py-1.5 rounded-xl text-[11px] font-semibold transition-all duration-200 flex items-center gap-1.5 cursor-pointer ${
                   isActive
                     ? 'bg-sky-500/20 text-sky-900 dark:text-sky-200 border border-sky-400/40 shadow-xs shadow-sky-500/10'
@@ -250,7 +271,13 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
 
           {/* Desktop Search */}
-          <div className="hidden md:flex relative items-center">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleNavClick('services');
+            }}
+            className="hidden md:flex relative items-center"
+          >
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 pointer-events-none" />
             <input
               id="navbar-search-input"
@@ -270,7 +297,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                 <X className="w-3 h-3" />
               </button>
             )}
-          </div>
+          </form>
 
           {/* Language Selector */}
           <div className="relative" ref={langRef}>
@@ -445,6 +472,18 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
             )}
           </div>
 
+          {/* Collapse Navbar Button */}
+          <button
+            type="button"
+            id="dash-header-collapse-btn"
+            onClick={() => setIsNavbarVisible(false)}
+            className="hidden sm:flex p-1.5 sm:p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-white/80 dark:hover:bg-slate-800/80 border border-slate-200/80 dark:border-white/10 backdrop-blur-md transition-all active:scale-[0.98] cursor-pointer"
+            title={language === 'gu' ? 'નેવબાર છુપાવો' : 'Hide Navbar'}
+            aria-label="Hide Navbar"
+          >
+            <ChevronUp className="w-4 h-4" />
+          </button>
+
           {/* Mobile nav hamburger (for nav links — separate from sidebar toggle) */}
           <button
             type="button"
@@ -462,7 +501,13 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
       {isMobileNavOpen && (
         <div className="xl:hidden px-3 pb-4 pt-2 border-t border-white/30 dark:border-white/10 animate-in fade-in slide-in-from-top-4 duration-200">
           {/* Mobile Search */}
-          <div className="relative mb-3">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleNavClick('services');
+            }}
+            className="relative mb-3"
+          >
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
             <input
               type="text"
@@ -481,14 +526,14 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                 <X className="w-3.5 h-3.5" />
               </button>
             )}
-          </div>
+          </form>
 
           {/* Mobile Nav Links Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
             {/* Dashboard shortcut */}
             <button
               type="button"
-              onClick={goToDashboard}
+              onClick={() => handleNavClick(role === 'admin' ? 'admin-dashboard' : 'user-dashboard')}
               className={`px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-colors cursor-pointer ${
                 (currentView === 'admin-dashboard' || currentView === 'user-dashboard')
                   ? 'bg-sky-500/20 text-sky-900 dark:text-sky-200 border border-sky-400/40'
@@ -505,7 +550,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                 <button
                   key={link.id}
                   type="button"
-                  onClick={() => navigateTo(link.id)}
+                  onClick={() => handleNavClick(link.id)}
                   className={`px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-colors cursor-pointer ${
                     isActive
                       ? 'bg-sky-500/20 text-sky-900 dark:text-sky-200 border border-sky-400/40'

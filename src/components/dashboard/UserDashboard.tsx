@@ -172,25 +172,24 @@ export const UserDashboard: React.FC = () => {
         >
           {/* Navigation */}
           <div className="p-3 overflow-y-auto space-y-1">
-            {/* Sidebar Brand Badge */}
-            <div className="flex items-center gap-3 px-3 py-2.5 mb-2 rounded-2xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/80 dark:border-white/10 shadow-xs">
-              <div className="w-12 h-12 rounded-2xl bg-transparent p-1 flex items-center justify-center shrink-0 overflow-hidden relative group">
+            {/* Sidebar Official Logo Branding (55-70px tall, no extra text, navigates to Home) */}
+            <button
+              type="button"
+              id="user-sidebar-logo-btn"
+              onClick={() => navigateToView('home')}
+              className="w-full flex items-center justify-center p-3 mb-2 rounded-2xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-md border border-slate-200/80 dark:border-white/10 shadow-xs hover:bg-white/90 dark:hover:bg-slate-800/80 transition-all cursor-pointer group"
+              title="Shiv Computer — Home"
+              aria-label="Go to Home"
+            >
+              <div className="h-16 w-16 sm:h-[66px] sm:w-[66px] flex items-center justify-center relative overflow-hidden transition-transform duration-200 group-hover:scale-105">
                 <img
                   src="/logo.png"
                   alt="Shiv Computer"
-                  className="w-full h-full object-contain filter drop-shadow-md relative z-5 transition-transform duration-200 group-hover:scale-105"
+                  className="w-full h-full object-contain filter drop-shadow-md relative z-5"
                   referrerPolicy="no-referrer"
                 />
               </div>
-              <div className="flex flex-col min-w-0 text-left">
-                <span className="font-extrabold text-sm text-slate-900 dark:text-white truncate">
-                  Shiv Computer
-                </span>
-                <span className="text-[11px] text-sky-600 dark:text-sky-400 font-bold leading-none mt-0.5">
-                  {language === 'gu' ? 'યુઝર' : 'User'}
-                </span>
-              </div>
-            </div>
+            </button>
 
             <div className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
               {language === 'gu' ? 'મેનૂ' : 'Navigation'}
@@ -261,7 +260,7 @@ export const UserDashboard: React.FC = () => {
           {/* Top Shiv Computer Brand Header (Prominently displayed after login) */}
           <div
             id="user-dashboard-top-brand"
-            className="p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl bg-linear-to-r from-white/80 via-sky-50/70 to-cyan-50/80 border border-white/80 dark:border-white/10 backdrop-blur-xl shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3.5"
+            className="p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl bg-linear-to-r from-white/80 via-sky-50/70 to-cyan-50/80 dark:from-slate-900/85 dark:via-slate-900/75 dark:to-slate-800/80 border border-white/80 dark:border-white/10 backdrop-blur-xl shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3.5"
           >
             <div className="flex items-center gap-3.5 min-w-0">
               <div className="w-11 h-11 sm:w-13 sm:h-13 rounded-2xl bg-white/70 dark:bg-slate-800/60 p-1 flex items-center justify-center border border-white/80 dark:border-white/10 shadow-xs shrink-0">
@@ -273,7 +272,7 @@ export const UserDashboard: React.FC = () => {
               </div>
               <div className="min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <h2 className="text-xl sm:text-2xl font-black tracking-tight bg-linear-to-r from-sky-950 via-sky-800 to-cyan-600 bg-clip-text text-transparent">
+                  <h2 className="text-xl sm:text-2xl font-black tracking-tight bg-linear-to-r from-sky-950 via-sky-800 to-cyan-600 dark:from-white dark:via-sky-200 dark:to-cyan-400 bg-clip-text text-transparent">
                     Shiv Computer
                   </h2>
                   <span className="px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-bold bg-sky-500/15 text-sky-800 dark:text-sky-300 border border-sky-400/30">

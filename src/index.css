@@ -83,39 +83,44 @@
   --liq-muted:    #5a8fa8;
 }
 
-/* Color foundations - Light transparent theme */
+/* Color foundations - Dark Mode (Navy / Charcoal with subtle blue accents) */
 html.dark,
 html.dark-mode,
 body.dark,
 body.dark-mode {
-  color-scheme: light;
-  background-color: #f0f7ff !important;
-  color: #0c3a56 !important;
-  --liq-text:     #0c3a56;
-  --liq-sub:      #2c5970;
-  --liq-muted:    #5a8fa8;
+  color-scheme: dark;
+  background-color: #0c1427 !important;
+  color: #f1f5f9 !important;
+  --liq-text:     #f8fafc;
+  --liq-sub:      #cbd5e1;
+  --liq-muted:    #94a3b8;
 }
 
-/* Headers and Navigation */
+/* Headers and Navigation in Dark Mode */
 .dark-mode #dashboard-header-bar:not(.glass-navbar),
 .dark #dashboard-header-bar:not(.glass-navbar) {
-  background-color: rgba(255, 255, 255, 0.35) !important;
-  border-color: rgba(255, 255, 255, 0.40) !important;
+  background-color: rgba(15, 23, 42, 0.88) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
 }
 
 .dark-mode #admin-sidebar:not(.glass-sidebar),
 .dark-mode #user-sidebar:not(.glass-sidebar),
 .dark #admin-sidebar:not(.glass-sidebar),
 .dark #user-sidebar:not(.glass-sidebar) {
-  background-color: rgba(255, 255, 255, 0.30) !important;
-  border-color: rgba(255, 255, 255, 0.35) !important;
+  background-color: rgba(13, 20, 38, 0.92) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
 }
 
-/* Cards & Content Containers */
+/* Cards & Content Containers in Dark Mode - Distinguishable, slightly lighter than background */
 .dark-mode .bg-white:not(.glass-card):not(.glass-panel):not(.glass-modal):not(.glass-dropdown):not(.glass-navbar):not(.glass-sidebar),
 .dark .bg-white:not(.glass-card):not(.glass-panel):not(.glass-modal):not(.glass-dropdown):not(.glass-navbar):not(.glass-sidebar) {
-  background-color: rgba(255, 255, 255, 0.30) !important;
-  color: #0c3a56;
+  background-color: rgba(18, 27, 49, 0.78) !important;
+  color: #f1f5f9 !important;
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
 /* =========================================================================
@@ -313,13 +318,13 @@ body.dark-mode {
 
 .dark .glass-navbar,
 .dark-mode .glass-navbar {
-  background: rgba(255, 255, 255, 0.28) !important;
-  backdrop-filter: blur(14px) saturate(190%) !important;
-  -webkit-backdrop-filter: blur(14px) saturate(190%) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.45) !important;
+  background: rgba(15, 23, 42, 0.85) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
   box-shadow:
-    0 4px 20px -2px rgba(12, 74, 110, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.60) !important;
+    0 4px 20px -2px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
 }
 
 /* Glass Sidebar */
@@ -335,25 +340,26 @@ body.dark-mode {
 
 .dark .glass-sidebar,
 .dark-mode .glass-sidebar {
-  background: rgba(255, 255, 255, 0.28) !important;
-  backdrop-filter: blur(14px) saturate(190%) !important;
-  -webkit-backdrop-filter: blur(14px) saturate(190%) !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.40) !important;
+  background: rgba(13, 20, 38, 0.90) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
   box-shadow:
-    4px 0 24px -2px rgba(12, 74, 110, 0.08),
-    inset -1px 0 0 rgba(255, 255, 255, 0.50) !important;
+    4px 0 24px -2px rgba(0, 0, 0, 0.40),
+    inset -1px 0 0 rgba(255, 255, 255, 0.05) !important;
 }
 
-/* Liquid Glass Card — Light Transparent Glass */
+/* Liquid Glass Card — Light Translucent White Glass with subtle blue borders & shadows */
 .iphone-glass-card,
 .glass-card {
-  background: rgba(255, 255, 255, 0.20) !important;
-  backdrop-filter: blur(12px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(12px) saturate(180%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.40) !important;
+  background: rgba(255, 255, 255, 0.74) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  border: 1px solid rgba(186, 230, 253, 0.85) !important;
   box-shadow:
-    0 8px 32px -4px rgba(14, 165, 233, 0.12),
-    inset 0 1px 1px rgba(255, 255, 255, 0.70) !important;
+    0 10px 30px -4px rgba(14, 165, 233, 0.12),
+    0 2px 8px -2px rgba(12, 74, 110, 0.05),
+    inset 0 1px 1px rgba(255, 255, 255, 0.95) !important;
   border-radius: 1.35rem;
   transition:
     transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
@@ -370,7 +376,7 @@ body.dark-mode {
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 38%;
-  background: linear-gradient(180deg, rgba(255,255,255,0.30) 0%, rgba(255,255,255,0) 100%);
+  background: linear-gradient(180deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0) 100%);
   pointer-events: none;
   border-radius: inherit;
   z-index: 1;
@@ -379,11 +385,11 @@ body.dark-mode {
 .iphone-glass-card:hover,
 .glass-card:hover {
   transform: translateY(-3px);
-  border-color: rgba(34, 211, 238, 0.65) !important;
+  border-color: rgba(14, 165, 233, 0.65) !important;
   box-shadow:
     0 16px 40px -6px rgba(14, 165, 233, 0.22),
-    0 0 24px rgba(34, 211, 238, 0.25),
-    inset 0 1px 2px rgba(255, 255, 255, 0.85) !important;
+    0 0 20px rgba(34, 211, 238, 0.20),
+    inset 0 1px 2px rgba(255, 255, 255, 0.95) !important;
 }
 
 .iphone-glass-card:active,
@@ -396,32 +402,49 @@ body.dark-mode {
 .dark-mode .iphone-glass-card,
 .dark .glass-card,
 .dark-mode .glass-card {
-  background: rgba(255, 255, 255, 0.22) !important;
-  backdrop-filter: blur(12px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(12px) saturate(180%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.40) !important;
+  background: rgba(15, 23, 42, 0.80) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  border: 1px solid rgba(56, 189, 248, 0.20) !important;
   box-shadow:
-    0 8px 32px -4px rgba(14, 165, 233, 0.12),
-    inset 0 1px 1px rgba(255, 255, 255, 0.70) !important;
+    0 12px 36px -4px rgba(0, 0, 0, 0.45),
+    0 0 20px rgba(14, 165, 233, 0.08),
+    inset 0 1px 1px rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .iphone-glass-card:hover,
+.dark-mode .iphone-glass-card:hover,
+.dark .glass-card:hover,
+.dark-mode .glass-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(56, 189, 248, 0.45) !important;
+  box-shadow:
+    0 16px 40px -6px rgba(0, 0, 0, 0.55),
+    0 0 24px rgba(56, 189, 248, 0.18),
+    inset 0 1px 1px rgba(255, 255, 255, 0.12) !important;
 }
 
 /* Glass Panel (section containers, data tables) */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.20) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.38) !important;
-  box-shadow: 0 8px 30px rgba(14, 165, 233, 0.10) !important;
+  background: rgba(255, 255, 255, 0.72) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  border: 1px solid rgba(186, 230, 253, 0.80) !important;
+  box-shadow:
+    0 8px 30px rgba(14, 165, 233, 0.10),
+    inset 0 1px 1px rgba(255, 255, 255, 0.90) !important;
   border-radius: 1.35rem;
 }
 
 .dark .glass-panel,
 .dark-mode .glass-panel {
-  background: rgba(255, 255, 255, 0.22) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.38) !important;
-  box-shadow: 0 8px 30px rgba(14, 165, 233, 0.10) !important;
+  background: rgba(15, 23, 42, 0.80) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  border: 1px solid rgba(56, 189, 248, 0.20) !important;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.40),
+    inset 0 1px 1px rgba(255, 255, 255, 0.08) !important;
 }
 
 /* Glass Modal & Dialogs */
@@ -439,14 +462,14 @@ body.dark-mode {
 
 .dark .glass-modal,
 .dark-mode .glass-modal {
-  background: rgba(255, 255, 255, 0.90) !important;
+  background: rgba(14, 22, 40, 0.95) !important;
   backdrop-filter: blur(24px) saturate(200%) !important;
   -webkit-backdrop-filter: blur(24px) saturate(200%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.65) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
   box-shadow:
-    0 24px 64px -12px rgba(12, 74, 110, 0.20),
-    0 0 0 1px rgba(255, 255, 255, 0.80),
-    inset 0 1px 2px rgba(255, 255, 255, 0.95) !important;
+    0 24px 64px -12px rgba(0, 0, 0, 0.65),
+    inset 0 1px 2px rgba(255, 255, 255, 0.10) !important;
+  color: #f1f5f9 !important;
 }
 
 /* Glass Dropdown */
@@ -463,13 +486,14 @@ body.dark-mode {
 
 .dark .glass-dropdown,
 .dark-mode .glass-dropdown {
-  background: rgba(255, 255, 255, 0.95) !important;
+  background: rgba(13, 21, 39, 0.96) !important;
   backdrop-filter: blur(20px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-  border: 1px solid rgba(14, 165, 233, 0.30) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
   box-shadow:
-    0 16px 42px -6px rgba(12, 74, 110, 0.15),
-    inset 0 1px 1px rgba(255, 255, 255, 0.90) !important;
+    0 16px 42px -6px rgba(0, 0, 0, 0.50),
+    inset 0 1px 1px rgba(255, 255, 255, 0.08) !important;
+  color: #f1f5f9 !important;
 }
 
 /* Glass Input */
@@ -492,20 +516,20 @@ body.dark-mode {
 
 .dark .glass-input,
 .dark-mode .glass-input {
-  background: rgba(255, 255, 255, 0.78) !important;
+  background: rgba(15, 25, 46, 0.80) !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
-  border: 1px solid rgba(125, 211, 240, 0.50) !important;
-  color: #0c3a56 !important;
+  border: 1px solid rgba(56, 189, 248, 0.22) !important;
+  color: #f8fafc !important;
 }
 
 .dark .glass-input:focus,
 .dark-mode .glass-input:focus {
-  background: rgba(255, 255, 255, 0.97) !important;
-  border-color: rgba(14, 165, 233, 0.76) !important;
+  background: rgba(17, 29, 54, 0.95) !important;
+  border-color: rgba(34, 211, 238, 0.65) !important;
   box-shadow:
     0 0 0 3px rgba(34, 211, 238, 0.22),
-    0 4px 14px rgba(14, 165, 233, 0.10) !important;
+    0 4px 14px rgba(0, 0, 0, 0.35) !important;
   outline: none !important;
 }
 
@@ -669,15 +693,15 @@ body.dark-mode {
   border: 1px solid rgba(255, 255, 255, 0.32) !important;
 }
 
-/* Liquid Glass — Slate Utilities */
+/* Dark Mode Utilities & Controls */
 .dark-mode .bg-slate-50,
 .dark .bg-slate-50 {
-  background-color: rgba(255, 255, 255, 0.35) !important;
+  background-color: rgba(15, 23, 42, 0.65) !important;
 }
 
 .dark-mode .bg-slate-100,
 .dark .bg-slate-100 {
-  background-color: rgba(255, 255, 255, 0.45) !important;
+  background-color: rgba(30, 41, 59, 0.70) !important;
 }
 
 .dark-mode .bg-slate-800,
@@ -688,93 +712,82 @@ body.dark-mode {
 .dark .bg-slate-900,
 .dark .dark\:bg-slate-800,
 .dark .dark\:bg-slate-900 {
-  background-color: rgba(255, 255, 255, 0.30) !important;
+  background-color: rgba(15, 23, 42, 0.85) !important;
 }
 
 .dark-mode .border-slate-200,
 .dark-mode .border-slate-100,
 .dark .border-slate-200,
 .dark .border-slate-100 {
-  border-color: rgba(255, 255, 255, 0.40) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
-/* Inputs, Selects, Textareas */
+/* Inputs, Selects, Textareas in Dark Mode */
 .dark-mode input:not([type="checkbox"]):not([type="radio"]),
 .dark-mode select,
 .dark-mode textarea,
 .dark input:not([type="checkbox"]):not([type="radio"]),
 .dark select,
 .dark textarea {
-  background-color: rgba(255, 255, 255, 0.75) !important;
-  color: #0c3a56 !important;
-  border-color: rgba(14, 165, 233, 0.25) !important;
+  background-color: rgba(15, 25, 46, 0.80) !important;
+  color: #f8fafc !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
 }
 
 .dark-mode input::placeholder,
 .dark-mode textarea::placeholder,
 .dark input::placeholder,
 .dark textarea::placeholder {
-  color: #64748b !important;
+  color: #94a3b8 !important;
 }
 
-/* Tables */
+/* Tables in Dark Mode */
 .dark-mode table,
 .dark table {
-  color: #0c3a56;
+  color: #f1f5f9;
 }
 
 .dark-mode thead tr,
 .dark thead tr {
-  background-color: rgba(240, 249, 255, 0.65) !important;
-  color: #0369a1 !important;
+  background-color: rgba(15, 25, 46, 0.85) !important;
+  color: #7dd3fc !important;
 }
 
 .dark-mode th,
 .dark th {
-  background-color: rgba(240, 249, 255, 0.65) !important;
-  color: #0369a1 !important;
-  border-color: rgba(255, 255, 255, 0.50) !important;
+  background-color: rgba(15, 25, 46, 0.85) !important;
+  color: #7dd3fc !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
 .dark-mode td,
 .dark td {
-  border-color: rgba(255, 255, 255, 0.35) !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
 }
 
 .dark-mode tbody tr:hover,
 .dark tbody tr:hover {
-  background-color: rgba(255, 255, 255, 0.40) !important;
+  background-color: rgba(30, 41, 59, 0.45) !important;
 }
 
-/* Text readability */
+/* Text readability in Dark Mode */
 .dark-mode .text-slate-900,
 .dark-mode .text-slate-800,
 .dark .text-slate-900,
-.dark .text-slate-800,
-.dark-mode h1.text-white,
-.dark-mode h2.text-white,
-.dark-mode h3.text-white,
-.dark-mode .dark\:text-white:not(.btn-glossy-primary):not([class*="bg-gradient"]):not([class*="bg-linear"]):not([class*="bg-blue"]):not([class*="bg-sky"]):not([class*="bg-cyan"]),
-.dark .dark\:text-white:not(.btn-glossy-primary):not([class*="bg-gradient"]):not([class*="bg-linear"]):not([class*="bg-blue"]):not([class*="bg-sky"]):not([class*="bg-cyan"]) {
-  color: #0f172a !important;
+.dark .text-slate-800 {
+  color: #f8fafc !important;
 }
 
 .dark-mode .text-slate-700,
 .dark-mode .text-slate-600,
-.dark-mode .dark\:text-slate-200,
-.dark-mode .dark\:text-slate-300,
 .dark .text-slate-700,
-.dark .text-slate-600,
-.dark .dark\:text-slate-200,
-.dark .dark\:text-slate-300 {
-  color: #334155 !important;
+.dark .text-slate-600 {
+  color: #cbd5e1 !important;
 }
 
 .dark-mode .text-slate-500,
-.dark-mode .dark\:text-slate-400,
-.dark .text-slate-500,
-.dark .dark\:text-slate-400 {
-  color: #64748b !important;
+.dark .text-slate-500 {
+  color: #94a3b8 !important;
 }
 
 /* =========================================================================

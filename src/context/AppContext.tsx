@@ -50,6 +50,10 @@ import { FormSubmission } from '../types';
 interface AppContextType {
   currentView: CurrentView;
   setCurrentView: (view: CurrentView) => void;
+  isNavbarVisible: boolean;
+  setIsNavbarVisible: (visible: boolean) => void;
+  toggleNavbar: () => void;
+  navigateToView: (view: CurrentView) => void;
   selectedRole: LoginRole;
   setSelectedRole: (role: LoginRole) => void;
   language: LanguageCode;
@@ -121,6 +125,23 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return hash.includes('admin') ? 'admin' : 'user';
   });
   const [currentView, setCurrentView] = useState<CurrentView>('login');
+  const [isNavbarVisible, setIsNavbarVisible] = useState<boolean>(true);
+
+  const toggleNavbar = () => {
+    setIsNavbarVisible((prev) => !prev);
+  };
+
+  const navigateToView = (view: CurrentView) => {
+    setCurrentView(view);
+    window.location.hash = `#/${view}`;
+    // Keep top navbar visible on main dashboard initially, auto-hide on other pages when clicked
+    if (view === 'user-dashboard' || view === 'admin-dashboard') {
+      setIsNavbarVisible(true);
+    } else {
+      setIsNavbarVisible(false);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   // Firebase Auth State
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -152,12 +173,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     try {
       const savedTheme = localStorage.getItem('sc_theme');
       if (savedTheme === 'light') {
-        return savedTheme;
+        return 'light';
       }
     } catch {
       // ignore
     }
-    return 'light';
+    return 'dark';
   });
 
   // Core Data
@@ -301,12 +322,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       } else if (rawHash === 'admin-dashboard') {
         if (auth.currentUser) {
           setCurrentView('admin-dashboard');
+          setIsNavbarVisible(true);
         } else {
           setCurrentView('admin-login');
         }
       } else if (rawHash === 'user-dashboard') {
         if (auth.currentUser) {
           setCurrentView('user-dashboard');
+          setIsNavbarVisible(true);
         } else {
           setCurrentView('login');
         }
@@ -926,6 +949,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       value={{
         currentView,
         setCurrentView,
+        isNavbarVisible,
+        setIsNavbarVisible,
+        toggleNavbar,
+        navigateToView,
         selectedRole,
         setSelectedRole,
         language,

@@ -17,10 +17,10 @@
     <script>
       try {
         const savedTheme = localStorage.getItem('sc_theme');
-        if (savedTheme === 'dark') {
-          document.documentElement.classList.add('dark', 'dark-mode');
-        } else {
+        if (savedTheme === 'light') {
           document.documentElement.classList.remove('dark', 'dark-mode');
+        } else {
+          document.documentElement.classList.add('dark', 'dark-mode');
         }
       } catch (e) {}
 

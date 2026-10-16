@@ -147,7 +147,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onForgotPasswordClick }) => 
   ];
 
   return (
-    <div className="w-full min-h-screen text-slate-800 pb-16 pt-20 sm:pt-24">
+    <div className="w-full min-h-screen text-slate-800 dark:text-slate-100 pb-16 pt-20 sm:pt-24">
       {/* =========================================================================
           SECTION 1: HERO SECTION (Left Welcome Content + Right Glass Login Panel)
           ========================================================================= */}
@@ -157,8 +157,8 @@ export const HomePage: React.FC<HomePageProps> = ({ onForgotPasswordClick }) => 
           <div className="lg:col-span-7 flex flex-col justify-center space-y-6">
             {/* Top Badge */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-500/15 border border-sky-400/40 backdrop-blur-md self-start shadow-xs">
-              <Sparkles className="w-4 h-4 text-sky-600 animate-pulse" />
-              <span className="text-xs sm:text-sm font-bold text-sky-900 tracking-wide">
+              <Sparkles className="w-4 h-4 text-sky-600 dark:text-sky-400 animate-pulse" />
+              <span className="text-xs sm:text-sm font-bold text-sky-900 dark:text-sky-300 tracking-wide">
                 {language === 'gu'
                   ? 'શિવ કમ્પ્યુટર — વિશ્વસનીય ડિજિટલ સેવા કેન્દ્ર'
                   : 'Shiv Computer — Premium Digital Service Platform'}
@@ -166,20 +166,20 @@ export const HomePage: React.FC<HomePageProps> = ({ onForgotPasswordClick }) => 
             </div>
 
             {/* Main Brand Title */}
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.15] text-slate-900">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.15] text-slate-900 dark:text-white">
               <span>{language === 'gu' ? 'તમામ સરકારી અને કૃષિ સેવાઓ' : 'Fast, Reliable'}</span>{' '}
-              <span className="bg-gradient-to-r from-sky-600 via-blue-600 to-cyan-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-sky-600 via-blue-600 to-cyan-500 dark:from-cyan-400 dark:via-sky-300 dark:to-blue-400 bg-clip-text text-transparent">
                 {language === 'gu' ? 'એક જ સ્થળે' : 'Online Digital Services'}
               </span>
             </h1>
 
             {/* Tagline / Subtitle */}
-            <p className="text-base sm:text-xl font-bold text-sky-900/90 leading-relaxed max-w-2xl">
+            <p className="text-base sm:text-xl font-bold text-sky-900/90 dark:text-sky-300 leading-relaxed max-w-2xl">
               Online Services | Form Filling | Agriculture Forms | Digital Support
             </p>
 
             {/* Gujarati Welcome Message */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-white/35 border border-sky-300/40 backdrop-blur-md text-sm sm:text-base text-sky-950 leading-relaxed shadow-lg shadow-sky-950/5">
+            <div className="p-4 sm:p-5 rounded-2xl bg-white/35 dark:bg-slate-900/60 border border-sky-300/40 dark:border-white/10 backdrop-blur-md text-sm sm:text-base text-sky-950 dark:text-slate-200 leading-relaxed shadow-lg shadow-sky-950/5">
               <p className="font-medium">
                 {language === 'gu'
                   ? 'ખેડૂત સહાય યોજનાઓ, આઈ-ખેડૂત પોર્ટલ, આવક અને જાતિના દાખલા, સોગંદનામા તેમજ તમામ ઓનલાઇન ફોર્મ સચોટ અને ઝડપથી ભરવા માટે કેશોદ ખાતેનું અગ્રણી કેન્દ્ર.'
@@ -189,43 +189,43 @@ export const HomePage: React.FC<HomePageProps> = ({ onForgotPasswordClick }) => 
 
             {/* 3 Core Highlights */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-              <div className="p-3.5 rounded-xl bg-white/30 border border-white/50 backdrop-blur-md flex items-center gap-3 hover:border-cyan-400/50 hover:bg-white/40 transition-all shadow-xs">
+              <div className="p-3.5 rounded-xl bg-white/30 dark:bg-slate-900/60 border border-white/50 dark:border-white/10 backdrop-blur-md flex items-center gap-3 hover:border-cyan-400/50 hover:bg-white/40 dark:hover:bg-slate-900/80 transition-all shadow-xs">
                 <div className="w-9 h-9 rounded-lg bg-sky-500/15 border border-sky-400/30 flex items-center justify-center shrink-0">
-                  <Zap className="w-4 h-4 text-sky-700" />
+                  <Zap className="w-4 h-4 text-sky-700 dark:text-sky-400" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-slate-900">
+                  <div className="text-xs font-bold text-slate-900 dark:text-white">
                     {language === 'gu' ? 'ઝડપી સેવા' : 'Fast Service'}
                   </div>
-                  <div className="text-[11px] text-slate-600">
+                  <div className="text-[11px] text-slate-600 dark:text-slate-400">
                     {language === 'gu' ? 'સેમ ડે પ્રોસેસિંગ' : 'Same-day processing'}
                   </div>
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-white/30 border border-white/50 backdrop-blur-md flex items-center gap-3 hover:border-blue-400/50 hover:bg-white/40 transition-all shadow-xs">
+              <div className="p-3.5 rounded-xl bg-white/30 dark:bg-slate-900/60 border border-white/50 dark:border-white/10 backdrop-blur-md flex items-center gap-3 hover:border-blue-400/50 hover:bg-white/40 dark:hover:bg-slate-900/80 transition-all shadow-xs">
                 <div className="w-9 h-9 rounded-lg bg-blue-500/15 border border-blue-400/30 flex items-center justify-center shrink-0">
-                  <ShieldCheck className="w-4 h-4 text-blue-700" />
+                  <ShieldCheck className="w-4 h-4 text-blue-700 dark:text-blue-400" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-slate-900">
+                  <div className="text-xs font-bold text-slate-900 dark:text-white">
                     {language === 'gu' ? 'સુરક્ષિત અને અધિકૃત' : 'Secure & Reliable'}
                   </div>
-                  <div className="text-[11px] text-slate-600">
+                  <div className="text-[11px] text-slate-600 dark:text-slate-400">
                     {language === 'gu' ? 'સરકારી પોર્ટલ પ્રમાણિત' : 'Official compliance'}
                   </div>
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-white/30 border border-white/50 backdrop-blur-md flex items-center gap-3 hover:border-teal-400/50 hover:bg-white/40 transition-all shadow-xs">
+              <div className="p-3.5 rounded-xl bg-white/30 dark:bg-slate-900/60 border border-white/50 dark:border-white/10 backdrop-blur-md flex items-center gap-3 hover:border-teal-400/50 hover:bg-white/40 dark:hover:bg-slate-900/80 transition-all shadow-xs">
                 <div className="w-9 h-9 rounded-lg bg-teal-500/15 border border-teal-400/30 flex items-center justify-center shrink-0">
-                  <Clock className="w-4 h-4 text-teal-700" />
+                  <Clock className="w-4 h-4 text-teal-700 dark:text-teal-400" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-slate-900">
+                  <div className="text-xs font-bold text-slate-900 dark:text-white">
                     {language === 'gu' ? 'સહાય ડેસ્ક' : '24/7 Support'}
                   </div>
-                  <div className="text-[11px] text-slate-600">
+                  <div className="text-[11px] text-slate-600 dark:text-slate-400">
                     {language === 'gu' ? 'વોટ્સએપ હેલ્પલાઇન' : 'WhatsApp guidance'}
                   </div>
                 </div>
@@ -246,7 +246,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onForgotPasswordClick }) => 
               <button
                 type="button"
                 onClick={() => navigateTo('applications')}
-                className="px-5 py-3 rounded-xl bg-white/40 hover:bg-white/60 border border-white/60 text-sky-900 font-bold text-sm transition-all backdrop-blur-md flex items-center gap-2 cursor-pointer shadow-xs"
+                className="px-5 py-3 rounded-xl bg-white/40 dark:bg-slate-800/60 hover:bg-white/60 dark:hover:bg-slate-800/80 border border-white/60 dark:border-white/10 text-sky-900 dark:text-sky-300 font-bold text-sm transition-all backdrop-blur-md flex items-center gap-2 cursor-pointer shadow-xs"
               >
                 <CheckCircle className="w-4 h-4 text-emerald-600" />
                 <span>{language === 'gu' ? 'અરજી સ્ટેટસ તપાસો' : 'Track Application'}</span>
@@ -257,18 +257,18 @@ export const HomePage: React.FC<HomePageProps> = ({ onForgotPasswordClick }) => 
           {/* Right Column: Transparent Glass Login Panel (or User Welcome Card if logged in) */}
           <div className="lg:col-span-5 flex justify-center">
             {isAuthenticated ? (
-              <div className="w-full max-w-md p-6 sm:p-8 rounded-3xl bg-white/25 border border-white/50 backdrop-blur-xl shadow-xl shadow-sky-900/10 text-center space-y-5 animate-in fade-in duration-300">
+              <div className="w-full max-w-md p-6 sm:p-8 rounded-3xl bg-white/25 dark:bg-slate-900/70 border border-white/50 dark:border-white/10 backdrop-blur-xl shadow-xl shadow-sky-900/10 text-center space-y-5 animate-in fade-in duration-300">
                 <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white text-2xl font-black shadow-lg shadow-cyan-500/30">
                   {authRole === 'admin' ? 'A' : (currentUser?.name?.charAt(0) || 'U')}
                 </div>
                 <div>
-                  <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-xs font-bold bg-sky-500/20 text-sky-800 border border-sky-400/40 mb-2">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-xs font-bold bg-sky-500/20 text-sky-800 dark:text-sky-300 border border-sky-400/40 mb-2">
                     {authRole === 'admin' ? 'Administrator' : 'Verified Citizen'}
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900">
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white">
                     {language === 'gu' ? 'સ્વાગત છે,' : 'Welcome back,'} {currentUser?.name || (authRole === 'admin' ? 'Admin' : 'User')}
                   </h3>
-                  <p className="text-xs text-slate-600 mt-1 truncate">
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 truncate">
                     {currentUser?.email || (authRole === 'admin' ? 'admin@shivcomputer.com' : 'user@shivcomputer.com')}
                   </p>
                 </div>
@@ -292,7 +292,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onForgotPasswordClick }) => 
                   <button
                     type="button"
                     onClick={() => navigateTo('documents')}
-                    className="w-full py-2.5 rounded-xl bg-white/40 hover:bg-white/60 border border-white/50 text-sky-900 text-xs font-bold transition-all cursor-pointer shadow-xs"
+                    className="w-full py-2.5 rounded-xl bg-white/40 dark:bg-slate-800/60 hover:bg-white/60 dark:hover:bg-slate-800/80 border border-white/50 dark:border-white/10 text-sky-900 dark:text-sky-300 text-xs font-bold transition-all cursor-pointer shadow-xs"
                   >
                     {language === 'gu' ? 'મારા અધિકૃત દસ્તાવેજો' : 'My Authorized Documents'}
                   </button>
@@ -324,16 +324,16 @@ export const HomePage: React.FC<HomePageProps> = ({ onForgotPasswordClick }) => 
       {/* =========================================================================
           SECTION 2: OUR SERVICES (Horizontal Scrollable Glass Card Section)
           ========================================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 border-t border-white/30">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 border-t border-white/30 dark:border-white/10">
         <div className="flex flex-wrap items-end justify-between gap-4 mb-6 sm:mb-8">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-sky-500/15 text-sky-800 border border-sky-400/30 mb-2">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-sky-500/15 text-sky-800 dark:text-sky-300 border border-sky-400/30 mb-2">
               {language === 'gu' ? 'મુખ્ય સેવાઓ' : 'Our Services'}
             </div>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
               {language === 'gu' ? 'ડિજિટલ અને સરકારી સેવાઓ' : 'Comprehensive Digital Solutions'}
             </h2>
-            <p className="text-xs sm:text-sm text-sky-900/80 mt-1 max-w-xl font-medium">
+            <p className="text-xs sm:text-sm text-sky-900/80 dark:text-sky-300 mt-1 max-w-xl font-medium">
               {language === 'gu'
                 ? 'ખેડૂતો અને નાગરિકો માટે તમામ પ્રકારના ઓનલાઇન ફોર્મ, સોગંદનામા અને દસ્તાવેજ સેવાઓ.'
                 : 'Browse our full spectrum of government, revenue, agricultural and certificate services.'}
@@ -345,7 +345,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onForgotPasswordClick }) => 
             <button
               type="button"
               onClick={() => scrollServices('left')}
-              className="p-2.5 rounded-xl bg-white/35 hover:bg-white/55 border border-white/50 text-slate-800 hover:text-sky-700 transition-colors cursor-pointer shadow-xs"
+              className="p-2.5 rounded-xl bg-white/35 dark:bg-slate-800/60 hover:bg-white/55 dark:hover:bg-slate-800/80 border border-white/50 dark:border-white/10 text-slate-800 dark:text-slate-200 hover:text-sky-700 dark:hover:text-cyan-400 transition-colors cursor-pointer shadow-xs"
               aria-label="Scroll left"
             >
               <ChevronLeft className="w-5 h-5" />
@@ -353,7 +353,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onForgotPasswordClick }) => 
             <button
               type="button"
               onClick={() => scrollServices('right')}
-              className="p-2.5 rounded-xl bg-white/35 hover:bg-white/55 border border-white/50 text-slate-800 hover:text-sky-700 transition-colors cursor-pointer shadow-xs"
+              className="p-2.5 rounded-xl bg-white/35 dark:bg-slate-800/60 hover:bg-white/55 dark:hover:bg-slate-800/80 border border-white/50 dark:border-white/10 text-slate-800 dark:text-slate-200 hover:text-sky-700 dark:hover:text-cyan-400 transition-colors cursor-pointer shadow-xs"
               aria-label="Scroll right"
             >
               <ChevronRight className="w-5 h-5" />
@@ -371,37 +371,37 @@ export const HomePage: React.FC<HomePageProps> = ({ onForgotPasswordClick }) => 
             <div
               key={service.id}
               onClick={() => navigateTo(service.targetView)}
-              className="snap-start shrink-0 w-[280px] sm:w-[320px] p-5 sm:p-6 rounded-2xl bg-white/20 border border-white/40 hover:border-cyan-400/60 backdrop-blur-md shadow-md shadow-sky-900/5 hover:shadow-cyan-500/15 transition-all duration-300 hover:-translate-y-1.5 cursor-pointer group flex flex-col justify-between"
+              className="snap-start shrink-0 w-[280px] sm:w-[320px] p-5 sm:p-6 rounded-2xl bg-white/20 dark:bg-slate-900/70 border border-white/40 dark:border-white/10 hover:border-cyan-400/60 dark:hover:border-cyan-400/50 backdrop-blur-md shadow-md shadow-sky-900/5 hover:shadow-cyan-500/15 transition-all duration-300 hover:-translate-y-1.5 cursor-pointer group flex flex-col justify-between"
             >
               <div>
                 {/* Header: Icon & Tag */}
                 <div className="flex items-center justify-between gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-xl bg-white/40 border border-white/50 flex items-center justify-center group-hover:scale-110 transition-transform shadow-xs">
+                  <div className="w-12 h-12 rounded-xl bg-white/40 dark:bg-slate-800/60 border border-white/50 dark:border-white/10 flex items-center justify-center group-hover:scale-110 transition-transform shadow-xs">
                     {service.icon}
                   </div>
-                  <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-sky-500/15 text-sky-850 border border-sky-400/35">
+                  <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-sky-500/15 text-sky-850 dark:text-sky-300 border border-sky-400/35">
                     {language === 'gu' ? service.tagGu : service.tag}
                   </span>
                 </div>
 
                 {/* Service Title */}
-                <h3 className="text-lg font-bold text-slate-900 group-hover:text-sky-700 transition-colors">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-sky-700 dark:group-hover:text-cyan-400 transition-colors">
                   {language === 'gu' ? service.titleGu : service.title}
                 </h3>
-                <div className="text-xs font-semibold text-sky-700 mb-2">
+                <div className="text-xs font-semibold text-sky-700 dark:text-cyan-400 mb-2">
                   {service.subtitle}
                 </div>
 
                 {/* Description */}
-                <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
                   {language === 'gu' ? service.descriptionGu : service.description}
                 </p>
               </div>
 
               {/* Bottom Action Arrow */}
-              <div className="pt-5 mt-4 border-t border-white/30 flex items-center justify-between text-xs font-bold text-sky-700 group-hover:text-sky-900 transition-colors">
+              <div className="pt-5 mt-4 border-t border-white/30 dark:border-white/10 flex items-center justify-between text-xs font-bold text-sky-700 dark:text-cyan-400 group-hover:text-sky-900 dark:group-hover:text-cyan-300 transition-colors">
                 <span>{language === 'gu' ? 'વિગતો જુઓ' : 'Learn More'}</span>
-                <div className="w-7 h-7 rounded-lg bg-white/40 flex items-center justify-center group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-cyan-400 group-hover:text-white transition-colors shadow-xs">
+                <div className="w-7 h-7 rounded-lg bg-white/40 dark:bg-slate-800/60 flex items-center justify-center group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-cyan-400 group-hover:text-white transition-colors shadow-xs">
                   <ArrowRight className="w-3.5 h-3.5" />
                 </div>
               </div>
@@ -413,23 +413,23 @@ export const HomePage: React.FC<HomePageProps> = ({ onForgotPasswordClick }) => 
       {/* =========================================================================
           SECTION 3: LOWER INFORMATION SECTION (4 Transparent Glass Panels)
           ========================================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 border-t border-white/30">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 border-t border-white/30 dark:border-white/10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
           {/* PANEL A: Agriculture Banner */}
-          <div className="p-6 sm:p-8 rounded-3xl bg-white/25 border border-emerald-300/60 backdrop-blur-md shadow-lg shadow-emerald-900/5 relative overflow-hidden group">
+          <div className="p-6 sm:p-8 rounded-3xl bg-white/25 dark:bg-slate-900/70 border border-emerald-300/60 dark:border-emerald-500/30 backdrop-blur-md shadow-lg shadow-emerald-900/5 relative overflow-hidden group">
             <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-emerald-400/20 blur-2xl pointer-events-none" />
             <div className="relative z-10 flex flex-col justify-between h-full space-y-4">
               <div>
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/15 text-emerald-800 border border-emerald-400/35 mb-3">
-                  <Sprout className="w-3.5 h-3.5 text-emerald-600" />
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 border border-emerald-400/35 mb-3">
+                  <Sprout className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                   <span>{language === 'gu' ? 'કૃષિ અને ખેડૂત સહાય' : 'Agriculture & Khedut Sahay'}</span>
                 </div>
-                <h3 className="text-xl sm:text-2xl font-black text-slate-900">
+                <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
                   {language === 'gu'
                     ? 'ધરતીપુત્રો માટે સમર્પિત કલ્યાણકારી સેવાઓ'
                     : 'Dedicated Support for Farmers & Agriculture'}
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-700 mt-2 leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 mt-2 leading-relaxed">
                   {language === 'gu'
                     ? '૭/૧૨ અને ૮-અ નકલ, આઈ-ખેડૂત પોર્ટલ પર સબસીડી અરજીઓ, તાર ફેન્સિંગ સહાય, બોરવેલ, દવા છંટકાવ પંપ તેમજ પાક વીમા સહાય માટે કેશોદ ખાતેનું અગ્રણી કેન્દ્ર.'
                     : 'Fast and reliable assistance for 7/12 & 8A land records, iKhedut portal applications, fence subventions, borewell subsidies, and PM Kisan updates.'}
