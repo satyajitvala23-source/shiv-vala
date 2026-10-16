@@ -338,8 +338,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         transition={{ duration: 0.35, ease: 'easeOut' }}
         className="iphone-glass-card p-4 sm:p-8 relative overflow-hidden w-full max-w-full min-w-0"
       >
-        {/* Shiv Computer Branding - Clean emblem presentation */}
-        <BrandLogo brandName="Shiv Computer" tagline={t.brandTagline} size="md" hideTitle={false} />
+        {/* Clean emblem presentation */}
+        <BrandLogo brandName={t.brandName} tagline={t.brandTagline} size="md" hideTitle={true} />
 
         {/* Dynamic Heading & Role Badge */}
         <div className="mt-4 mb-5 text-center">
@@ -352,8 +352,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             ) : (
               <UserCheck className="w-3.5 h-3.5 text-sky-700" />
             )}
-            <span className="font-bold text-sky-900">Shiv Computer</span>
-            <span className="text-sky-400 font-normal">|</span>
             <span>{role === 'admin' ? t.adminBadge : t.userBadge}</span>
           </div>
 

@@ -317,6 +317,44 @@ export const AdminDashboard: React.FC = () => {
 
         {/* Main Content Area */}
         <main className="flex-1 overflow-y-auto p-3.5 sm:p-6 lg:p-8 space-y-6 min-w-0 max-w-full">
+          {/* Top Shiv Computer Brand Header (Prominently displayed after login) */}
+          <div
+            id="admin-dashboard-top-brand"
+            className="p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl bg-linear-to-r from-white/80 via-sky-50/70 to-cyan-50/80 border border-white/80 dark:border-white/10 backdrop-blur-xl shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3.5"
+          >
+            <div className="flex items-center gap-3.5 min-w-0">
+              <div className="w-11 h-11 sm:w-13 sm:h-13 rounded-2xl bg-white/70 dark:bg-slate-800/60 p-1 flex items-center justify-center border border-white/80 dark:border-white/10 shadow-xs shrink-0">
+                <img
+                  src="/logo.png"
+                  alt="Shiv Computer"
+                  className="w-full h-full object-contain filter drop-shadow-xs"
+                />
+              </div>
+              <div className="min-w-0">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h2 className="text-xl sm:text-2xl font-black tracking-tight bg-linear-to-r from-sky-950 via-sky-800 to-cyan-600 bg-clip-text text-transparent">
+                    Shiv Computer
+                  </h2>
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-bold bg-purple-500/15 text-purple-800 dark:text-purple-300 border border-purple-400/30">
+                    {language === 'gu' ? 'એડમિન કંટ્રોલ પેનલ' : 'Admin Control Panel'}
+                  </span>
+                </div>
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-medium truncate mt-0.5">
+                  {language === 'gu'
+                    ? 'શિવ કમ્પ્યુટર — સત્તાવાર સંચાલન, ફોર્મ્સ અને દસ્તાવેજ વ્યવસ્થાપન'
+                    : 'Shiv Computer — Official Administration, Forms & Document Management'}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 self-start sm:self-center shrink-0">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-white/70 dark:bg-slate-800/60 border border-white/80 dark:border-white/10 text-xs font-semibold text-slate-700 dark:text-slate-300 shadow-2xs backdrop-blur-md">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span>{language === 'gu' ? 'સક્રિય એડમિન' : 'Active Admin'}</span>
+              </div>
+            </div>
+          </div>
+
           {/* TAB 1: DASHBOARD OVERVIEW */}
           {activeTab === 'dashboard' && (
             <div className="space-y-6">
