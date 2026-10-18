@@ -46,6 +46,7 @@ export const UserDashboard: React.FC = () => {
     services,
     agricultureServices,
     updateUserProfile,
+    navigateToView,
   } = useApp();
 
   const getStatusLabel = (status: ApplicationStatus): string => {

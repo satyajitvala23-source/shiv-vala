@@ -61,6 +61,7 @@ export interface LoginParams {
   identifier: string; // username or email
   password: string;
   expectedRole: 'admin' | 'user';
+  rememberMe?: boolean;
 }
 
 /**
@@ -77,11 +78,12 @@ export async function loginUser({
   identifier,
   password,
   expectedRole,
+  rememberMe = true,
 }: LoginParams): Promise<{ user: CustomerUser; role: 'admin' | 'user' }> {
   if (expectedRole === 'admin') {
-    return signInAdmin(identifier, password);
+    return signInAdmin(identifier, password, rememberMe);
   } else {
-    const res = await signInCitizen(identifier, password);
+    const res = await signInCitizen(identifier, password, rememberMe);
     return { user: res.user, role: res.role === 'admin' ? 'admin' : 'user' };
   }
 }

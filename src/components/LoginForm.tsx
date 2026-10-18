@@ -236,6 +236,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         identifier: identifier.trim(),
         password: loginPassword,
         expectedRole: role,
+        rememberMe,
       });
 
       setStatusMessage({
