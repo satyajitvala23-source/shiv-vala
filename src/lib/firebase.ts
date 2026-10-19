@@ -61,7 +61,6 @@ export interface LoginParams {
   identifier: string; // username or email
   password: string;
   expectedRole: 'admin' | 'user';
-  rememberMe?: boolean;
 }
 
 /**
@@ -78,12 +77,27 @@ export async function loginUser({
   identifier,
   password,
   expectedRole,
-  rememberMe = true,
 }: LoginParams): Promise<{ user: CustomerUser; role: 'admin' | 'user' }> {
-  if (expectedRole === 'admin') {
-    return signInAdmin(identifier, password, rememberMe);
+  const normalized = cleanUsername(identifier);
+  const isKnownAdmin =
+    normalized === 'admin' ||
+    normalized === 'satu' ||
+    normalized === 'administrator' ||
+    identifier.trim().toLowerCase() === 'satyajitvala23@gmail.com' ||
+    identifier.trim().toLowerCase() === 'admin@shivcomputer.com';
+
+  if (expectedRole === 'admin' || isKnownAdmin) {
+    try {
+      return await signInAdmin(identifier, password);
+    } catch (adminErr) {
+      if (expectedRole !== 'admin') {
+        const res = await signInCitizen(identifier, password);
+        return { user: res.user, role: res.role === 'admin' ? 'admin' : 'user' };
+      }
+      throw adminErr;
+    }
   } else {
-    const res = await signInCitizen(identifier, password, rememberMe);
+    const res = await signInCitizen(identifier, password);
     return { user: res.user, role: res.role === 'admin' ? 'admin' : 'user' };
   }
 }

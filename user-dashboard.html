@@ -18,9 +18,7 @@
       } catch (e) {}
       // Automatically route role to user
       sessionStorage.setItem('sc_current_role', 'user');
-      if (!window.location.hash || window.location.hash === '#/') {
-        window.location.hash = '#/user-dashboard';
-      }
+      window.location.replace('/#/user-dashboard');
     </script>
   </head>
   <body class="font-sans antialiased bg-slate-50 text-slate-900">

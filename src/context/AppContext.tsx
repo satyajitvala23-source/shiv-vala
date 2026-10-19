@@ -624,9 +624,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setCurrentUser(CURRENT_USER);
     setCurrentView('login');
     window.location.hash = '#/login';
-    if (typeof window !== 'undefined' && window.location.pathname.includes('dashboard')) {
-      window.location.href = '/';
-    }
   };
 
   // Service Management

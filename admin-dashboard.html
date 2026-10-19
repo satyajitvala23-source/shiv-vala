@@ -18,9 +18,7 @@
       } catch (e) {}
       // Automatically route role to admin
       sessionStorage.setItem('sc_current_role', 'admin');
-      if (!window.location.hash || window.location.hash === '#/') {
-        window.location.hash = '#/admin-dashboard';
-      }
+      window.location.replace('/#/admin-dashboard');
     </script>
   </head>
   <body class="font-sans antialiased bg-slate-50 text-slate-900">
