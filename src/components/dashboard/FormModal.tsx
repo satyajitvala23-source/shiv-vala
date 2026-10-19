@@ -68,16 +68,16 @@ export const FormModal: React.FC<FormModalProps> = ({
     >
       <div
         id="form-modal-card"
-        className="w-full max-w-md bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden text-left animate-in zoom-in-95"
+        className="w-full max-w-md bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden text-left animate-in zoom-in-95"
       >
-        <div className="p-4 sm:p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/70 dark:bg-slate-800/40">
-          <h3 className="font-bold text-slate-900 dark:text-white text-base">
+        <div className="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
+          <h3 className="font-bold text-slate-900 text-base">
             {formToEdit ? 'Edit Form Template' : 'Add New Downloadable Form'}
           </h3>
           <button
             type="button"
             onClick={onClose}
-            className="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+            className="p-1 rounded-lg text-slate-400 hover:text-slate-600"
           >
             <X className="w-5 h-5" />
           </button>
@@ -85,7 +85,7 @@ export const FormModal: React.FC<FormModalProps> = ({
 
         <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 text-xs sm:text-sm">
           <div>
-            <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+            <label className="block font-semibold text-slate-700 mb-1">
               Form Title *
             </label>
             <input
@@ -94,18 +94,18 @@ export const FormModal: React.FC<FormModalProps> = ({
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Enter form title"
-              className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-blue-500/20"
+              className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-slate-900 outline-none focus:ring-2 focus:ring-blue-500/20"
             />
           </div>
 
           <div>
-            <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+            <label className="block font-semibold text-slate-700 mb-1">
               Category
             </label>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value as any)}
-              className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none"
+              className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-slate-900 outline-none"
             >
               <option value="general">General Application Form</option>
               <option value="agriculture">Agriculture & iKhedut Scheme</option>
@@ -115,7 +115,7 @@ export const FormModal: React.FC<FormModalProps> = ({
           </div>
 
           <div>
-            <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+            <label className="block font-semibold text-slate-700 mb-1">
               Description / Instructions
             </label>
             <textarea
@@ -123,13 +123,13 @@ export const FormModal: React.FC<FormModalProps> = ({
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Guidelines for applicants when filling this form"
-              className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none"
+              className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-slate-900 outline-none"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block font-semibold text-slate-700 mb-1">
                 File Size
               </label>
               <input
@@ -137,11 +137,11 @@ export const FormModal: React.FC<FormModalProps> = ({
                 value={fileSize}
                 onChange={(e) => setFileSize(e.target.value)}
                 placeholder="File size (KB / MB)"
-                className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none"
+                className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-slate-900 outline-none"
               />
             </div>
             <div>
-              <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block font-semibold text-slate-700 mb-1">
                 File Format
               </label>
               <input
@@ -149,12 +149,12 @@ export const FormModal: React.FC<FormModalProps> = ({
                 value={fileType}
                 onChange={(e) => setFileType(e.target.value)}
                 placeholder="PDF Document"
-                className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none"
+                className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-slate-900 outline-none"
               />
             </div>
           </div>
 
-          <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-dashed border-slate-300 dark:border-slate-700 flex items-center justify-center gap-2 text-slate-500 text-xs">
+          <div className="p-3 bg-slate-50 rounded-xl border border-dashed border-slate-300 flex items-center justify-center gap-2 text-slate-500 text-xs">
             <FileUp className="w-4 h-4 text-blue-500" />
             <span>Simulate file upload / replacement on submit</span>
           </div>
@@ -167,16 +167,16 @@ export const FormModal: React.FC<FormModalProps> = ({
               onChange={(e) => setEnabled(e.target.checked)}
               className="w-4 h-4 rounded text-blue-600 focus:ring-0 cursor-pointer"
             />
-            <label htmlFor="form-active-check" className="font-semibold text-slate-700 dark:text-slate-300 cursor-pointer">
+            <label htmlFor="form-active-check" className="font-semibold text-slate-700 cursor-pointer">
               Active / Available for Download
             </label>
           </div>
 
-          <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex justify-end gap-2">
+          <div className="pt-4 border-t border-slate-100 flex justify-end gap-2">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-medium"
+              className="px-4 py-2 rounded-xl text-slate-600 hover:bg-slate-100 text-xs font-medium"
             >
               Cancel
             </button>

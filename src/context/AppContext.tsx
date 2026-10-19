@@ -169,17 +169,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       // ignore
     }
   };
-  const [theme, setTheme] = useState<ThemeMode>(() => {
-    try {
-      const savedTheme = localStorage.getItem('sc_theme');
-      if (savedTheme === 'light') {
-        return 'light';
-      }
-    } catch {
-      // ignore
-    }
-    return 'dark';
-  });
+  const [theme] = useState<ThemeMode>('light');
 
   // Core Data
   const [currentUser, setCurrentUser] = useState<CustomerUser>(CURRENT_USER);
@@ -553,24 +543,21 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     localStorage.setItem('sc_web_content', JSON.stringify(websiteContent));
   }, [websiteContent]);
 
-  // Apply dark mode classes to documentElement & body
+  // Permanently maintain clean light theme across all pages & reloads
   useEffect(() => {
     try {
-      localStorage.setItem('sc_theme', theme);
+      localStorage.removeItem('sc_theme');
     } catch {
       // ignore
     }
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark', 'dark-mode');
-      document.body.classList.add('dark', 'dark-mode');
-    } else {
-      document.documentElement.classList.remove('dark', 'dark-mode');
-      document.body.classList.remove('dark', 'dark-mode');
-    }
-  }, [theme]);
+    document.documentElement.classList.remove('dark', 'dark-mode');
+    document.documentElement.classList.add('light');
+    document.body.classList.remove('dark', 'dark-mode');
+    document.body.classList.add('light');
+  }, []);
 
   const toggleTheme = () => {
-    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+    // Light theme is the permanent default
   };
 
   // Real Firebase Login

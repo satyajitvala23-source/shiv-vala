@@ -323,13 +323,13 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
 
   const getFormatBadge = (fileType: string, fileName: string) => {
     const ext = (fileName.split('.').pop() || fileType || '').toUpperCase();
-    if (ext === 'PDF') return 'bg-rose-50 text-rose-700 dark:bg-rose-950/60 dark:text-rose-300 border-rose-200 dark:border-rose-800';
-    if (['JPG', 'JPEG', 'PNG', 'WEBP'].includes(ext)) return 'bg-cyan-50 text-cyan-700 dark:bg-cyan-950/60 dark:text-cyan-300 border-cyan-200 dark:border-cyan-800';
-    if (['DOC', 'DOCX'].includes(ext)) return 'bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300 border-blue-200 dark:border-blue-800';
-    if (['XLS', 'XLSX', 'CSV'].includes(ext)) return 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800';
-    if (['PPT', 'PPTX'].includes(ext)) return 'bg-amber-50 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300 border-amber-200 dark:border-amber-800';
-    if (ext === 'ZIP') return 'bg-purple-50 text-purple-700 dark:bg-purple-950/60 dark:text-purple-300 border-purple-200 dark:border-purple-800';
-    return 'bg-slate-50 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border-slate-200 dark:border-slate-700';
+    if (ext === 'PDF') return 'bg-rose-50 text-rose-700   border-rose-200 ';
+    if (['JPG', 'JPEG', 'PNG', 'WEBP'].includes(ext)) return 'bg-cyan-50 text-cyan-700   border-cyan-200 ';
+    if (['DOC', 'DOCX'].includes(ext)) return 'bg-blue-50 text-blue-700   border-blue-200 ';
+    if (['XLS', 'XLSX', 'CSV'].includes(ext)) return 'bg-emerald-50 text-emerald-700   border-emerald-200 ';
+    if (['PPT', 'PPTX'].includes(ext)) return 'bg-amber-50 text-amber-700   border-amber-200 ';
+    if (ext === 'ZIP') return 'bg-purple-50 text-purple-700   border-purple-200 ';
+    return 'bg-slate-50 text-slate-700   border-slate-200 ';
   };
 
   // Filtered documents
@@ -347,22 +347,22 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
   return (
     <div className="space-y-6">
       {/* Top Banner & Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 sm:p-6 rounded-3xl bg-white/70 dark:bg-slate-900/70 border border-slate-200/80 dark:border-white/10 backdrop-blur-xl shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 sm:p-6 rounded-3xl bg-white/70 border border-slate-200/80 backdrop-blur-xl shadow-xs">
         <div>
           <div className="flex items-center gap-2">
-            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-sky-500/15 text-sky-700 dark:text-sky-300 border border-sky-500/25">
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-sky-500/15 text-sky-700 border border-sky-500/25">
               Admin
             </span>
-            <span className="text-xs font-mono text-slate-500 dark:text-slate-400">
+            <span className="text-xs font-mono text-slate-500">
               {documents.length} Documents in Storage
             </span>
           </div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white mt-1">
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 mt-1">
             {language === 'gu'
               ? 'દસ્તાવેજ વ્યવસ્થાપન (Firebase Storage)'
               : 'Document Manager (Firebase Storage)'}
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">
             {language === 'gu'
               ? 'એડમિન કંટ્રોલ: દસ્તાવેજો અપલોડ કરો, એડિટ કરો, બદલો (Replace), જુઓ અને ડિલીટ કરો. અપલોડ કરેલા દસ્તાવેજો યુઝર પેનલમાં આપોઆપ દેખાશે.'
               : 'Admin controls to upload, edit, replace, preview, download, and delete documents. Uploads automatically appear in the User Panel.'}
@@ -387,14 +387,14 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
 
       {/* Success Notice */}
       {uploadSuccessNotice && (
-        <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs flex items-center gap-2 animate-in fade-in">
+        <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 text-xs flex items-center gap-2 animate-in fade-in">
           <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600" />
           <span className="font-semibold">{uploadSuccessNotice}</span>
         </div>
       )}
 
       {/* Search & Category Filter Bar */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 p-4 rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-white/10 shadow-xs backdrop-blur-md">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 p-4 rounded-2xl bg-white/80 border border-slate-200/80 shadow-xs backdrop-blur-md">
         <div className="relative flex-1">
           <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
@@ -406,7 +406,7 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
                 ? 'દસ્તાવેજ શોધો (Title, Category, File)...'
                 : 'Search documents by title, category, or filename...'
             }
-            className="w-full pl-9 pr-4 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-hidden focus:border-sky-500"
+            className="w-full pl-9 pr-4 py-2 rounded-xl text-xs bg-slate-50 border border-slate-200 text-slate-900 focus:outline-hidden focus:border-sky-500"
           />
         </div>
 
@@ -416,7 +416,7 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value)}
             aria-label="Filter documents by category"
-            className="py-2 px-3 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-hidden"
+            className="py-2 px-3 rounded-xl text-xs bg-slate-50 border border-slate-200 text-slate-900 focus:outline-hidden"
           >
             <option value="all">All Categories (બધા વર્ગ)</option>
             <option value="certificates">Certificates (પ્રમાણપત્રો)</option>
@@ -430,14 +430,14 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
 
       {/* Documents Grid */}
       {loadingDocs ? (
-        <div className="p-12 text-center text-slate-400 text-xs bg-white/40 dark:bg-slate-900/40 rounded-3xl border border-slate-200/50">
+        <div className="p-12 text-center text-slate-400 text-xs bg-white/40 rounded-3xl border border-slate-200/50">
           <RefreshCw className="w-5 h-5 animate-spin mx-auto mb-2 text-sky-600" />
           <span>Loading document catalog...</span>
         </div>
       ) : filteredDocs.length === 0 ? (
-        <div className="p-12 text-center bg-white/70 dark:bg-slate-900/70 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-3 backdrop-blur-md">
-          <FileText className="w-8 h-8 text-slate-300 dark:text-slate-600 mx-auto" />
-          <div className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+        <div className="p-12 text-center bg-white/70 rounded-3xl border border-slate-200 space-y-3 backdrop-blur-md">
+          <FileText className="w-8 h-8 text-slate-300 mx-auto" />
+          <div className="text-sm font-semibold text-slate-700">
             No documents found
           </div>
           <p className="text-xs text-slate-400 max-w-sm mx-auto">
@@ -453,12 +453,12 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
             return (
               <div
                 key={docItem.id}
-                className="glass-card p-5 rounded-3xl border border-slate-200/80 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 flex flex-col justify-between space-y-4 group transition-all hover:shadow-lg backdrop-blur-md"
+                className="glass-card p-5 rounded-3xl border border-slate-200/80 bg-white/80 flex flex-col justify-between space-y-4 group transition-all hover:shadow-lg backdrop-blur-md"
               >
                 <div>
                   {/* Top Badges */}
                   <div className="flex items-center justify-between text-[11px] mb-3">
-                    <span className="uppercase px-2.5 py-0.5 rounded-lg bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20 font-mono text-[10px]">
+                    <span className="uppercase px-2.5 py-0.5 rounded-lg bg-sky-500/10 text-sky-600 border border-sky-500/20 font-mono text-[10px]">
                       {getCategoryLabel(docItem.category)}
                     </span>
                     <div className="flex items-center gap-1.5">
@@ -470,8 +470,8 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
                         onClick={() => handleTogglePublished(docItem)}
                         className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border transition-colors ${
                           docItem.isPublished
-                            ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800'
-                            : 'bg-slate-100 dark:bg-slate-800 text-slate-500 border-slate-200 dark:border-slate-700'
+                            ? 'bg-emerald-50  text-emerald-700  border-emerald-200 '
+                            : 'bg-slate-100  text-slate-500 border-slate-200 '
                         }`}
                         title="Toggle Publish Status (Controls visibility in User Panel)"
                       >
@@ -485,8 +485,8 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
                     <div
                       className={`w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 border ${
                         isDocPdf
-                          ? 'bg-rose-500/10 border-rose-500/20 text-rose-600 dark:text-rose-400'
-                          : 'bg-sky-500/10 border-sky-500/20 text-sky-600 dark:text-sky-400'
+                          ? 'bg-rose-500/10 border-rose-500/20 text-rose-600 '
+                          : 'bg-sky-500/10 border-sky-500/20 text-sky-600 '
                       }`}
                     >
                       {isDocPdf ? (
@@ -496,25 +496,25 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
                       )}
                     </div>
                     <div className="min-w-0 flex-1">
-                      <h3 className="font-bold text-sm text-slate-900 dark:text-white line-clamp-1 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors">
+                      <h3 className="font-bold text-sm text-slate-900 line-clamp-1 group-hover:text-sky-600 transition-colors">
                         {docItem.title}
                       </h3>
                       {docItem.titleGujarati && (
-                        <p className="text-xs text-slate-600 dark:text-slate-300 line-clamp-1 mt-0.5 font-medium">
+                        <p className="text-xs text-slate-600 line-clamp-1 mt-0.5 font-medium">
                           {docItem.titleGujarati}
                         </p>
                       )}
-                      <p className="text-xs text-slate-400 dark:text-slate-500 mt-1 line-clamp-2">
+                      <p className="text-xs text-slate-400 mt-1 line-clamp-2">
                         {docItem.description || 'Published official document'}
                       </p>
                     </div>
                   </div>
 
                   {/* Filename, Size, Date */}
-                  <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex flex-col gap-1 text-[11px] text-slate-400 font-mono">
+                  <div className="mt-4 pt-3 border-t border-slate-100 flex flex-col gap-1 text-[11px] text-slate-400 font-mono">
                     <div className="flex items-center justify-between">
                       <span className="truncate max-w-[160px]" title={docItem.fileName}>{docItem.fileName}</span>
-                      <span className="font-semibold text-slate-700 dark:text-slate-300">{docItem.fileSize}</span>
+                      <span className="font-semibold text-slate-700">{docItem.fileSize}</span>
                     </div>
                     <div className="flex items-center justify-between text-[10px] text-slate-400">
                       <span>{new Date(docItem.uploadedAt).toLocaleDateString()}</span>
@@ -524,11 +524,11 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
                 </div>
 
                 {/* Admin Actions: Preview, Download, Edit/Replace, Delete */}
-                <div className="grid grid-cols-4 gap-1.5 pt-2 border-t border-slate-100 dark:border-slate-800/80">
+                <div className="grid grid-cols-4 gap-1.5 pt-2 border-t border-slate-100">
                   <button
                     type="button"
                     onClick={() => setViewerDoc(docItem)}
-                    className="py-2 px-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-semibold text-xs flex items-center justify-center gap-1 transition-colors active:scale-95"
+                    className="py-2 px-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-xs flex items-center justify-center gap-1 transition-colors active:scale-95"
                     title="Preview in Browser"
                   >
                     <Eye className="w-3.5 h-3.5" />
@@ -538,7 +538,7 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
                   <button
                     type="button"
                     onClick={() => handleDownload(docItem)}
-                    className="py-2 px-1.5 rounded-xl bg-sky-50 dark:bg-sky-950/60 hover:bg-sky-100 dark:hover:bg-sky-900/60 text-sky-600 dark:text-sky-400 font-semibold text-xs flex items-center justify-center gap-1 transition-colors active:scale-95"
+                    className="py-2 px-1.5 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-600 font-semibold text-xs flex items-center justify-center gap-1 transition-colors active:scale-95"
                     title="Download File"
                   >
                     <Download className="w-3.5 h-3.5" />
@@ -548,7 +548,7 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
                   <button
                     type="button"
                     onClick={() => openEditModal(docItem)}
-                    className="py-2 px-1.5 rounded-xl bg-amber-50 dark:bg-amber-950/60 hover:bg-amber-100 dark:hover:bg-amber-900/60 text-amber-600 dark:text-amber-400 font-semibold text-xs flex items-center justify-center gap-1 transition-colors active:scale-95"
+                    className="py-2 px-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-600 font-semibold text-xs flex items-center justify-center gap-1 transition-colors active:scale-95"
                     title="Edit Details / Replace File"
                   >
                     <RefreshCw className="w-3.5 h-3.5" />
@@ -558,7 +558,7 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
                   <button
                     type="button"
                     onClick={() => setDocToDelete(docItem)}
-                    className="py-2 px-1.5 rounded-xl bg-rose-50 dark:bg-rose-950/60 hover:bg-rose-100 dark:hover:bg-rose-900/60 text-rose-600 dark:text-rose-400 font-semibold text-xs flex items-center justify-center transition-colors active:scale-95"
+                    className="py-2 px-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 font-semibold text-xs flex items-center justify-center transition-colors active:scale-95"
                     title="Delete Document from Storage"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
@@ -578,16 +578,16 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
           className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in"
         >
           <div
-            className="glass-card relative flex flex-col w-full max-w-2xl max-h-[90vh] rounded-3xl border border-white/20 dark:border-slate-800 shadow-2xl overflow-hidden bg-white dark:bg-slate-900"
+            className="glass-card relative flex flex-col w-full max-w-2xl max-h-[90vh] rounded-3xl border border-white/20 shadow-2xl overflow-hidden bg-white"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-slate-800 shrink-0">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 shrink-0">
               <div className="flex items-center gap-2.5">
-                <div className="p-2 rounded-xl bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20">
+                <div className="p-2 rounded-xl bg-sky-500/10 text-sky-600 border border-sky-500/20">
                   <UploadCloud className="w-5 h-5" />
                 </div>
                 <div>
-                  <h2 className="text-base font-bold text-slate-900 dark:text-white">
+                  <h2 className="text-base font-bold text-slate-900">
                     {language === 'gu'
                       ? 'નવો દસ્તાવેજ અપલોડ કરો (Firebase Storage)'
                       : 'Upload Document to Firebase Storage'}
@@ -603,7 +603,7 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
                 onClick={() => {
                   if (!isUploading) setIsUploadModalOpen(false);
                 }}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-white"
+                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700"
               >
                 <XCircle className="w-5 h-5" />
               </button>
@@ -611,7 +611,7 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
 
             <form onSubmit={handleUploadSubmit} className="flex-1 overflow-y-auto p-6 space-y-4">
               {uploadError && (
-                <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 text-xs flex items-center gap-2">
+                <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
                   <AlertCircle className="w-4 h-4 shrink-0" />
                   <span>{uploadError}</span>
                 </div>
@@ -633,13 +633,13 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
                 className={`p-6 border-2 border-dashed rounded-2xl text-center cursor-pointer transition-all ${
                   selectedFile
                     ? 'border-emerald-400 bg-emerald-500/5'
-                    : 'border-slate-300 dark:border-slate-700 hover:border-sky-500 bg-slate-50 dark:bg-slate-800/40'
+                    : 'border-slate-300  hover:border-sky-500 bg-slate-50 '
                 }`}
               >
                 {selectedFile ? (
                   <div className="space-y-2">
                     <CheckCircle2 className="w-8 h-8 text-emerald-500 mx-auto" />
-                    <div className="font-bold text-sm text-slate-900 dark:text-white">
+                    <div className="font-bold text-sm text-slate-900">
                       {selectedFile.name}
                     </div>
                     <div className="text-xs text-slate-400 font-mono">
@@ -649,7 +649,7 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
                 ) : (
                   <div className="space-y-2">
                     <UploadCloud className="w-8 h-8 text-sky-500 mx-auto" />
-                    <div className="font-bold text-sm text-slate-800 dark:text-slate-200">
+                    <div className="font-bold text-sm text-slate-800">
                       Click to Browse or Drag & Drop File
                     </div>
                     <div className="text-xs text-slate-400">
@@ -662,7 +662,7 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
               {/* Title & Category */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
                     Document Title (English) *
                   </label>
                   <input
@@ -671,18 +671,18 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
                     value={docTitle}
                     onChange={(e) => setDocTitle(e.target.value)}
                     placeholder="e.g. Income Certificate Application Form"
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:border-sky-500"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 bg-white text-slate-900 outline-none focus:border-sky-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
                     Category *
                   </label>
                   <select
                     value={docCategory}
                     onChange={(e) => setDocCategory(e.target.value as DocumentCategory)}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:border-sky-500 cursor-pointer"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 bg-white text-slate-900 outline-none focus:border-sky-500 cursor-pointer"
                   >
                     <option value="forms">Official Forms (અરજી ફોર્મ્સ)</option>
                     <option value="certificates">Certificates (પ્રમાણપત્રો)</option>
@@ -695,7 +695,7 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
 
               {/* Gujarati Title */}
               <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
                   Document Title (Gujarati - વૈકલ્પિક)
                 </label>
                 <input
@@ -703,13 +703,13 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
                   value={docTitleGu}
                   onChange={(e) => setDocTitleGu(e.target.value)}
                   placeholder="દા.ત. આવકનો દાખલો અરજી ફોર્મ"
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:border-sky-500"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 bg-white text-slate-900 outline-none focus:border-sky-500"
                 />
               </div>
 
               {/* Description */}
               <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
                   Description / Instructions
                 </label>
                 <textarea
@@ -717,18 +717,18 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
                   value={docDescription}
                   onChange={(e) => setDocDescription(e.target.value)}
                   placeholder="Key instructions for users..."
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:border-sky-500"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 bg-white text-slate-900 outline-none focus:border-sky-500"
                 />
               </div>
 
               {/* Progress bar */}
               {isUploading && (
                 <div className="space-y-1.5 p-3 rounded-xl bg-sky-500/10 border border-sky-500/20">
-                  <div className="flex justify-between text-xs font-semibold text-sky-700 dark:text-sky-300">
+                  <div className="flex justify-between text-xs font-semibold text-sky-700">
                     <span>Uploading to Firebase Cloud Storage...</span>
                     <span>{uploadProgress}%</span>
                   </div>
-                  <div className="w-full h-2 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+                  <div className="w-full h-2 rounded-full bg-slate-200 overflow-hidden">
                     <div
                       className="h-full bg-gradient-to-r from-sky-500 to-cyan-400 transition-all duration-200"
                       style={{ width: `${uploadProgress}%` }}
@@ -738,12 +738,12 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
               )}
 
               {/* Submit Buttons */}
-              <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+              <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
                 <button
                   type="button"
                   disabled={isUploading}
                   onClick={() => setIsUploadModalOpen(false)}
-                  className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100"
                 >
                   Cancel
                 </button>
@@ -769,13 +769,13 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
           className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in"
         >
           <div
-            className="glass-card relative flex flex-col w-full max-w-lg rounded-3xl border border-white/20 dark:border-slate-800 shadow-2xl overflow-hidden bg-white dark:bg-slate-900"
+            className="glass-card relative flex flex-col w-full max-w-lg rounded-3xl border border-white/20 shadow-2xl overflow-hidden bg-white"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-slate-800 shrink-0">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 shrink-0">
               <div className="flex items-center gap-2">
                 <RefreshCw className="w-5 h-5 text-amber-500" />
-                <h3 className="font-bold text-sm text-slate-900 dark:text-white">
+                <h3 className="font-bold text-sm text-slate-900">
                   Edit Document / Replace File
                 </h3>
               </div>
@@ -796,7 +796,7 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
               )}
 
               <div>
-                <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                <label className="block font-semibold text-slate-700 mb-1">
                   Title
                 </label>
                 <input
@@ -804,18 +804,18 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
                   required
                   value={editTitle}
                   onChange={(e) => setEditTitle(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none"
+                  className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-slate-900 outline-none"
                 />
               </div>
 
               <div>
-                <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                <label className="block font-semibold text-slate-700 mb-1">
                   Category
                 </label>
                 <select
                   value={editCategory}
                   onChange={(e) => setEditCategory(e.target.value as DocumentCategory)}
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none"
+                  className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-slate-900 outline-none"
                 >
                   <option value="forms">Official Forms (અરજી ફોર્મ્સ)</option>
                   <option value="certificates">Certificates (પ્રમાણપત્રો)</option>
@@ -826,19 +826,19 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
               </div>
 
               <div>
-                <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                <label className="block font-semibold text-slate-700 mb-1">
                   Description
                 </label>
                 <textarea
                   rows={2}
                   value={editDescription}
                   onChange={(e) => setEditDescription(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none"
+                  className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-slate-900 outline-none"
                 />
               </div>
 
               <div>
-                <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                <label className="block font-semibold text-slate-700 mb-1">
                   Replace File with New PDF/Document (Optional)
                 </label>
                 <input
@@ -864,7 +864,7 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
                 </div>
               )}
 
-              <div className="flex justify-end gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+              <div className="flex justify-end gap-2 pt-2 border-t border-slate-100">
                 <button
                   type="button"
                   onClick={() => setDocToReplace(null)}
@@ -892,15 +892,15 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
           aria-modal="true"
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in"
         >
-          <div className="glass-card max-w-sm w-full p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4 text-center">
+          <div className="glass-card max-w-sm w-full p-6 rounded-3xl bg-white border border-slate-200 space-y-4 text-center">
             <div className="w-12 h-12 rounded-2xl bg-rose-500/10 text-rose-600 flex items-center justify-center mx-auto">
               <Trash2 className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="font-bold text-base text-slate-900 dark:text-white">
+              <h3 className="font-bold text-base text-slate-900">
                 Delete Document?
               </h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+              <p className="text-xs text-slate-500 mt-1">
                 Are you sure you want to permanently delete "{docToDelete.title}"? This will remove the file from Firebase Storage and remove it from the User Panel.
               </p>
             </div>
@@ -908,7 +908,7 @@ export const AdminDocumentManager: React.FC<AdminDocumentManagerProps> = ({
               <button
                 type="button"
                 onClick={() => setDocToDelete(null)}
-                className="flex-1 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300"
+                className="flex-1 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700"
               >
                 Cancel
               </button>

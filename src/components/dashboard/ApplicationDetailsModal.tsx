@@ -124,15 +124,15 @@ export const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = (
     switch (status) {
       case 'Approved':
       case 'Completed':
-        return 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800';
+        return 'bg-emerald-50 text-emerald-700   border-emerald-200 ';
       case 'Processing':
-        return 'bg-blue-50 text-blue-700 dark:bg-blue-950/40 dark:text-blue-300 border-blue-200 dark:border-blue-800';
+        return 'bg-blue-50 text-blue-700   border-blue-200 ';
       case 'Pending':
-        return 'bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-300 border-amber-200 dark:border-amber-800';
+        return 'bg-amber-50 text-amber-700   border-amber-200 ';
       case 'Document Required':
-        return 'bg-purple-50 text-purple-700 dark:bg-purple-950/40 dark:text-purple-300 border-purple-200 dark:border-purple-800';
+        return 'bg-purple-50 text-purple-700   border-purple-200 ';
       case 'Rejected':
-        return 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border-slate-300 dark:border-slate-700';
+        return 'bg-slate-100 text-slate-700   border-slate-300 ';
       default:
         return 'bg-slate-50 text-slate-700 border-slate-200';
     }
@@ -150,24 +150,24 @@ export const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = (
         className="glass-modal w-full max-w-2xl max-h-[90vh] flex flex-col rounded-3xl shadow-2xl overflow-hidden text-left animate-in zoom-in-95"
       >
         {/* Header */}
-        <div className="p-4 sm:p-5 border-b border-slate-200/60 dark:border-white/10 flex items-center justify-between bg-white/40 dark:bg-slate-900/40 backdrop-blur-md">
+        <div className="p-4 sm:p-5 border-b border-slate-200/60 flex items-center justify-between bg-white/40 backdrop-blur-md">
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-mono text-xs font-bold text-blue-600 dark:text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-md border border-blue-500/20">
+              <span className="font-mono text-xs font-bold text-blue-600 bg-blue-500/10 px-2 py-0.5 rounded-md border border-blue-500/20">
                 {application.id}
               </span>
               <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full border ${getStatusColor(application.status)}`}>
                 {application.status}
               </span>
             </div>
-            <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mt-1">
+            <h3 className="text-base sm:text-lg font-bold text-slate-900 mt-1">
               {application.serviceName}
             </h3>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-white/60 dark:hover:bg-slate-800/60 transition-colors"
+            className="p-1.5 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-white/60 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -176,24 +176,24 @@ export const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = (
         {/* Modal Scrollable Body */}
         <div className="p-4 sm:p-6 overflow-y-auto space-y-6 text-xs sm:text-sm">
           {/* Applicant & Meta Information */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200/70 dark:border-slate-800">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200/70">
             <div className="space-y-2">
               <div className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
                 Applicant Information
               </div>
-              <div className="flex items-center gap-2 text-slate-800 dark:text-slate-200 font-medium">
+              <div className="flex items-center gap-2 text-slate-800 font-medium">
                 <User className="w-4 h-4 text-slate-400" />
                 <span>{application.applicantName}</span>
               </div>
-              <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400 text-xs">
+              <div className="flex items-center gap-2 text-slate-600 text-xs">
                 <Mail className="w-3.5 h-3.5 text-slate-400" />
                 <span>{application.applicantEmail}</span>
               </div>
-              <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400 text-xs">
+              <div className="flex items-center gap-2 text-slate-600 text-xs">
                 <Phone className="w-3.5 h-3.5 text-slate-400" />
                 <span>{application.applicantPhone}</span>
               </div>
-              <div className="flex items-start gap-2 text-slate-600 dark:text-slate-400 text-xs">
+              <div className="flex items-start gap-2 text-slate-600 text-xs">
                 <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0 mt-0.5" />
                 <span>{application.applicantAddress}</span>
               </div>
@@ -203,17 +203,17 @@ export const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = (
               <div className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
                 Application Timelines & Fee
               </div>
-              <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+              <div className="flex items-center gap-2 text-slate-700">
                 <Calendar className="w-3.5 h-3.5 text-slate-400" />
                 <span>Submitted: <strong>{application.applicationDate}</strong></span>
               </div>
-              <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+              <div className="flex items-center gap-2 text-slate-700">
                 <Clock className="w-3.5 h-3.5 text-slate-400" />
                 <span>Last Updated: {application.lastUpdated}</span>
               </div>
-              <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+              <div className="flex items-center gap-2 text-slate-700">
                 <span>Fee: <strong>₹{application.fee}</strong></span>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 font-semibold">
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold">
                   {application.paymentStatus}
                 </span>
               </div>
@@ -222,15 +222,15 @@ export const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = (
 
           {/* Required Documents Checklist */}
           <div>
-            <h4 className="font-semibold text-slate-900 dark:text-white mb-2 flex items-center gap-1.5">
-              <FileCheck className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+            <h4 className="font-semibold text-slate-900 mb-2 flex items-center gap-1.5">
+              <FileCheck className="w-4 h-4 text-blue-600" />
               <span>Required Verification Documents</span>
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {application.requiredDocuments.map((doc, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center gap-2 p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/40 border border-slate-200/60 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-xs"
+                  className="flex items-center gap-2 p-2.5 rounded-lg bg-slate-50 border border-slate-200/60 text-slate-700 text-xs"
                 >
                   <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 shrink-0" />
                   <span>{doc}</span>
@@ -241,9 +241,9 @@ export const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = (
 
           {/* Uploaded Documents List */}
           <div>
-            <h4 className="font-semibold text-slate-900 dark:text-white mb-2 flex items-center justify-between">
+            <h4 className="font-semibold text-slate-900 mb-2 flex items-center justify-between">
               <span className="flex items-center gap-1.5">
-                <FileText className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                <FileText className="w-4 h-4 text-indigo-600" />
                 <span>Uploaded Documents ({application.uploadedDocuments.length})</span>
               </span>
             </h4>
@@ -252,14 +252,14 @@ export const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = (
               {application.uploadedDocuments.map((doc) => (
                 <div
                   key={doc.id}
-                  className="flex items-center justify-between p-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-slate-300 transition-colors"
+                  className="flex items-center justify-between p-3 rounded-xl bg-white border border-slate-200 hover:border-slate-300 transition-colors"
                 >
                   <div className="flex items-center gap-2.5">
-                    <div className="p-2 rounded-lg bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400">
+                    <div className="p-2 rounded-lg bg-blue-50 text-blue-600">
                       <FileText className="w-4 h-4" />
                     </div>
                     <div>
-                      <div className="font-medium text-slate-900 dark:text-white text-xs sm:text-sm">
+                      <div className="font-medium text-slate-900 text-xs sm:text-sm">
                         {doc.name}
                       </div>
                       <div className="text-[11px] text-slate-400 flex items-center gap-2">
@@ -274,10 +274,10 @@ export const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = (
                     <span
                       className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${
                         doc.status === 'Verified'
-                          ? 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950 dark:text-emerald-300'
+                          ? 'bg-emerald-50 text-emerald-700 border-emerald-200  '
                           : doc.status === 'Needs Correction'
-                          ? 'bg-amber-50 text-amber-700 border-amber-300 dark:bg-amber-950/60 dark:text-amber-300'
-                          : 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950 dark:text-blue-300'
+                          ? 'bg-amber-50 text-amber-700 border-amber-300  '
+                          : 'bg-blue-50 text-blue-700 border-blue-200  '
                       }`}
                     >
                       {doc.status}
@@ -286,7 +286,7 @@ export const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = (
                       type="button"
                       title="Inspect Document Proof"
                       onClick={() => handleViewDoc(doc.name, doc.size, doc.date)}
-                      className="p-1.5 text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors"
+                      className="p-1.5 text-slate-500 hover:text-blue-600 hover:bg-slate-100 rounded-lg transition-colors"
                     >
                       <Eye className="w-4 h-4" />
                     </button>
@@ -294,7 +294,7 @@ export const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = (
                       type="button"
                       title="Download Document"
                       onClick={() => handleDownloadDoc(doc.name)}
-                      className="p-1.5 text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors"
+                      className="p-1.5 text-slate-500 hover:text-blue-600 hover:bg-slate-100 rounded-lg transition-colors"
                     >
                       <Download className="w-4 h-4" />
                     </button>
@@ -311,7 +311,7 @@ export const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = (
                   placeholder="Enter document title or filename (PDF, JPG, PNG)"
                   value={newDocUploadName}
                   onChange={(e) => setNewDocUploadName(e.target.value)}
-                  className="flex-1 px-3 py-2 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-blue-500/20"
+                  className="flex-1 px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500/20"
                 />
                 <button
                   type="submit"
@@ -326,32 +326,32 @@ export const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = (
           </div>
 
           {/* Admin Notes / Remarks */}
-          <div className="p-4 rounded-xl bg-amber-50/50 dark:bg-amber-950/20 border border-amber-200/60 dark:border-amber-900/40">
-            <h4 className="font-semibold text-amber-900 dark:text-amber-300 mb-1 flex items-center gap-1.5">
+          <div className="p-4 rounded-xl bg-amber-50/50 border border-amber-200/60">
+            <h4 className="font-semibold text-amber-900 mb-1 flex items-center gap-1.5">
               <AlertTriangle className="w-4 h-4 text-amber-600" />
               <span>Official Admin Remarks</span>
             </h4>
-            <p className="text-xs text-amber-800 dark:text-amber-200/90 leading-relaxed">
+            <p className="text-xs text-amber-800 leading-relaxed">
               {application.adminNotes || 'No notes currently attached to this application.'}
             </p>
           </div>
 
           {/* ADMIN MANAGEMENT CONTROLS (STRICTLY FOR ADMIN ONLY) */}
           {role === 'admin' && (
-            <div className="pt-4 border-t border-slate-200 dark:border-slate-800 space-y-4">
-              <div className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+            <div className="pt-4 border-t border-slate-200 space-y-4">
+              <div className="text-xs font-bold uppercase tracking-wider text-slate-500">
                 Admin Status & Workflow Controls
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
                     Change Application Status
                   </label>
                   <select
                     value={selectedStatus}
                     onChange={(e) => setSelectedStatus(e.target.value as ApplicationStatus)}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-blue-500/20"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 bg-white text-slate-900 outline-none focus:ring-2 focus:ring-blue-500/20"
                   >
                     <option value="Pending">Pending</option>
                     <option value="Processing">Processing</option>
@@ -363,7 +363,7 @@ export const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = (
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
                     Update Admin Note for Applicant
                   </label>
                   <input
@@ -371,7 +371,7 @@ export const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = (
                     value={adminNoteInput}
                     onChange={(e) => setAdminNoteInput(e.target.value)}
                     placeholder="Provide clear notes or instructions for user"
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-blue-500/20"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 bg-white text-slate-900 outline-none focus:ring-2 focus:ring-blue-500/20"
                   />
                 </div>
               </div>
@@ -398,7 +398,7 @@ export const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = (
                   <button
                     type="button"
                     onClick={handleQuickReject}
-                    className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-900 text-white font-medium text-xs flex items-center gap-1 transition-colors shadow-xs"
+                    className="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-medium text-xs flex items-center gap-1 transition-colors shadow-xs"
                   >
                     <XCircle className="w-3.5 h-3.5" />
                     <span>Reject</span>
@@ -416,7 +416,7 @@ export const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = (
               </div>
 
               {isSavedNotice && (
-                <div className="p-2 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-xs text-center font-medium animate-in fade-in">
+                <div className="p-2 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs text-center font-medium animate-in fade-in">
                   Status and notes updated successfully!
                 </div>
               )}
@@ -425,11 +425,11 @@ export const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = (
         </div>
 
         {/* Footer */}
-        <div className="p-4 border-t border-slate-100 dark:border-slate-800 flex justify-end bg-slate-50/70 dark:bg-slate-800/40">
+        <div className="p-4 border-t border-slate-100 flex justify-end bg-slate-50/70">
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 text-xs font-semibold transition-colors"
+            className="px-4 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-semibold transition-colors"
           >
             Close Details
           </button>

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
-  User,
   Mail,
   Lock,
   Eye,
@@ -10,13 +9,11 @@ import {
   AlertCircle,
   Loader2,
   CheckCircle2,
-  ShieldCheck,
-  UserCheck,
   ShieldAlert,
-  AtSign,
-  UserPlus,
-  LogIn,
+  User,
   Phone,
+  LogIn,
+  UserPlus,
 } from 'lucide-react';
 import { LoginRole, TranslationStrings } from '../types';
 import { BrandLogo } from './BrandLogo';
@@ -37,9 +34,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   onBackToHomeClick,
   onLoginSuccess,
 }) => {
-  const { loginWithCredentials, registerNewUser, language, currentView, setCurrentView, setSelectedRole } = useApp();
+  const { loginWithCredentials, registerNewUser, language, currentView, setCurrentView } = useApp();
 
-  // Mode: 'login' | 'register' (Registration is available for citizens/users)
+  // Mode: 'login' | 'register'
   const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
 
   // Login Form Values
@@ -74,18 +71,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({
     }
   }, [currentView]);
 
-  // When role changes, if Admin is selected, switch mode to 'login' and ensure no credentials prefill
-  useEffect(() => {
-    setIdentifier('');
-    setLoginPassword('');
-    setShowPassword(false);
-    if (role === 'admin') {
-      setAuthMode('login');
-    }
-    setErrors({});
-    setStatusMessage(null);
-  }, [role]);
-
   // Error message helper based on Firebase error code or custom error
   const getErrorMessage = (err: any): { title: string; text: string } => {
     const code = err?.code || err?.message;
@@ -105,25 +90,28 @@ export const LoginForm: React.FC<LoginFormProps> = ({
     if (code === 'USER_NOT_FOUND' || code === 'auth/user-not-found') {
       return {
         title: language === 'gu' ? 'ખાતું મળ્યું નથી' : 'Account Not Found',
-        text: language === 'gu'
-          ? 'આ યુઝરનેમ અથવા ઈમેલ ધરાવતું કોઈ ખાતું મળ્યું નથી.'
-          : 'No account found with this username or email address.',
+        text:
+          language === 'gu'
+            ? 'આ યુઝરનેમ અથવા ઈમેલ ધરાવતું કોઈ ખાતું મળ્યું નથી.'
+            : 'No account found with this username or email address.',
       };
     }
     if (code === 'ADMIN_ACCESS_DENIED') {
       return {
         title: language === 'gu' ? 'એડમિન પરવાનગી નથી' : 'Admin Access Denied',
-        text: language === 'gu'
-          ? 'આ ખાતા પાસે એડમિન પરવાનગી નથી. કૃપા કરીને એડમિન ઓળખપત્રો વાપરો.'
-          : 'This account does not have administrator privileges.',
+        text:
+          language === 'gu'
+            ? 'આ ખાતા પાસે એડમિન પરવાનગી નથી. કૃપા કરીને એડમિન ઓળખપત્રો વાપરો.'
+            : 'This account does not have administrator privileges.',
       };
     }
     if (code === 'ACCOUNT_INACTIVE') {
       return {
         title: language === 'gu' ? 'ખાતું નિષ્ક્રિય છે' : 'Account Inactive',
-        text: language === 'gu'
-          ? 'તમારું ખાતું નિષ્ક્રિય થયેલું છે. કૃપા કરીને શિવ કમ્પ્યુટર સપોર્ટ ડેસ્કનો સંપર્ક કરો.'
-          : 'Your account has been deactivated. Please contact support.',
+        text:
+          language === 'gu'
+            ? 'તમારું ખાતું નિષ્ક્રિય થયેલું છે. કૃપા કરીને શિવ કમ્પ્યુટર સપોર્ટ ડેસ્કનો સંપર્ક કરો.'
+            : 'Your account has been deactivated. Please contact support.',
       };
     }
     if (code === 'auth/email-already-in-use') {
@@ -132,78 +120,27 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         text: t.errors.emailAlreadyRegistered,
       };
     }
-    if (code === 'auth/user-not-found') {
+    if (code === 'auth/wrong-password' || code === 'auth/invalid-credential') {
       return {
-        title: language === 'gu' ? 'ખાતું મળ્યું નથી' : 'Account Not Found',
-        text: language === 'gu'
-          ? 'આ ઈમેલ અથવા યુઝરનેમ સાથે કોઈ ખાતું મળ્યું નથી. કૃપા કરીને પહેલા રજીસ્ટ્રેશન કરો.'
-          : 'No registered account found with this email or username. Please register first.',
+        title: language === 'gu' ? 'ખોટો પાસવર્ડ' : 'Invalid Credentials',
+        text:
+          language === 'gu'
+            ? 'ખોટો પાસવર્ડ અથવા ઓળખપત્ર. કૃપા કરીને ફરી પ્રયાસ કરો.'
+            : 'Incorrect password or credentials. Please try again or use Forgot Password.',
       };
     }
     if (code === 'auth/network-request-failed') {
       return {
         title: language === 'gu' ? 'નેટવર્ક સમસ્યા' : 'Network Error',
-        text: language === 'gu'
-          ? 'નેટવર્ક કનેક્શન સમસ્યા. કૃપા કરીને તમારું ઇન્ટરનેટ તપાસો.'
-          : 'Network connection problem. Please verify your internet connection.',
+        text:
+          language === 'gu'
+            ? 'નેટવર્ક કનેક્શન સમસ્યા. કૃપા કરીને તમારું ઇન્ટરનેટ તપાસો.'
+            : 'Network connection problem. Please verify your internet connection.',
       };
     }
-    if (code === 'permission-denied' || code === 'auth/permission-denied') {
-      return {
-        title: language === 'gu' ? 'પરવાનગી નકારી' : 'Permission Denied',
-        text: language === 'gu'
-          ? 'તમારી પાસે આ ઓપરેશન કરવાની પરવાનગી નથી.'
-          : 'Permission denied. You do not have authorization for this operation.',
-      };
-    }
-    if (code === 'unavailable') {
-      return {
-        title: language === 'gu' ? 'સર્વિસ ઉપલબ્ધ નથી' : 'Service Unavailable',
-        text: language === 'gu'
-          ? 'ફાયરબેઝ સેવા અસ્થાયી રૂપે ઉપલબ્ધ નથી. કૃપા કરીને થોડીવાર પછી પ્રયાસ કરો.'
-          : 'Firebase service is temporarily unavailable. Please try again shortly.',
-      };
-    }
-    if (code === 'auth/invalid-email') {
-      return {
-        title: language === 'gu' ? 'અમાન્ય ઈમેલ' : 'Invalid Email',
-        text: t.errors.emailInvalid,
-      };
-    }
-    if (code === 'auth/wrong-password' || code === 'auth/invalid-credential') {
-      return {
-        title: language === 'gu' ? 'ખોટો પાસવર્ડ' : 'Authentication Failed',
-        text: language === 'gu'
-          ? 'ઓળખપત્ર અથવા પાસવર્ડ ખોટો છે. કૃપા કરીને ફરી પ્રયાસ કરો.'
-          : 'Incorrect username/email or password. Please try again.',
-      };
-    }
-    if (code === 'auth/weak-password') {
-      return {
-        title: language === 'gu' ? 'નબળો પાસવર્ડ' : 'Weak Password',
-        text: t.errors.passwordTooShort,
-      };
-    }
-    if (code === 'auth/too-many-requests') {
-      return {
-        title: language === 'gu' ? 'વધુ પડતા પ્રયાસો' : 'Too Many Requests',
-        text: language === 'gu'
-          ? 'ઘણા નિષ્ફળ પ્રયાસો થયા છે. થોડીવાર રાહ જોઈને ફરી પ્રયાસ કરો.'
-          : 'Access temporarily locked due to many failed attempts. Try again later.',
-      };
-    }
-    if (code === 'auth/operation-not-allowed' || code === 'auth/admin-restricted-operation') {
-      return {
-        title: language === 'gu' ? 'ઓથેન્ટિકેશન માહિતી' : 'Sign-in Mode Active',
-        text: language === 'gu'
-          ? 'Firebase Console માં Email/Password પ્રોવાઈડર એનેબલ કરવું જરૂરી છે. લોકલ સિક્યોર સેશન દ્વારા લોગિન કરો.'
-          : 'Email/Password sign-in provider is disabled in Firebase Console. Using local secure session.',
-      };
-    }
-
     return {
-      title: language === 'gu' ? 'ઓથેન્ટિકેશન ભૂલ' : 'Authentication Error',
-      text: err?.message || (language === 'gu' ? 'કંઈક ખોટું થયું. ફરી પ્રયાસ કરો.' : 'An error occurred. Please try again.'),
+      title: language === 'gu' ? 'ઓથેન્ટિકેશન નિષ્ફળ' : 'Authentication Failed',
+      text: err?.message || 'Please check your information and try again.',
     };
   };
 
@@ -215,9 +152,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 
     if (!identifier.trim()) {
       newErrors.identifier =
-        role === 'admin'
-          ? t.errors.usernameRequired
-          : t.errors.emailOrUsernameRequired;
+        language === 'gu'
+          ? 'કૃપા કરીને યુઝરનેમ અથવા ઈમેલ દાખલ કરો'
+          : 'Please enter your username or email address';
     }
 
     if (!loginPassword) {
@@ -232,7 +169,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
     setIsLoading(true);
 
     try {
-      await loginWithCredentials({
+      const authResult = await loginWithCredentials({
         identifier: identifier.trim(),
         password: loginPassword,
         expectedRole: role,
@@ -246,7 +183,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       });
 
       if (onLoginSuccess) {
-        onLoginSuccess(role);
+        onLoginSuccess(authResult.role as LoginRole);
       }
     } catch (err: any) {
       const errInfo = getErrorMessage(err);
@@ -310,9 +247,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       setStatusMessage({
         type: 'success',
         title: language === 'gu' ? 'ખાતું સફળતાપૂર્વક બન્યું!' : 'Registration Successful!',
-        text: language === 'gu'
-          ? 'તમારું નાગરિક ખાતું બની ગયું છે. યુઝર ડેશબોર્ડ ખૂલી રહ્યું છે...'
-          : 'Your citizen account has been created. Redirecting to User Dashboard...',
+        text:
+          language === 'gu'
+            ? 'તમારું નાગરિક ખાતું બની ગયું છે. યુઝર ડેશબોર્ડ ખૂલી રહ્યું છે...'
+            : 'Your citizen account has been created. Redirecting to User Dashboard...',
       });
 
       if (onLoginSuccess) {
@@ -334,96 +272,29 @@ export const LoginForm: React.FC<LoginFormProps> = ({
     <div className="w-full max-w-md mx-auto min-w-0">
       <motion.div
         id="login-card"
-        initial={{ opacity: 0, y: 16 }}
+        initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease: 'easeOut' }}
-        className="iphone-glass-card p-4 sm:p-8 relative overflow-hidden w-full max-w-full min-w-0"
+        className="sc-restored-login-card p-6 sm:p-8 relative overflow-hidden w-full max-w-full min-w-0"
       >
-        {/* Clean emblem presentation */}
-        <BrandLogo brandName={t.brandName} tagline={t.brandTagline} size="md" hideTitle={true} />
-
-        {/* Dynamic Heading & Role Badge */}
-        <div className="mt-4 mb-5 text-center">
-          <div
-            id={`role-indicator-badge-${role}`}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold mb-2.5 bg-sky-500/15 text-sky-900 dark:text-sky-300 border border-sky-400/35 dark:border-sky-400/25 shadow-xs backdrop-blur-md"
-          >
-            {role === 'admin' ? (
-              <ShieldCheck className="w-3.5 h-3.5 text-sky-700 dark:text-sky-400" />
-            ) : (
-              <UserCheck className="w-3.5 h-3.5 text-sky-700 dark:text-sky-400" />
-            )}
-            <span>{role === 'admin' ? t.adminBadge : t.userBadge}</span>
-          </div>
-
-          <h2
-            id="login-heading"
-            className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 dark:text-white"
-          >
-            {role === 'admin'
-              ? t.adminHeading
-              : authMode === 'register'
-              ? t.signUpTab
-              : t.userHeading}
-          </h2>
-          <p
-            id="login-subtitle"
-            className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-1 max-w-xs mx-auto font-medium"
-          >
-            {role === 'admin'
-              ? t.adminSubtitle
-              : authMode === 'register'
-              ? (language === 'gu' ? 'નવા વપરાશકર્તા તરીકે નોંધણી કરો' : 'Register to apply and track online government schemes')
-              : t.userSubtitle}
-          </p>
+        {/* Top Centered Brand Logo — official SC logo with original aspect ratio, horizontally centered, no text underneath */}
+        <div className="flex justify-center mb-3">
+          <BrandLogo size="md" onLogoClick={onBackToHomeClick} />
         </div>
 
-        {/* User Mode: Tab Switcher (Sign In vs Sign Up) */}
-        {role === 'user' && (
-          <div
-            id="auth-mode-tab-bar"
-            className="flex p-1 bg-white/40 dark:bg-slate-800/60 border border-white/50 dark:border-white/10 rounded-2xl mb-5 text-xs font-semibold backdrop-blur-md"
-          >
-            <button
-              type="button"
-              id="tab-sign-in"
-              onClick={() => {
-                setAuthMode('login');
-                setCurrentView('login');
-                window.location.hash = '#/login';
-                setStatusMessage(null);
-                setErrors({});
-              }}
-              className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl transition-all cursor-pointer ${
-                authMode === 'login'
-                  ? 'btn-glossy-primary shadow-xs'
-                  : 'text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
-              }`}
-            >
-              <LogIn className="w-3.5 h-3.5" />
-              <span>{t.signInTab}</span>
-            </button>
-            <button
-              type="button"
-              id="tab-sign-up"
-              onClick={() => {
-                setAuthMode('register');
-                setCurrentView('register');
-                window.location.hash = '#/register';
-                setStatusMessage(null);
-                setErrors({});
-              }}
-              className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl transition-all cursor-pointer ${
-                authMode === 'register'
-                  ? 'btn-glossy-primary shadow-xs'
-                  : 'text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
-              }`}
-            >
-              <UserPlus className="w-3.5 h-3.5" />
-              <span>{t.signUpTab}</span>
-            </button>
-          </div>
-        )}
+        {/* Card Header: Brand Name & Subtitle in crisp dark blue / slate */}
+        <div className="text-center mb-6">
+          <h2 id="login-heading" className="text-2xl sm:text-[26px] font-black tracking-tight text-slate-900">
+            {authMode === 'register'
+              ? (language === 'gu' ? 'નવું ખાતું બનાવો' : 'Create Account')
+              : 'Shiv Computer'}
+          </h2>
+          <p id="login-subtitle" className="text-xs sm:text-sm text-slate-600 font-medium mt-1">
+            {authMode === 'register'
+              ? (language === 'gu' ? 'ઑનલાઇન સેવાઓ અને ફોર્મ માટે રજીસ્ટ્રેશન કરો' : 'Register to apply and track services')
+              : (language === 'gu' ? 'તમારા ખાતામાં લૉગિન કરો' : 'Sign in to access your digital services')}
+          </p>
+        </div>
 
         {/* Global Feedback Banner */}
         <AnimatePresence>
@@ -433,16 +304,16 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               initial={{ opacity: 0, height: 0, marginBottom: 0 }}
               animate={{ opacity: 1, height: 'auto', marginBottom: 16 }}
               exit={{ opacity: 0, height: 0, marginBottom: 0 }}
-              className={`p-3.5 rounded-xl text-xs sm:text-sm flex items-start gap-2.5 border ${
+              className={`p-3.5 rounded-xl text-xs sm:text-sm flex items-start gap-2.5 border shadow-xs ${
                 statusMessage.type === 'success'
-                  ? 'bg-emerald-50/90 dark:bg-emerald-950/60 border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-200'
-                  : 'bg-amber-50/90 dark:bg-amber-950/60 border-amber-300 dark:border-amber-700 text-amber-900 dark:text-amber-100'
+                  ? 'bg-emerald-50/95 border-emerald-200 text-emerald-900'
+                  : 'bg-amber-50/95 border-amber-300 text-amber-900'
               }`}
             >
               {statusMessage.type === 'success' ? (
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
               ) : (
-                <ShieldAlert className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+                <ShieldAlert className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
               )}
               <div className="flex-1">
                 <div className="font-semibold">{statusMessage.title}</div>
@@ -455,71 +326,63 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         {/* 1. LOGIN FORM */}
         {authMode === 'login' && (
           <form id="login-form" onSubmit={handleLoginSubmit} noValidate className="space-y-4">
-            {/* IDENTIFIER (EMAIL OR USERNAME) */}
+            {/* USERNAME OR EMAIL INPUT */}
             <div>
               <label
                 htmlFor="login-identifier-input"
-                className="block text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200 mb-1.5"
+                className="block text-xs sm:text-sm font-semibold text-slate-800 mb-1.5"
               >
-                {role === 'admin' ? t.adminUsernameLabel : t.userIdentifierLabel}
+                {language === 'gu' ? 'યુઝરનેમ અથવા ઈમેલ' : 'Username or Email'}
               </label>
               <div className="relative rounded-xl shadow-xs">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
-                  {role === 'admin' ? (
-                    <User className="w-4 h-4 text-sky-600 dark:text-sky-400" />
-                  ) : (
-                    <Mail className="w-4 h-4 text-sky-600 dark:text-sky-400" />
-                  )}
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-sky-600">
+                  <Mail className="w-4 h-4" />
                 </div>
                 <input
                   id="login-identifier-input"
                   name="identifier"
                   type="text"
-                  autoComplete={role === 'admin' ? 'username' : 'email'}
+                  autoComplete="username"
                   value={identifier}
                   onChange={(e) => {
                     setIdentifier(e.target.value);
                     if (errors.identifier) setErrors((prev) => ({ ...prev, identifier: undefined }));
                   }}
-                  placeholder={
-                    role === 'admin'
-                      ? t.adminUsernamePlaceholder
-                      : t.userIdentifierPlaceholder
-                  }
+                  placeholder={language === 'gu' ? 'તમારું યુઝરનેમ અથવા ઈમેલ દાખલ કરો' : 'Enter username or email address'}
                   disabled={isLoading}
-                  className={`w-full pl-10 pr-3.5 py-2.5 sm:py-3 bg-white/55 dark:bg-slate-900/65 hover:bg-white/70 dark:hover:bg-slate-900/80 focus:bg-white/90 dark:focus:bg-slate-900/95 border text-xs sm:text-sm text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 rounded-xl transition-all duration-200 outline-none backdrop-blur-md ${
+                  className={`w-full pl-10 pr-3.5 py-2.5 sm:py-3 bg-white/75 hover:bg-white/90 focus:bg-white border text-xs sm:text-sm text-slate-900 placeholder-slate-400 rounded-xl transition-all duration-200 outline-none backdrop-blur-md ${
                     errors.identifier
-                      ? 'border-amber-400 focus:border-amber-500 focus:ring-3 focus:ring-amber-500/20'
-                      : 'border-white/60 dark:border-white/10 hover:border-cyan-400/50 dark:hover:border-cyan-400/40 focus:border-cyan-500 focus:ring-3 focus:ring-cyan-500/20'
+                      ? 'border-red-400 focus:border-red-500 focus:ring-4 focus:ring-red-500/15'
+                      : 'border-sky-200/80 hover:border-sky-400 focus:border-sky-500 focus:ring-4 focus:ring-sky-500/20'
                   }`}
                 />
               </div>
               {errors.identifier && (
-                <p className="mt-1.5 text-xs text-amber-700 dark:text-amber-400 flex items-center gap-1 font-medium">
+                <p className="mt-1.5 text-xs text-red-600 flex items-center gap-1 font-medium">
                   <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                   <span>{errors.identifier}</span>
                 </p>
               )}
             </div>
 
-            {/* PASSWORD */}
+            {/* PASSWORD INPUT WITH SHOW/HIDE TOGGLE */}
             <div>
               <div className="flex items-center justify-between mb-1.5">
                 <label
                   htmlFor="login-password-input"
-                  className="block text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200"
+                  className="block text-xs sm:text-sm font-semibold text-slate-800"
                 >
                   {t.passwordLabel}
                 </label>
               </div>
               <div className="relative rounded-xl shadow-xs">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
-                  <Lock className="w-4 h-4 text-sky-600 dark:text-sky-400" />
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-sky-600">
+                  <Lock className="w-4 h-4" />
                 </div>
                 <input
                   id="login-password-input"
                   name="password"
-                  type={role === 'admin' ? 'password' : (showPassword ? 'text' : 'password')}
+                  type={showPassword ? 'text' : 'password'}
                   autoComplete="current-password"
                   value={loginPassword}
                   onChange={(e) => {
@@ -528,24 +391,24 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                   }}
                   placeholder={t.passwordPlaceholder}
                   disabled={isLoading}
-                  className={`w-full pl-10 pr-11 py-2.5 sm:py-3 bg-white/55 dark:bg-slate-900/65 hover:bg-white/70 dark:hover:bg-slate-900/80 focus:bg-white/90 dark:focus:bg-slate-900/95 border text-xs sm:text-sm text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 rounded-xl transition-all duration-200 outline-none backdrop-blur-md ${
+                  className={`w-full pl-10 pr-11 py-2.5 sm:py-3 bg-white/75 hover:bg-white/90 focus:bg-white border text-xs sm:text-sm text-slate-900 placeholder-slate-400 rounded-xl transition-all duration-200 outline-none backdrop-blur-md ${
                     errors.password
-                      ? 'border-amber-400 focus:border-amber-500 focus:ring-3 focus:ring-amber-500/20'
-                      : 'border-white/60 dark:border-white/10 hover:border-cyan-400/50 dark:hover:border-cyan-400/40 focus:border-cyan-500 focus:ring-3 focus:ring-cyan-500/20'
+                      ? 'border-red-400 focus:border-red-500 focus:ring-4 focus:ring-red-500/15'
+                      : 'border-sky-200/80 hover:border-sky-400 focus:border-sky-500 focus:ring-4 focus:ring-sky-500/20'
                   }`}
                 />
                 <button
                   type="button"
                   id="toggle-password-visibility-btn"
                   onClick={() => setShowPassword((prev) => !prev)}
-                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors cursor-pointer"
+                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-700 transition-colors cursor-pointer"
                   title={showPassword ? t.hidePassword : t.showPassword}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
               {errors.password && (
-                <p className="mt-1.5 text-xs text-amber-700 dark:text-amber-400 flex items-center gap-1 font-medium">
+                <p className="mt-1.5 text-xs text-red-600 flex items-center gap-1 font-medium">
                   <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                   <span>{errors.password}</span>
                 </p>
@@ -563,29 +426,29 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                   type="checkbox"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
-                  className="w-4 h-4 rounded-md border-slate-300 dark:border-slate-700 text-sky-600 focus:ring-sky-500/20 cursor-pointer"
+                  className="w-4 h-4 rounded border-slate-300 text-sky-600 focus:ring-sky-500/20 cursor-pointer"
                 />
-                <span className="text-slate-700 dark:text-slate-300 font-semibold">{t.rememberMe}</span>
+                <span className="text-slate-700 font-semibold">{t.rememberMe}</span>
               </label>
 
               <button
                 type="button"
                 id="forgot-password-link"
                 onClick={() => onForgotPasswordClick(identifier.trim())}
-                className="text-xs sm:text-sm font-bold text-sky-700 dark:text-sky-400 hover:text-sky-900 dark:hover:text-sky-300 hover:underline transition-colors cursor-pointer"
+                className="text-xs sm:text-sm font-bold text-sky-600 hover:text-sky-800 hover:underline transition-colors cursor-pointer"
               >
                 {t.forgotPassword}
               </button>
             </div>
 
-            {/* SUBMIT BUTTON */}
+            {/* LOGIN BUTTON */}
             <div className="pt-2">
               <button
                 id="login-submit-button"
                 type="submit"
                 disabled={isLoading}
-                className={`btn-glossy-primary w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-white font-bold text-sm ${
-                  isLoading ? 'opacity-85 cursor-not-allowed' : 'active:scale-98'
+                className={`w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-white font-bold text-sm bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-500 hover:from-blue-700 hover:via-sky-600 hover:to-cyan-600 shadow-md shadow-sky-500/25 transition-all cursor-pointer ${
+                  isLoading ? 'opacity-80 cursor-not-allowed' : 'active:scale-98'
                 }`}
               >
                 {isLoading ? (
@@ -594,78 +457,37 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                     <span>{t.loggingIn}</span>
                   </>
                 ) : (
-                  <span>{t.loginButton}</span>
+                  <>
+                    <LogIn className="w-4 h-4" />
+                    <span>{t.loginButton}</span>
+                  </>
                 )}
               </button>
             </div>
 
-            {/* Switch to Register link for users */}
-            {role === 'user' && (
-              <div className="pt-2 text-center text-xs text-[#3a4750] dark:text-[#cbd5d0]">
-                <span>{t.dontHaveAccount} </span>
-                <button
-                  type="button"
-                  id="switch-to-signup-link"
-                  onClick={() => {
-                    setAuthMode('register');
-                    setCurrentView('register');
-                    window.location.hash = '#/register';
-                    setStatusMessage(null);
-                    setErrors({});
-                  }}
-                  className="font-bold text-emerald-700 dark:text-emerald-400 hover:underline"
-                >
-                  {t.signUpLink}
-                </button>
-              </div>
-            )}
-
-            {/* Quick Switch to Admin */}
-            {role === 'user' && (
-              <div className="pt-2 text-center text-xs">
-                <button
-                  type="button"
-                  id="switch-to-admin-login-link"
-                  onClick={() => {
-                    setSelectedRole('admin');
-                    setCurrentView('admin-login');
-                    window.location.hash = '#/admin-login';
-                    setStatusMessage(null);
-                    setErrors({});
-                  }}
-                  className="font-medium text-[#2c5970] dark:text-[#a0c4dc] hover:text-sky-700 dark:hover:text-cyan-300 transition-colors inline-flex items-center gap-1.5"
-                >
-                  <ShieldCheck className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
-                  <span>Admin &rarr;</span>
-                </button>
-              </div>
-            )}
-
-            {/* Quick Switch from Admin to User */}
-            {role === 'admin' && (
-              <div className="pt-2 text-center text-xs">
-                <button
-                  type="button"
-                  id="switch-to-user-login-link"
-                  onClick={() => {
-                    setSelectedRole('user');
-                    setCurrentView('login');
-                    window.location.hash = '#/login';
-                    setStatusMessage(null);
-                    setErrors({});
-                  }}
-                  className="font-medium text-[#2c5970] dark:text-[#a0c4dc] hover:text-sky-700 dark:hover:text-cyan-300 transition-colors inline-flex items-center gap-1.5"
-                >
-                  <UserCheck className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
-                  <span>&larr; User</span>
-                </button>
-              </div>
-            )}
+            {/* CREATE ACCOUNT / REGISTER LINK */}
+            <div className="pt-2 text-center text-xs sm:text-sm text-slate-600">
+              <span>{t.dontHaveAccount} </span>
+              <button
+                type="button"
+                id="switch-to-signup-link"
+                onClick={() => {
+                  setAuthMode('register');
+                  setCurrentView('register');
+                  window.location.hash = '#/register';
+                  setStatusMessage(null);
+                  setErrors({});
+                }}
+                className="font-bold text-sky-600 hover:text-sky-800 hover:underline cursor-pointer"
+              >
+                {t.signUpLink}
+              </button>
+            </div>
           </form>
         )}
 
         {/* 2. REGISTRATION (SIGN UP) FORM */}
-        {authMode === 'register' && role === 'user' && (
+        {authMode === 'register' && (
           <form id="register-form" onSubmit={handleRegisterSubmit} noValidate className="space-y-3.5">
             {/* FULL NAME */}
             <div>
@@ -676,8 +498,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                 {t.fullNameLabel}
               </label>
               <div className="relative rounded-xl shadow-xs">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
-                  <User className="w-4 h-4 text-sky-600" />
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-sky-600">
+                  <User className="w-4 h-4" />
                 </div>
                 <input
                   id="reg-fullname-input"
@@ -690,15 +512,15 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                   }}
                   placeholder={t.fullNamePlaceholder}
                   disabled={isLoading}
-                  className={`w-full pl-10 pr-3.5 py-2.5 bg-white/55 hover:bg-white/70 focus:bg-white/90 border text-xs sm:text-sm text-slate-900 placeholder-slate-500 rounded-xl transition-all duration-200 outline-none backdrop-blur-md ${
+                  className={`w-full pl-10 pr-3.5 py-2.5 bg-white/75 hover:bg-white/90 focus:bg-white border text-xs sm:text-sm text-slate-900 placeholder-slate-400 rounded-xl transition-all duration-200 outline-none backdrop-blur-md ${
                     errors.name
-                      ? 'border-amber-400 focus:border-amber-500 focus:ring-3 focus:ring-amber-500/20'
-                      : 'border-white/60 hover:border-cyan-400/50 focus:border-cyan-500 focus:ring-3 focus:ring-cyan-500/20'
+                      ? 'border-red-400 focus:border-red-500 focus:ring-4 focus:ring-red-500/15'
+                      : 'border-sky-200/80 hover:border-sky-400 focus:border-sky-500 focus:ring-4 focus:ring-sky-500/20'
                   }`}
                 />
               </div>
               {errors.name && (
-                <p className="mt-1 text-xs text-amber-700 flex items-center gap-1 font-medium">
+                <p className="mt-1 text-xs text-red-600 flex items-center gap-1 font-medium">
                   <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                   <span>{errors.name}</span>
                 </p>
@@ -714,8 +536,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                 {t.emailLabel}
               </label>
               <div className="relative rounded-xl shadow-xs">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
-                  <Mail className="w-4 h-4 text-sky-600" />
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-sky-600">
+                  <Mail className="w-4 h-4" />
                 </div>
                 <input
                   id="reg-email-input"
@@ -728,15 +550,15 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                   }}
                   placeholder={t.emailPlaceholder}
                   disabled={isLoading}
-                  className={`w-full pl-10 pr-3.5 py-2.5 bg-white/55 hover:bg-white/70 focus:bg-white/90 border text-xs sm:text-sm text-slate-900 placeholder-slate-500 rounded-xl transition-all duration-200 outline-none backdrop-blur-md ${
+                  className={`w-full pl-10 pr-3.5 py-2.5 bg-white/75 hover:bg-white/90 focus:bg-white border text-xs sm:text-sm text-slate-900 placeholder-slate-400 rounded-xl transition-all duration-200 outline-none backdrop-blur-md ${
                     errors.email
-                      ? 'border-amber-400 focus:border-amber-500 focus:ring-3 focus:ring-amber-500/20'
-                      : 'border-white/60 hover:border-cyan-400/50 focus:border-cyan-500 focus:ring-3 focus:ring-cyan-500/20'
+                      ? 'border-red-400 focus:border-red-500 focus:ring-4 focus:ring-red-500/15'
+                      : 'border-sky-200/80 hover:border-sky-400 focus:border-sky-500 focus:ring-4 focus:ring-sky-500/20'
                   }`}
                 />
               </div>
               {errors.email && (
-                <p className="mt-1 text-xs text-amber-700 flex items-center gap-1 font-medium">
+                <p className="mt-1 text-xs text-red-600 flex items-center gap-1 font-medium">
                   <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                   <span>{errors.email}</span>
                 </p>
@@ -752,8 +574,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                 {t.mobileLabel}
               </label>
               <div className="relative rounded-xl shadow-xs">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
-                  <Phone className="w-4 h-4 text-sky-600" />
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-sky-600">
+                  <Phone className="w-4 h-4" />
                 </div>
                 <input
                   id="reg-mobile-input"
@@ -768,15 +590,15 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                   }}
                   placeholder={t.mobilePlaceholder}
                   disabled={isLoading}
-                  className={`w-full pl-10 pr-3.5 py-2.5 bg-white/55 hover:bg-white/70 focus:bg-white/90 border text-xs sm:text-sm text-slate-900 placeholder-slate-500 rounded-xl transition-all duration-200 outline-none backdrop-blur-md ${
+                  className={`w-full pl-10 pr-3.5 py-2.5 bg-white/75 hover:bg-white/90 focus:bg-white border text-xs sm:text-sm text-slate-900 placeholder-slate-400 rounded-xl transition-all duration-200 outline-none backdrop-blur-md ${
                     errors.mobile
-                      ? 'border-amber-400 focus:border-amber-500 focus:ring-3 focus:ring-amber-500/20'
-                      : 'border-white/60 hover:border-cyan-400/50 focus:border-cyan-500 focus:ring-3 focus:ring-cyan-500/20'
+                      ? 'border-red-400 focus:border-red-500 focus:ring-4 focus:ring-red-500/15'
+                      : 'border-sky-200/80 hover:border-sky-400 focus:border-sky-500 focus:ring-4 focus:ring-sky-500/20'
                   }`}
                 />
               </div>
               {errors.mobile && (
-                <p className="mt-1 text-xs text-amber-700 flex items-center gap-1 font-medium">
+                <p className="mt-1 text-xs text-red-600 flex items-center gap-1 font-medium">
                   <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                   <span>{errors.mobile}</span>
                 </p>
@@ -792,8 +614,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                 {t.passwordLabel}
               </label>
               <div className="relative rounded-xl shadow-xs">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
-                  <Lock className="w-4 h-4 text-sky-600" />
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-sky-600">
+                  <Lock className="w-4 h-4" />
                 </div>
                 <input
                   id="reg-password-input"
@@ -806,22 +628,22 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                   }}
                   placeholder="Min 6 characters"
                   disabled={isLoading}
-                  className={`w-full pl-10 pr-11 py-2.5 bg-white/55 hover:bg-white/70 focus:bg-white/90 border text-xs sm:text-sm text-slate-900 placeholder-slate-500 rounded-xl transition-all duration-200 outline-none backdrop-blur-md ${
+                  className={`w-full pl-10 pr-11 py-2.5 bg-white/75 hover:bg-white/90 focus:bg-white border text-xs sm:text-sm text-slate-900 placeholder-slate-400 rounded-xl transition-all duration-200 outline-none backdrop-blur-md ${
                     errors.password
-                      ? 'border-amber-400 focus:border-amber-500 focus:ring-3 focus:ring-amber-500/20'
-                      : 'border-white/60 hover:border-cyan-400/50 focus:border-cyan-500 focus:ring-3 focus:ring-cyan-500/20'
+                      ? 'border-red-400 focus:border-red-500 focus:ring-4 focus:ring-red-500/15'
+                      : 'border-sky-200/80 hover:border-sky-400 focus:border-sky-500 focus:ring-4 focus:ring-sky-500/20'
                   }`}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword((prev) => !prev)}
-                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-500 hover:text-slate-700 transition-colors cursor-pointer"
+                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-700 transition-colors cursor-pointer"
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
               {errors.password && (
-                <p className="mt-1 text-xs text-amber-700 flex items-center gap-1 font-medium">
+                <p className="mt-1 text-xs text-red-600 flex items-center gap-1 font-medium">
                   <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                   <span>{errors.password}</span>
                 </p>
@@ -837,8 +659,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                 {t.confirmPasswordLabel}
               </label>
               <div className="relative rounded-xl shadow-xs">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
-                  <Lock className="w-4 h-4 text-sky-600" />
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-sky-600">
+                  <Lock className="w-4 h-4" />
                 </div>
                 <input
                   id="reg-confirm-password-input"
@@ -851,22 +673,22 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                   }}
                   placeholder={t.confirmPasswordPlaceholder}
                   disabled={isLoading}
-                  className={`w-full pl-10 pr-11 py-2.5 bg-white/55 hover:bg-white/70 focus:bg-white/90 border text-xs sm:text-sm text-slate-900 placeholder-slate-500 rounded-xl transition-all duration-200 outline-none backdrop-blur-md ${
+                  className={`w-full pl-10 pr-11 py-2.5 bg-white/75 hover:bg-white/90 focus:bg-white border text-xs sm:text-sm text-slate-900 placeholder-slate-400 rounded-xl transition-all duration-200 outline-none backdrop-blur-md ${
                     errors.confirmPassword
-                      ? 'border-amber-400 focus:border-amber-500 focus:ring-3 focus:ring-amber-500/20'
-                      : 'border-white/60 hover:border-cyan-400/50 focus:border-cyan-500 focus:ring-3 focus:ring-cyan-500/20'
+                      ? 'border-red-400 focus:border-red-500 focus:ring-4 focus:ring-red-500/15'
+                      : 'border-sky-200/80 hover:border-sky-400 focus:border-sky-500 focus:ring-4 focus:ring-sky-500/20'
                   }`}
                 />
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword((prev) => !prev)}
-                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-500 hover:text-slate-700 transition-colors cursor-pointer"
+                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-700 transition-colors cursor-pointer"
                 >
                   {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
               {errors.confirmPassword && (
-                <p className="mt-1 text-xs text-amber-700 flex items-center gap-1 font-medium">
+                <p className="mt-1 text-xs text-red-600 flex items-center gap-1 font-medium">
                   <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                   <span>{errors.confirmPassword}</span>
                 </p>
@@ -879,8 +701,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                 id="register-submit-button"
                 type="submit"
                 disabled={isLoading}
-                className={`btn-glossy-primary w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-white font-bold text-sm ${
-                  isLoading ? 'opacity-85 cursor-not-allowed' : 'active:scale-98'
+                className={`w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-white font-bold text-sm bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-500 hover:from-blue-700 hover:via-sky-600 hover:to-cyan-600 shadow-md shadow-sky-500/25 transition-all cursor-pointer ${
+                  isLoading ? 'opacity-80 cursor-not-allowed' : 'active:scale-98'
                 }`}
               >
                 {isLoading ? (
@@ -889,13 +711,16 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                     <span>{t.registering}</span>
                   </>
                 ) : (
-                  <span>{t.registerButton}</span>
+                  <>
+                    <UserPlus className="w-4 h-4" />
+                    <span>{t.registerButton}</span>
+                  </>
                 )}
               </button>
             </div>
 
-            {/* Switch to Login link */}
-            <div className="pt-1 text-center text-xs text-[#3a4750] dark:text-[#cbd5d0]">
+            {/* SWITCH TO LOGIN LINK */}
+            <div className="pt-1 text-center text-xs sm:text-sm text-slate-600">
               <span>{t.alreadyHaveAccount} </span>
               <button
                 type="button"
@@ -907,7 +732,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                   setStatusMessage(null);
                   setErrors({});
                 }}
-                className="font-bold text-emerald-700 dark:text-emerald-400 hover:underline"
+                className="font-bold text-sky-600 hover:text-sky-800 hover:underline cursor-pointer"
               >
                 {t.signInLink}
               </button>
@@ -916,12 +741,12 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         )}
 
         {/* Back to Home Button */}
-        <div className="pt-3 text-center">
+        <div className="pt-4 text-center">
           <button
             type="button"
             id="back-to-home-button"
             onClick={onBackToHomeClick}
-            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors py-1"
+            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-slate-500 hover:text-slate-800 transition-colors py-1 cursor-pointer"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>{t.backToHome}</span>
@@ -929,8 +754,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         </div>
 
         {/* Security / Firebase Connection Sub-footer */}
-        <div className="mt-5 pt-3 border-t border-slate-100 dark:border-slate-800 text-center">
-          <p className="text-[11px] text-slate-400 dark:text-slate-500 flex items-center justify-center gap-1.5">
+        <div className="mt-5 pt-3 border-t border-sky-100 text-center">
+          <p className="text-[11px] text-slate-500 flex items-center justify-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse" />
             <span>Secured with Firebase Authentication & Cloud Firestore</span>
           </p>

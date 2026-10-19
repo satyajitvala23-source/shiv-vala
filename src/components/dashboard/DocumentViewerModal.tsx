@@ -212,21 +212,21 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
       className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200"
     >
       <div
-        className="w-full max-w-5xl h-[92vh] flex flex-col rounded-3xl overflow-hidden shadow-2xl border border-white/20 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-900 dark:text-white"
+        className="w-full max-w-5xl h-[92vh] flex flex-col rounded-3xl overflow-hidden shadow-2xl border border-white/20 bg-white text-slate-900"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header Bar */}
-        <div className="px-4 sm:px-6 py-3.5 border-b border-slate-200/80 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md flex items-center justify-between gap-3 shrink-0">
+        <div className="px-4 sm:px-6 py-3.5 border-b border-slate-200/80 bg-white/80 backdrop-blur-md flex items-center justify-between gap-3 shrink-0">
           <div className="flex items-center gap-3 min-w-0">
-            <div className="p-2 rounded-2xl bg-blue-500/10 text-blue-600 dark:text-blue-400 shrink-0">
+            <div className="p-2 rounded-2xl bg-blue-500/10 text-blue-600 shrink-0">
               {renderFormatIcon('w-5 h-5')}
             </div>
             <div className="min-w-0">
-              <h2 id="doc-viewer-modal-title" className="font-bold text-sm sm:text-base truncate text-slate-900 dark:text-white">
+              <h2 id="doc-viewer-modal-title" className="font-bold text-sm sm:text-base truncate text-slate-900">
                 {displayTitle}
               </h2>
-              <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 truncate">
-                <span className="font-mono font-medium uppercase text-blue-600 dark:text-blue-400">
+              <div className="flex items-center gap-2 text-xs text-slate-500 truncate">
+                <span className="font-mono font-medium uppercase text-blue-600">
                   .{ext.toUpperCase()}
                 </span>
                 <span>•</span>
@@ -243,7 +243,7 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
               type="button"
               onClick={handleCopyLink}
               title="Copy link"
-              className="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              className="p-2 rounded-xl text-slate-600 hover:bg-slate-100 transition-colors"
             >
               {copiedLink ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
             </button>
@@ -252,7 +252,7 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
               type="button"
               onClick={onClose}
               title="Close Viewer"
-              className="p-2 rounded-xl text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors ml-1"
+              className="p-2 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors ml-1"
             >
               <X className="w-5 h-5" />
             </button>
@@ -261,7 +261,7 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
 
         {/* Notice Banner */}
         {downloadNotice && (
-          <div className="px-4 py-2.5 bg-blue-500/10 border-b border-blue-500/20 text-blue-700 dark:text-blue-300 text-xs flex items-center justify-between gap-2 shrink-0 animate-in fade-in">
+          <div className="px-4 py-2.5 bg-blue-500/10 border-b border-blue-500/20 text-blue-700 text-xs flex items-center justify-between gap-2 shrink-0 animate-in fade-in">
             <div className="flex items-center gap-2">
               <Smartphone className="w-4 h-4 shrink-0" />
               <span>{downloadNotice}</span>
@@ -277,7 +277,7 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
         )}
 
         {/* Viewer Body */}
-        <div className="flex-1 relative overflow-hidden bg-slate-100/60 dark:bg-slate-950 flex flex-col items-center justify-center p-3 sm:p-5">
+        <div className="flex-1 relative overflow-hidden bg-slate-100/60 flex flex-col items-center justify-center p-3 sm:p-5">
           {loadingFile ? (
             <div className="flex flex-col items-center gap-3">
               <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
@@ -287,9 +287,9 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
             </div>
           ) : isPdf ? (
             /* PDF VIEWER */
-            <div className="w-full h-full flex flex-col rounded-2xl overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-inner">
+            <div className="w-full h-full flex flex-col rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-inner">
               {deviceInfo.isMobile && (
-                <div className="p-2.5 bg-amber-50 dark:bg-amber-950/40 border-b border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-300 text-xs flex flex-wrap items-center justify-between gap-2 shrink-0">
+                <div className="p-2.5 bg-amber-50 border-b border-amber-200 text-amber-800 text-xs flex flex-wrap items-center justify-between gap-2 shrink-0">
                   <span className="flex items-center gap-1.5">
                     <Smartphone className="w-3.5 h-3.5" />
                     <span>Mobile Screen: Open full tab for high-resolution pinch zoom</span>
@@ -314,12 +314,12 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
           ) : isImage ? (
             /* IMAGE VIEWER WITH ZOOM & ROTATE */
             <div className="w-full h-full relative flex items-center justify-center overflow-hidden">
-              <div className="absolute top-2 z-10 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900/80 backdrop-blur-md text-white shadow-lg border border-white/20 text-xs">
+              <div className="absolute top-2 z-10 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/95 backdrop-blur-md text-[#243447] shadow-md border border-[#D8E8F5] text-xs">
                 <button
                   type="button"
                   onClick={handleZoomOut}
                   title="Zoom Out"
-                  className="p-1 hover:text-blue-400 transition-colors"
+                  className="p-1 hover:text-[#2196F3] transition-colors"
                 >
                   <ZoomOut className="w-4 h-4" />
                 </button>
@@ -366,49 +366,49 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
             </div>
           ) : isTextOrCsv && textContent ? (
             /* TEXT / CSV PREVIEW */
-            <div className="w-full h-full flex flex-col rounded-2xl overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm p-4">
+            <div className="w-full h-full flex flex-col rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-sm p-4">
               <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 flex items-center justify-between">
                 <span>Text / Data Preview ({doc.fileName})</span>
                 <span className="text-[11px] font-mono text-blue-600">{doc.fileSize}</span>
               </div>
-              <pre className="flex-1 overflow-auto p-3 rounded-xl bg-slate-50 dark:bg-slate-950 font-mono text-xs text-slate-800 dark:text-slate-200 whitespace-pre-wrap leading-relaxed border border-slate-200 dark:border-slate-800">
+              <pre className="flex-1 overflow-auto p-3 rounded-xl bg-slate-50 font-mono text-xs text-slate-800 whitespace-pre-wrap leading-relaxed border border-slate-200">
                 {textContent}
               </pre>
             </div>
           ) : (
             /* OFFICE FORMATS (DOC, DOCX, XLS, XLSX, PPT, PPTX, ZIP) FILE CARD */
-            <div className="w-full max-w-xl p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-white/10 shadow-xl flex flex-col items-center text-center space-y-5 animate-in zoom-in-95">
+            <div className="w-full max-w-xl p-6 sm:p-8 rounded-3xl bg-white border border-slate-200/80 shadow-xl flex flex-col items-center text-center space-y-5 animate-in zoom-in-95">
               <div className="w-20 h-20 rounded-3xl bg-linear-to-tr from-blue-500/10 via-indigo-500/15 to-sky-500/10 border border-blue-500/20 flex items-center justify-center shadow-md">
                 {renderFormatIcon('w-10 h-10')}
               </div>
 
               <div className="space-y-1.5 max-w-md">
-                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-blue-100 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-blue-100 text-blue-700 border border-blue-200">
                   {ext.toUpperCase()} File Format
                 </span>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                <h3 className="text-lg font-bold text-slate-900">
                   {doc.fileName}
                 </h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400">
+                <p className="text-xs text-slate-500">
                   {displayDescription || (language === 'gu' ? 'આ ફોર્મેટ માટે ડાઉનલોડ ઉપલબ્ધ છે' : 'Direct browser preview is not applicable for this binary format. Please download the file to view in Microsoft Office, LibreOffice, or your local viewer.')}
                 </p>
               </div>
 
               {/* Metadata Details Grid */}
-              <div className="w-full grid grid-cols-2 sm:grid-cols-3 gap-2.5 p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700 text-left text-xs">
+              <div className="w-full grid grid-cols-2 sm:grid-cols-3 gap-2.5 p-3.5 rounded-2xl bg-slate-50 border border-slate-200/70 text-left text-xs">
                 <div>
                   <div className="text-[10px] text-slate-400 uppercase font-bold">File Size</div>
-                  <div className="font-semibold text-slate-800 dark:text-slate-200">{doc.fileSize}</div>
+                  <div className="font-semibold text-slate-800">{doc.fileSize}</div>
                 </div>
                 <div>
                   <div className="text-[10px] text-slate-400 uppercase font-bold">Upload Date</div>
-                  <div className="font-semibold text-slate-800 dark:text-slate-200">
+                  <div className="font-semibold text-slate-800">
                     {new Date(doc.uploadedAt).toLocaleDateString()}
                   </div>
                 </div>
                 <div className="col-span-2 sm:col-span-1">
                   <div className="text-[10px] text-slate-400 uppercase font-bold">Category</div>
-                  <div className="font-semibold text-slate-800 dark:text-slate-200 capitalize">{doc.category}</div>
+                  <div className="font-semibold text-slate-800 capitalize">{doc.category}</div>
                 </div>
               </div>
 
@@ -431,13 +431,13 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
         </div>
 
         {/* Footer Action Bar */}
-        <div className="px-4 sm:px-6 py-3.5 border-t border-slate-200/80 dark:border-slate-800 bg-white/70 dark:bg-slate-900/70 backdrop-blur-md flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0">
+        <div className="px-4 sm:px-6 py-3.5 border-t border-slate-200/80 bg-white/70 backdrop-blur-md flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0">
           <div className="flex items-center gap-2.5">
-            <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 px-2.5 py-1 rounded-full border border-emerald-200 dark:border-emerald-800">
+            <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
               <ShieldCheck className="w-3.5 h-3.5" />
               <span>Verified Document Format</span>
             </span>
-            <span className="text-xs text-slate-500 dark:text-slate-400 hidden md:inline">
+            <span className="text-xs text-slate-500 hidden md:inline">
               Shiv Computer e-Governance
             </span>
           </div>
@@ -447,7 +447,7 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
               href={resolvedUrl || doc.fileUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3.5 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold text-xs flex items-center gap-1.5 transition-colors"
+              className="px-3.5 py-2 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 font-semibold text-xs flex items-center gap-1.5 transition-colors"
             >
               <ExternalLink className="w-3.5 h-3.5" />
               <span>Open in Tab</span>

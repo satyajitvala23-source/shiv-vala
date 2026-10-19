@@ -70,7 +70,7 @@ export const NotificationModal: React.FC<NotificationModalProps> = ({
             type="button"
             id="modal-dismiss-button"
             onClick={onClose}
-            className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs sm:text-sm font-semibold transition-colors shadow-xs"
+            className="px-4 py-2 rounded-xl bg-[#2196F3] hover:bg-[#1976D2] text-white text-xs sm:text-sm font-semibold transition-colors shadow-xs"
           >
             {closeText}
           </button>

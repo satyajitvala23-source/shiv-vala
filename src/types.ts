@@ -79,6 +79,21 @@ export interface ServiceItem {
   department: string;
 }
 
+export interface ServiceCardItem {
+  id: string;
+  title: string;
+  titleGu: string;
+  subtitle: string;
+  description: string;
+  descriptionGu: string;
+  icon: any;
+  tag: string;
+  tagGu: string;
+  targetView: CurrentView;
+  gradient: string;
+  borderColor: string;
+}
+
 export interface FormTemplate {
   id: string;
   title: string;

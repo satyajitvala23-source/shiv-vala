@@ -31,7 +31,7 @@ export const QuickServiceCards: React.FC<QuickServiceCardsProps> = ({ onSelectSe
       descEn: 'High-speed B/W & Color Xerox, document scanning, lamination & PDF printouts.',
       descGu: 'ઝડપી બ્લેક/વ્હાઇટ અને કલર પ્રિન્ટિંગ, ઝેરોક્ષ, સ્કેનિંગ અને બાઇન્ડિંગ.',
       icon: Printer,
-      accentColor: 'text-blue-600 dark:text-blue-400',
+      accentColor: 'text-blue-600 ',
       badgeEn: 'Instant',
       badgeGu: 'ત્વરિત સેવા',
       fee: '₹20',
@@ -43,7 +43,7 @@ export const QuickServiceCards: React.FC<QuickServiceCardsProps> = ({ onSelectSe
       descEn: 'Heavy-gauge hot thermal lamination for certificates, marksheets & smart PVC cards.',
       descGu: 'માર્કશીટ, જમીન દસ્તાવેજ અને પ્રમાણપત્રોનું હેવી લેમિનેશન તથા સ્માર્ટ કાર્ડ.',
       icon: Layers,
-      accentColor: 'text-blue-600 dark:text-blue-400',
+      accentColor: 'text-blue-600 ',
       badgeEn: '5 Mins',
       badgeGu: '૫ મિનિટમાં',
       fee: '₹30',
@@ -55,7 +55,7 @@ export const QuickServiceCards: React.FC<QuickServiceCardsProps> = ({ onSelectSe
       descEn: 'New instant e-PAN card, Aadhaar biometric linkage, DOB/name correction & reprint.',
       descGu: 'નવું પાન કાર્ડ, સુધારો, આધાર લિંક અને તાત્કાલિક રીપ્રિન્ટ સેવા.',
       icon: CreditCard,
-      accentColor: 'text-blue-600 dark:text-blue-400',
+      accentColor: 'text-blue-600 ',
       badgeEn: 'NSDL Official',
       badgeGu: 'NSDL માન્ય',
       fee: '₹250',
@@ -67,7 +67,7 @@ export const QuickServiceCards: React.FC<QuickServiceCardsProps> = ({ onSelectSe
       descEn: 'Urgent studio-finish passport photos with official white/blue background in 10 minutes.',
       descGu: '૧૦ મિનિટમાં સરકારી અને વિઝા માન્ય પાસપોર્ટ સાઇઝ કલર ફોટોગ્રાફ.',
       icon: Camera,
-      accentColor: 'text-blue-600 dark:text-blue-400',
+      accentColor: 'text-blue-600 ',
       badgeEn: '10 Mins',
       badgeGu: '૧૦ મિનિટ',
       fee: '₹60',
@@ -79,7 +79,7 @@ export const QuickServiceCards: React.FC<QuickServiceCardsProps> = ({ onSelectSe
       descEn: 'Authorized IRCTC railway reservation, Tatkal ticket booking, GSRTC & flight booking.',
       descGu: 'IRCTC ટ્રેન ટિકિટ, તત્કાલ બુકિંગ, GSRTC બસ અને ફ્લાઇટ ટિકિટ સેવા.',
       icon: Ticket,
-      accentColor: 'text-blue-600 dark:text-blue-400',
+      accentColor: 'text-blue-600 ',
       badgeEn: 'Fast Booking',
       badgeGu: 'ઝડપી બુકિંગ',
       fee: '₹100',
@@ -91,7 +91,7 @@ export const QuickServiceCards: React.FC<QuickServiceCardsProps> = ({ onSelectSe
       descEn: 'Sarathi portal test slot booking, learning licence, DL renewal & address change.',
       descGu: 'લર્નિંગ લાયસન્સ, પાકું લાયસન્સ, રિન્યુઅલ અને આર.ટી.ઓ સ્લોટ બુકિંગ.',
       icon: Car,
-      accentColor: 'text-blue-600 dark:text-blue-400',
+      accentColor: 'text-blue-600 ',
       badgeEn: 'RTO Parivahan',
       badgeGu: 'RTO પરિવહન',
       fee: '₹300',
@@ -103,7 +103,7 @@ export const QuickServiceCards: React.FC<QuickServiceCardsProps> = ({ onSelectSe
       descEn: 'New Indian Passport application, renewal, Tatkal quota & PSK Junagadh appointments.',
       descGu: 'નવો પાસપોર્ટ, રિન્યુઅલ અને જૂનાગઢ પાસપોર્ટ ઓફિસ એપોઇન્ટમેન્ટ.',
       icon: Compass,
-      accentColor: 'text-blue-600 dark:text-blue-400',
+      accentColor: 'text-blue-600 ',
       badgeEn: 'Govt Portal',
       badgeGu: 'સરકારી પોર્ટલ',
       fee: '₹500',
@@ -115,7 +115,7 @@ export const QuickServiceCards: React.FC<QuickServiceCardsProps> = ({ onSelectSe
       descEn: 'Income Certificate (આવકનો દાખલો), Caste Certificate, Domicile & Non-Creamy Layer.',
       descGu: 'આવકનો દાખલો, જાતિનો દાખલો, નોન-ક્રીમીલેયર અને બોનાફાઇડ સર્ટિફિકેટ.',
       icon: Award,
-      accentColor: 'text-blue-600 dark:text-blue-400',
+      accentColor: 'text-blue-600 ',
       badgeEn: 'State Portal',
       badgeGu: 'ગુજરાત સરકાર',
       fee: '₹150',
@@ -127,7 +127,7 @@ export const QuickServiceCards: React.FC<QuickServiceCardsProps> = ({ onSelectSe
       descEn: 'GPSC, GSSSB, Police Bharti, Talati, TET/TAT, Post Office & scholarship registration.',
       descGu: 'પોલીસ ભરતી, તલાટી, સરકારી નોકરી અને શિષ્યવૃત્તિના ઓનલાઇન ફોર્મ.',
       icon: ClipboardList,
-      accentColor: 'text-blue-600 dark:text-blue-400',
+      accentColor: 'text-blue-600 ',
       badgeEn: 'Job & Schemes',
       badgeGu: 'ભરતી અને યોજના',
       fee: '₹120',
@@ -139,7 +139,7 @@ export const QuickServiceCards: React.FC<QuickServiceCardsProps> = ({ onSelectSe
       descEn: 'e-Shram card, Ayushman Bharat card, Ration card KYC & Electricity bill payments.',
       descGu: 'આયુષ્માન કાર્ડ, ઇ-શ્રમ કાર્ડ, રેશન કાર્ડ કેવાયસી અને લાઈટ બિલ ભરવું.',
       icon: Sparkles,
-      accentColor: 'text-blue-600 dark:text-blue-400',
+      accentColor: 'text-blue-600 ',
       badgeEn: 'All CSC',
       badgeGu: 'તમામ સેવાઓ',
       fee: '₹80',
@@ -153,21 +153,21 @@ export const QuickServiceCards: React.FC<QuickServiceCardsProps> = ({ onSelectSe
         <div>
           <div className="flex items-center gap-2">
             <span className="w-2 h-5 rounded-full bg-linear-to-b from-blue-600 to-amber-400" />
-            <h2 className="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
+            <h2 className="text-base sm:text-lg font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
               <span>{language === 'gu' ? 'મુખ્ય સેવાઓ (શિવ કમ્પ્યુટર)' : 'Core Center Services'}</span>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-400/20 text-amber-900 dark:text-amber-300 border border-amber-400/40">
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-400/20 text-amber-900 border border-amber-400/40">
                 10 Services
               </span>
             </h2>
           </div>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 ml-4">
+          <p className="text-xs text-slate-500 mt-0.5 ml-4">
             {language === 'gu'
               ? 'રોયલ બ્લૂ અને પીળા એક્સેન્ટ સાથેના પ્રીમિયમ ગ્લાસ કાર્ડ્સ. સેવા વિગતો અને શુલ્ક.'
               : 'Official center services, processing turnaround times, and verified fee structure.'}
           </p>
         </div>
 
-        <div className="flex items-center gap-1.5 self-start sm:self-auto text-xs text-blue-700 dark:text-blue-300 font-medium">
+        <div className="flex items-center gap-1.5 self-start sm:self-auto text-xs text-blue-700 font-medium">
           <Zap className="w-3.5 h-3.5 text-amber-500 fill-amber-400" />
           <span>{language === 'gu' ? 'કેન્દ્ર સહાય ઉપલબ્ધ' : 'Center Services & Inquiries'}</span>
         </div>
@@ -192,35 +192,35 @@ export const QuickServiceCards: React.FC<QuickServiceCardsProps> = ({ onSelectSe
                   </div>
 
                   {/* Bright Yellow Accent Tag */}
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-400/20 text-amber-800 dark:text-amber-300 border border-amber-400/40 shadow-2xs">
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-400/20 text-amber-800 border border-amber-400/40 shadow-2xs">
                     <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
                     {language === 'gu' ? item.badgeGu : item.badgeEn}
                   </span>
                 </div>
 
                 {/* Title */}
-                <h3 className="font-bold text-sm text-slate-900 dark:text-white transition-colors line-clamp-1">
+                <h3 className="font-bold text-sm text-slate-900 transition-colors line-clamp-1">
                   {language === 'gu' ? item.titleGu : item.titleEn}
                 </h3>
 
                 {/* Description */}
-                <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                <p className="text-[11px] text-slate-500 mt-1 line-clamp-2 leading-relaxed">
                   {language === 'gu' ? item.descGu : item.descEn}
                 </p>
               </div>
 
               {/* Bottom Row: Fee & Service details */}
-              <div className="mt-3 pt-3 border-t border-slate-100 dark:border-white/10 flex items-center justify-between">
+              <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between">
                 <div>
                   <span className="text-[10px] text-slate-400 block uppercase font-medium">
                     {language === 'gu' ? 'શુલ્ક' : 'Fee'}
                   </span>
-                  <span className="text-xs font-extrabold text-blue-700 dark:text-sky-300">
+                  <span className="text-xs font-extrabold text-blue-700">
                     {item.fee}
                   </span>
                 </div>
 
-                <div className="inline-flex items-center gap-1 text-[10px] font-semibold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 px-2 py-1 rounded-lg">
+                <div className="inline-flex items-center gap-1 text-[10px] font-semibold text-slate-500 bg-slate-100 px-2 py-1 rounded-lg">
                   <span>{language === 'gu' ? 'ઓફિસ સેવા' : 'In-Office'}</span>
                 </div>
               </div>

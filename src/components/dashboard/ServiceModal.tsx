@@ -91,16 +91,16 @@ export const ServiceModal: React.FC<ServiceModalProps> = ({
     >
       <div
         id="service-modal-card"
-        className="w-full max-w-lg max-h-[90vh] flex flex-col bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden text-left animate-in zoom-in-95"
+        className="w-full max-w-lg max-h-[90vh] flex flex-col bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden text-left animate-in zoom-in-95"
       >
-        <div className="p-4 sm:p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/70 dark:bg-slate-800/40">
-          <h3 className="font-bold text-slate-900 dark:text-white text-base">
+        <div className="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
+          <h3 className="font-bold text-slate-900 text-base">
             {serviceToEdit ? 'Edit Service Details' : 'Add New Service'}
           </h3>
           <button
             type="button"
             onClick={onClose}
-            className="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+            className="p-1 rounded-lg text-slate-400 hover:text-slate-600"
           >
             <X className="w-5 h-5" />
           </button>
@@ -108,7 +108,7 @@ export const ServiceModal: React.FC<ServiceModalProps> = ({
 
         <form onSubmit={handleSubmit} className="p-4 sm:p-6 overflow-y-auto space-y-4 text-xs sm:text-sm">
           <div>
-            <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+            <label className="block font-semibold text-slate-700 mb-1">
               Service Name *
             </label>
             <input
@@ -117,19 +117,19 @@ export const ServiceModal: React.FC<ServiceModalProps> = ({
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter service name"
-              className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-blue-500/20"
+              className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-slate-900 outline-none focus:ring-2 focus:ring-blue-500/20"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block font-semibold text-slate-700 mb-1">
                 Category
               </label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value as 'general' | 'agriculture')}
-                className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none"
+                className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-slate-900 outline-none"
               >
                 <option value="general">General Service</option>
                 <option value="agriculture">Agriculture / iKhedut Service</option>
@@ -137,7 +137,7 @@ export const ServiceModal: React.FC<ServiceModalProps> = ({
             </div>
 
             <div>
-              <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block font-semibold text-slate-700 mb-1">
                 Department
               </label>
               <input
@@ -145,14 +145,14 @@ export const ServiceModal: React.FC<ServiceModalProps> = ({
                 value={department}
                 onChange={(e) => setDepartment(e.target.value)}
                 placeholder="Enter department name"
-                className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none"
+                className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-slate-900 outline-none"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block font-semibold text-slate-700 mb-1">
                 Service Processing Fee (₹)
               </label>
               <input
@@ -160,12 +160,12 @@ export const ServiceModal: React.FC<ServiceModalProps> = ({
                 min="0"
                 value={fee}
                 onChange={(e) => setFee(Number(e.target.value))}
-                className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none"
+                className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-slate-900 outline-none"
               />
             </div>
 
             <div>
-              <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block font-semibold text-slate-700 mb-1">
                 Processing Time
               </label>
               <input
@@ -173,13 +173,13 @@ export const ServiceModal: React.FC<ServiceModalProps> = ({
                 value={processingTime}
                 onChange={(e) => setProcessingTime(e.target.value)}
                 placeholder="Enter processing duration"
-                className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none"
+                className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-slate-900 outline-none"
               />
             </div>
           </div>
 
           <div>
-            <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+            <label className="block font-semibold text-slate-700 mb-1">
               Description
             </label>
             <textarea
@@ -187,12 +187,12 @@ export const ServiceModal: React.FC<ServiceModalProps> = ({
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Brief description of requirements and eligibility"
-              className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none"
+              className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-slate-900 outline-none"
             />
           </div>
 
           <div>
-            <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+            <label className="block font-semibold text-slate-700 mb-1">
               Required Documents
             </label>
             <div className="flex gap-2 mb-2">
@@ -201,12 +201,12 @@ export const ServiceModal: React.FC<ServiceModalProps> = ({
                 value={newDocInput}
                 onChange={(e) => setNewDocInput(e.target.value)}
                 placeholder="Add required document name"
-                className="flex-1 px-3 py-1.5 text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none"
+                className="flex-1 px-3 py-1.5 text-xs rounded-xl border border-slate-200 bg-white text-slate-900 outline-none"
               />
               <button
                 type="button"
                 onClick={handleAddDoc}
-                className="px-3 py-1.5 bg-slate-800 dark:bg-slate-700 text-white rounded-xl text-xs font-semibold flex items-center gap-1"
+                className="px-3 py-1.5 bg-slate-800 text-white rounded-xl text-xs font-semibold flex items-center gap-1"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Add</span>
@@ -217,9 +217,9 @@ export const ServiceModal: React.FC<ServiceModalProps> = ({
               {requiredDocuments.map((doc, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center justify-between p-2 rounded-lg bg-slate-50 dark:bg-slate-800 text-xs border border-slate-200/60 dark:border-slate-700"
+                  className="flex items-center justify-between p-2 rounded-lg bg-slate-50 text-xs border border-slate-200/60"
                 >
-                  <span className="text-slate-700 dark:text-slate-300">{doc}</span>
+                  <span className="text-slate-700">{doc}</span>
                   <button
                     type="button"
                     onClick={() => handleRemoveDoc(idx)}
@@ -240,17 +240,17 @@ export const ServiceModal: React.FC<ServiceModalProps> = ({
                 onChange={(e) => setEnabled(e.target.checked)}
                 className="w-4 h-4 rounded text-blue-600 focus:ring-0 cursor-pointer"
               />
-              <span className="font-semibold text-slate-700 dark:text-slate-300">
+              <span className="font-semibold text-slate-700">
                 Service Active / Enabled for Users
               </span>
             </label>
           </div>
 
-          <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex justify-end gap-2">
+          <div className="pt-4 border-t border-slate-100 flex justify-end gap-2">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-medium"
+              className="px-4 py-2 rounded-xl text-slate-600 hover:bg-slate-100 text-xs font-medium"
             >
               Cancel
             </button>

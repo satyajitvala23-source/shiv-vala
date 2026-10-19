@@ -131,15 +131,15 @@ export const UserDashboard: React.FC = () => {
     switch (status) {
       case 'Approved':
       case 'Completed':
-        return 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800';
+        return 'bg-emerald-50 text-emerald-700 border-emerald-200';
       case 'Processing':
-        return 'bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300 border-blue-200 dark:border-blue-800';
+        return 'bg-blue-50 text-blue-700 border-blue-200';
       case 'Pending':
-        return 'bg-amber-50 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300 border-amber-200 dark:border-amber-800';
+        return 'bg-amber-50 text-amber-700 border-amber-200';
       case 'Document Required':
-        return 'bg-purple-50 text-purple-700 dark:bg-purple-950/60 dark:text-purple-300 border-purple-200 dark:border-purple-800';
+        return 'bg-purple-50 text-purple-700 border-purple-200';
       case 'Rejected':
-        return 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border-slate-300 dark:border-slate-700';
+        return 'bg-slate-100 text-slate-700 border-slate-300';
       default:
         return 'bg-slate-50 text-slate-700 border-slate-200';
     }
@@ -155,7 +155,7 @@ export const UserDashboard: React.FC = () => {
   ];
 
   return (
-    <div id="user-dashboard-container" className="min-h-screen flex flex-col bg-transparent text-slate-900 dark:text-white relative z-10 w-full max-w-full overflow-x-hidden">
+    <div id="user-dashboard-container" className="min-h-screen flex flex-col bg-transparent text-slate-900 relative z-10 w-full max-w-full overflow-x-hidden">
       {/* Header */}
       <DashboardHeader
         role="user"
@@ -178,7 +178,7 @@ export const UserDashboard: React.FC = () => {
               type="button"
               id="user-sidebar-logo-btn"
               onClick={() => navigateToView('home')}
-              className="w-full flex items-center justify-center p-3 mb-2 rounded-2xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-md border border-slate-200/80 dark:border-white/10 shadow-xs hover:bg-white/90 dark:hover:bg-slate-800/80 transition-all cursor-pointer group"
+              className="w-full flex items-center justify-center p-3 mb-2 rounded-2xl bg-white/70 backdrop-blur-md border border-slate-200/80 shadow-xs hover:bg-white/90 transition-all cursor-pointer group"
               title="Shiv Computer — Home"
               aria-label="Go to Home"
             >
@@ -192,7 +192,7 @@ export const UserDashboard: React.FC = () => {
               </div>
             </button>
 
-            <div className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+            <div className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">
               {language === 'gu' ? 'મેનૂ' : 'Navigation'}
             </div>
 
@@ -211,7 +211,7 @@ export const UserDashboard: React.FC = () => {
                   className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${
                     isActive
                       ? 'btn-glossy-primary shadow-xs'
-                      : 'text-slate-700 dark:text-slate-300 hover:bg-white/60 dark:hover:bg-slate-800/60'
+                      : 'text-slate-700  hover:bg-white/60 '
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
@@ -223,7 +223,7 @@ export const UserDashboard: React.FC = () => {
                       className={`px-1.5 py-0.5 rounded-full text-[10px] font-mono font-bold ${
                         isActive
                           ? 'bg-white/20 text-white'
-                          : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
+                          : 'bg-slate-200  text-slate-700 '
                       }`}
                     >
                       {item.badge}
@@ -235,12 +235,12 @@ export const UserDashboard: React.FC = () => {
           </div>
 
           {/* User Sign Out footer */}
-          <div className="p-3 border-t border-slate-200/80 dark:border-white/10 shrink-0">
+          <div className="p-3 border-t border-slate-200/80 shrink-0">
             <button
               id="user-logout-button"
               type="button"
               onClick={logout}
-              className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 transition-colors"
+              className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-rose-600 hover:bg-rose-50 transition-colors"
             >
               <LogOut className="w-4 h-4 shrink-0" />
               <span>{t.userSidebar?.logout || 'Sign Out'}</span>
@@ -261,35 +261,42 @@ export const UserDashboard: React.FC = () => {
           {/* Top Shiv Computer Brand Header (Prominently displayed after login) */}
           <div
             id="user-dashboard-top-brand"
-            className="p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl bg-linear-to-r from-white/80 via-sky-50/70 to-cyan-50/80 dark:from-slate-900/85 dark:via-slate-900/75 dark:to-slate-800/80 border border-white/80 dark:border-white/10 backdrop-blur-xl shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3.5"
+            className="p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl bg-linear-to-r from-white/80 via-sky-50/70 to-cyan-50/80 border border-white/80 backdrop-blur-xl shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3.5"
           >
             <div className="flex items-center gap-3.5 min-w-0">
-              <div className="w-11 h-11 sm:w-13 sm:h-13 rounded-2xl bg-white/70 dark:bg-slate-800/60 p-1 flex items-center justify-center border border-white/80 dark:border-white/10 shadow-xs shrink-0">
+              <button
+                type="button"
+                id="user-dash-brand-logo-btn"
+                onClick={() => navigateToView('home')}
+                className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/70 p-1 flex items-center justify-center border border-white/80 shadow-xs shrink-0 cursor-pointer hover:scale-105 transition-transform"
+                title="Shiv Computer — Home"
+                aria-label="Go to Home"
+              >
                 <img
                   src="/logo.png"
-                  alt="Shiv Computer"
+                  alt="Shiv Computer Logo"
                   className="w-full h-full object-contain filter drop-shadow-xs"
                 />
-              </div>
+              </button>
               <div className="min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <h2 className="text-xl sm:text-2xl font-black tracking-tight bg-linear-to-r from-sky-950 via-sky-800 to-cyan-600 dark:from-white dark:via-sky-200 dark:to-cyan-400 bg-clip-text text-transparent">
-                    Shiv Computer
+                  <h2 className="text-xl sm:text-2xl font-black tracking-tight bg-linear-to-r from-sky-950 via-sky-800 to-cyan-600 bg-clip-text text-transparent">
+                    {language === 'gu' ? 'ડિજિટલ સેવા પોર્ટલ' : 'Citizen Services Portal'}
                   </h2>
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-bold bg-sky-500/15 text-sky-800 dark:text-sky-300 border border-sky-400/30">
-                    {language === 'gu' ? 'ઑનલાઇન પોર્ટલ' : 'Online Portal'}
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-bold bg-sky-500/15 text-sky-800 border border-sky-400/30">
+                    {language === 'gu' ? 'ઑનલાઇન' : 'Online'}
                   </span>
                 </div>
-                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-medium truncate mt-0.5">
+                <p className="text-xs sm:text-sm text-slate-600 font-medium truncate mt-0.5">
                   {language === 'gu'
-                    ? 'શિવ કમ્પ્યુટર — ડિજિટલ સેવા કેન્દ્ર • તમામ ઓનલાઇન ફોર્મ્સ અને સરકારી યોજનાઓ'
-                    : 'Shiv Computer — Digital Seva Kendra • Online Forms & Government Services'}
+                    ? 'તમામ ઓનલાઇન ફોર્મ્સ, ખેડૂત યોજનાઓ અને સરકારી સેવાઓ'
+                    : 'Online Forms, Agriculture Schemes & Government Services'}
                 </p>
               </div>
             </div>
 
             <div className="flex items-center gap-2 self-start sm:self-center shrink-0">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-white/70 dark:bg-slate-800/60 border border-white/80 dark:border-white/10 text-xs font-semibold text-slate-700 dark:text-slate-300 shadow-2xs backdrop-blur-md">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-white/70 border border-white/80 text-xs font-semibold text-slate-700 shadow-2xs backdrop-blur-md">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 <span>{currentUser.name || (language === 'gu' ? 'વપરાશકર્તા' : 'User')}</span>
               </div>
@@ -300,19 +307,19 @@ export const UserDashboard: React.FC = () => {
           {activeTab === 'dashboard' && (
             <div className="space-y-6">
               {/* Welcome Banner */}
-              <div className="p-5 sm:p-6 rounded-3xl bg-white/70 dark:bg-slate-900/70 border border-slate-200/80 dark:border-white/10 backdrop-blur-xl shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="p-5 sm:p-6 rounded-3xl bg-white/70 border border-slate-200/80 backdrop-blur-xl shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-sky-500/15 text-sky-700 dark:text-sky-300 border border-sky-500/25">
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-sky-500/15 text-sky-700 border border-sky-500/25">
                       {language === 'gu' ? 'યુઝર એકાઉન્ટ' : 'User Account'}
                     </span>
                   </div>
-                  <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+                  <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
                     {language === 'gu'
                       ? `સ્વાગત છે, ${currentUser.name || 'યુઝર'}`
                       : `Welcome, ${currentUser.name || 'User'}`}
                   </h1>
-                  <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+                  <p className="text-xs sm:text-sm text-slate-500">
                     {language === 'gu'
                       ? 'શિવ કમ્પ્યુટર ઑનલાઇન પોર્ટલ પર આપનું સ્વાગત છે. સત્તાવાર દસ્તાવેજો ડાઉનલોડ કરો અને સેવાઓ માટે અરજી કરો.'
                       : 'Access official documents uploaded by Admin, apply for digital services, and track your applications in real-time.'}
@@ -331,27 +338,27 @@ export const UserDashboard: React.FC = () => {
 
               {/* Status Counters */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div className="p-4 rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-white/10 shadow-xs backdrop-blur-md">
-                  <div className="text-xs text-slate-500 dark:text-slate-400">Total Applications</div>
-                  <div className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-1">
+                <div className="p-4 rounded-2xl bg-white/80 border border-slate-200/80 shadow-xs backdrop-blur-md">
+                  <div className="text-xs text-slate-500">Total Applications</div>
+                  <div className="text-xl sm:text-2xl font-bold text-slate-900 mt-1">
                     <AnimatedCounter value={totalUserApps} />
                   </div>
                 </div>
-                <div className="p-4 rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-white/10 shadow-xs backdrop-blur-md">
-                  <div className="text-xs text-amber-600 dark:text-amber-400">Pending Review</div>
-                  <div className="text-xl sm:text-2xl font-bold text-amber-600 dark:text-amber-400 mt-1">
+                <div className="p-4 rounded-2xl bg-white/80 border border-slate-200/80 shadow-xs backdrop-blur-md">
+                  <div className="text-xs text-amber-600">Pending Review</div>
+                  <div className="text-xl sm:text-2xl font-bold text-amber-600 mt-1">
                     <AnimatedCounter value={pendingUserApps} />
                   </div>
                 </div>
-                <div className="p-4 rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-white/10 shadow-xs backdrop-blur-md">
-                  <div className="text-xs text-blue-600 dark:text-blue-400">In Processing</div>
-                  <div className="text-xl sm:text-2xl font-bold text-blue-600 dark:text-blue-400 mt-1">
+                <div className="p-4 rounded-2xl bg-white/80 border border-slate-200/80 shadow-xs backdrop-blur-md">
+                  <div className="text-xs text-blue-600">In Processing</div>
+                  <div className="text-xl sm:text-2xl font-bold text-blue-600 mt-1">
                     <AnimatedCounter value={processingUserApps} />
                   </div>
                 </div>
-                <div className="p-4 rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-white/10 shadow-xs backdrop-blur-md">
-                  <div className="text-xs text-emerald-600 dark:text-emerald-400">Approved</div>
-                  <div className="text-xl sm:text-2xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">
+                <div className="p-4 rounded-2xl bg-white/80 border border-slate-200/80 shadow-xs backdrop-blur-md">
+                  <div className="text-xs text-emerald-600">Approved</div>
+                  <div className="text-xl sm:text-2xl font-bold text-emerald-600 mt-1">
                     <AnimatedCounter value={approvedUserApps} />
                   </div>
                 </div>
@@ -374,10 +381,10 @@ export const UserDashboard: React.FC = () => {
           {activeTab === 'services' && (
             <div className="space-y-6">
               <div>
-                <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+                <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
                   {language === 'gu' ? 'ઉપલબ્ધ સેવાઓ' : 'Available Services'}
                 </h1>
-                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+                <p className="text-xs sm:text-sm text-slate-500">
                   {language === 'gu'
                     ? 'ડિજિટલ ગુજરાત, પાન કાર્ડ, રેશન કાર્ડ અને ખેતીવાડી યોજનાઓ માટે અરજી કરો.'
                     : 'Apply for Digital Gujarat, PAN Card, Ration Card, Land records, and Farmer subsidies.'}
@@ -391,21 +398,21 @@ export const UserDashboard: React.FC = () => {
                     className="service-gloss-card p-5 flex flex-col justify-between space-y-4"
                   >
                     <div>
-                      <div className="flex items-center justify-between text-xs text-sky-600 dark:text-sky-400 font-bold mb-1">
+                      <div className="flex items-center justify-between text-xs text-sky-600 font-bold mb-1">
                         <span className="truncate pr-2">{service.department}</span>
-                        <span className="font-extrabold text-slate-900 dark:text-amber-300 bg-amber-400/15 dark:bg-amber-400/20 px-2.5 py-0.5 rounded-full border border-amber-400/30 shrink-0">
+                        <span className="font-extrabold text-slate-900 bg-amber-400/15 px-2.5 py-0.5 rounded-full border border-amber-400/30 shrink-0">
                           ₹{service.fee}
                         </span>
                       </div>
-                      <h3 className="font-bold text-base text-slate-900 dark:text-white">
+                      <h3 className="font-bold text-base text-slate-900">
                         {service.name}
                       </h3>
-                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                      <p className="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">
                         {service.description}
                       </p>
 
-                      <div className="mt-3 pt-3 border-t border-slate-100 dark:border-white/10 text-xs space-y-1 text-slate-600 dark:text-slate-400">
-                        <div>Processing: <strong className="text-slate-800 dark:text-slate-200">{service.processingTime}</strong></div>
+                      <div className="mt-3 pt-3 border-t border-slate-100 text-xs space-y-1 text-slate-600">
+                        <div>Processing: <strong className="text-slate-800">{service.processingTime}</strong></div>
                         <div className="text-[11px] text-slate-400 truncate">
                           Required: {service.requiredDocuments.join(', ')}
                         </div>
@@ -430,17 +437,17 @@ export const UserDashboard: React.FC = () => {
           {activeTab === 'myApplications' && (
             <div className="space-y-6">
               <div>
-                <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+                <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
                   My Submitted Applications
                 </h1>
-                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+                <p className="text-xs sm:text-sm text-slate-500">
                   Track live progress and review submitted applications.
                 </p>
               </div>
 
               <div className="space-y-3">
                 {userApplications.length === 0 ? (
-                  <div className="p-12 text-center bg-white/70 dark:bg-slate-900/70 rounded-3xl border border-slate-200 dark:border-slate-800 text-slate-400">
+                  <div className="p-12 text-center bg-white/70 rounded-3xl border border-slate-200 text-slate-400">
                     <FileSpreadsheet className="w-8 h-8 mx-auto mb-2 opacity-50" />
                     <p className="font-semibold text-sm">No applications submitted yet.</p>
                     <p className="text-xs mt-1">Browse services to submit your first application.</p>
@@ -449,18 +456,18 @@ export const UserDashboard: React.FC = () => {
                   userApplications.map((app) => (
                     <div
                       key={app.id}
-                      className="p-5 rounded-3xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-white/10 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4 backdrop-blur-md"
+                      className="p-5 rounded-3xl bg-white/80 border border-slate-200/80 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4 backdrop-blur-md"
                     >
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
-                          <span className="font-mono text-xs font-bold text-sky-600 dark:text-sky-400">{app.id}</span>
-                          <span className="font-bold text-sm text-slate-900 dark:text-white">{app.serviceName}</span>
+                          <span className="font-mono text-xs font-bold text-sky-600">{app.id}</span>
+                          <span className="font-bold text-sm text-slate-900">{app.serviceName}</span>
                         </div>
-                        <div className="text-xs text-slate-500 dark:text-slate-400">
+                        <div className="text-xs text-slate-500">
                           Submitted on {app.applicationDate} • Fee: ₹{app.fee} ({app.paymentStatus})
                         </div>
                         {app.adminNotes && (
-                          <div className="text-xs text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/40 p-2 rounded-xl border border-amber-200/50 mt-1">
+                          <div className="text-xs text-amber-700 bg-amber-50 p-2 rounded-xl border border-amber-200/50 mt-1">
                             Note from Admin: {app.adminNotes}
                           </div>
                         )}
@@ -473,7 +480,7 @@ export const UserDashboard: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => setSelectedAppForModal(app)}
-                          className="px-3.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-sky-600 hover:text-white text-xs font-semibold transition-colors"
+                          className="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-sky-600 hover:text-white text-xs font-semibold transition-colors"
                         >
                           View Details
                         </button>
@@ -489,20 +496,20 @@ export const UserDashboard: React.FC = () => {
           {activeTab === 'myProfile' && (
             <div className="space-y-6">
               <div>
-                <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+                <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
                   User Profile & Account Security
                 </h1>
-                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+                <p className="text-xs sm:text-sm text-slate-500">
                   Update personal contact details and manage Firebase Authentication credentials.
                 </p>
               </div>
 
               <form
                 onSubmit={handleSaveProfile}
-                className="max-w-xl p-5 sm:p-6 rounded-3xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-white/10 shadow-xs space-y-4 text-xs sm:text-sm backdrop-blur-md"
+                className="max-w-xl p-5 sm:p-6 rounded-3xl bg-white/80 border border-slate-200/80 shadow-xs space-y-4 text-xs sm:text-sm backdrop-blur-md"
               >
                 <div>
-                  <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                  <label className="block font-semibold text-slate-700 mb-1">
                     Full Name
                   </label>
                   <input
@@ -510,13 +517,13 @@ export const UserDashboard: React.FC = () => {
                     required
                     value={nameInput}
                     onChange={(e) => setNameInput(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:border-sky-500"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-slate-900 outline-none focus:border-sky-500"
                   />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                    <label className="block font-semibold text-slate-700 mb-1">
                       Mobile Number
                     </label>
                     <input
@@ -524,44 +531,44 @@ export const UserDashboard: React.FC = () => {
                       required
                       value={phoneInput}
                       onChange={(e) => setPhoneInput(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:border-sky-500"
+                      className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-slate-900 outline-none focus:border-sky-500"
                     />
                   </div>
 
                   <div>
-                    <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                    <label className="block font-semibold text-slate-700 mb-1">
                       Username
                     </label>
                     <input
                       type="text"
                       disabled
                       value={currentUser.username ? `@${currentUser.username}` : '@user'}
-                      className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-500 cursor-not-allowed outline-none font-mono"
+                      className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-100 text-slate-500 cursor-not-allowed outline-none font-mono"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                  <label className="block font-semibold text-slate-700 mb-1">
                     Email Address
                   </label>
                   <input
                     type="email"
                     disabled
                     value={currentUser.email}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-500 cursor-not-allowed outline-none"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-100 text-slate-500 cursor-not-allowed outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                  <label className="block font-semibold text-slate-700 mb-1">
                     Address
                   </label>
                   <textarea
                     rows={2}
                     value={addressInput}
                     onChange={(e) => setAddressInput(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:border-sky-500"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-slate-900 outline-none focus:border-sky-500"
                   />
                 </div>
 
@@ -584,23 +591,23 @@ export const UserDashboard: React.FC = () => {
               {/* Account Security & Password Recovery */}
               <div
                 id="user-account-security-card"
-                className="max-w-xl p-5 sm:p-6 rounded-3xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-white/10 shadow-xs space-y-3.5 text-xs sm:text-sm backdrop-blur-md"
+                className="max-w-xl p-5 sm:p-6 rounded-3xl bg-white/80 border border-slate-200/80 shadow-xs space-y-3.5 text-xs sm:text-sm backdrop-blur-md"
               >
                 <div className="flex items-center gap-2.5">
-                  <div className="p-2 rounded-xl bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20">
+                  <div className="p-2 rounded-xl bg-sky-500/10 text-sky-600 border border-sky-500/20">
                     <KeyRound className="w-4 h-4" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-slate-900 dark:text-white">
+                    <h3 className="font-bold text-slate-900">
                       Password & Credentials
                     </h3>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                    <p className="text-[11px] text-slate-500">
                       Firebase Authentication password recovery
                     </p>
                   </div>
                 </div>
 
-                <p className="text-slate-600 dark:text-slate-300 text-xs leading-relaxed">
+                <p className="text-slate-600 text-xs leading-relaxed">
                   Send a password reset email to your registered account ({currentUser.email || 'your email'}) using Firebase Auth.
                 </p>
 
@@ -608,8 +615,8 @@ export const UserDashboard: React.FC = () => {
                   <div
                     className={`p-3 rounded-xl border text-xs flex items-start gap-2 ${
                       resetStatus.type === 'success'
-                        ? 'bg-emerald-50 dark:bg-emerald-950/50 border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-200'
-                        : 'bg-amber-50 dark:bg-amber-950/50 border-amber-300 dark:border-amber-700 text-amber-900 dark:text-amber-200'
+                        ? 'bg-emerald-50  border-emerald-200  text-emerald-800 '
+                        : 'bg-amber-50  border-amber-300  text-amber-900 '
                     }`}
                   >
                     {resetStatus.type === 'success' ? (
@@ -627,7 +634,7 @@ export const UserDashboard: React.FC = () => {
                     id="user-send-password-reset-btn"
                     onClick={handleSendProfilePasswordReset}
                     disabled={isResettingPassword || !currentUser.email}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-semibold text-xs transition-colors disabled:opacity-50"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-xs transition-colors disabled:opacity-50"
                   >
                     {isResettingPassword ? (
                       <>
@@ -636,7 +643,7 @@ export const UserDashboard: React.FC = () => {
                       </>
                     ) : (
                       <>
-                        <Mail className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
+                        <Mail className="w-3.5 h-3.5 text-sky-600" />
                         <span>Send Password Reset Email</span>
                       </>
                     )}

@@ -260,7 +260,7 @@ function AppContent() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col relative text-slate-800 dark:text-slate-100">
+    <div className="min-h-screen flex flex-col relative text-[#243447]">
       <DynamicGlassBackground />
       <GlassNavbar />
       <main className="flex-1 min-w-0">

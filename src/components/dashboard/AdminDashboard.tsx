@@ -59,6 +59,7 @@ export const AdminDashboard: React.FC = () => {
     toggleUserStatus,
     updateUser,
     updateApplicationStatus,
+    navigateToView,
   } = useApp();
 
   const getStatusLabel = (status: ApplicationStatus): string => {
@@ -188,15 +189,15 @@ export const AdminDashboard: React.FC = () => {
     switch (status) {
       case 'Approved':
       case 'Completed':
-        return 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800';
+        return 'bg-emerald-50 text-emerald-700 border-emerald-200';
       case 'Processing':
-        return 'bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300 border-blue-200 dark:border-blue-800';
+        return 'bg-blue-50 text-blue-700 border-blue-200';
       case 'Pending':
-        return 'bg-amber-50 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300 border-amber-200 dark:border-amber-800';
+        return 'bg-amber-50 text-amber-700 border-amber-200';
       case 'Document Required':
-        return 'bg-purple-50 text-purple-700 dark:bg-purple-950/60 dark:text-purple-300 border-purple-200 dark:border-purple-800';
+        return 'bg-purple-50 text-purple-700 border-purple-200';
       case 'Rejected':
-        return 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border-slate-300 dark:border-slate-700';
+        return 'bg-slate-100 text-slate-700 border-slate-300';
       default:
         return 'bg-slate-50 text-slate-700 border-slate-200';
     }
@@ -213,7 +214,7 @@ export const AdminDashboard: React.FC = () => {
   ];
 
   return (
-    <div id="admin-dashboard-container" className="min-h-screen flex flex-col bg-transparent text-slate-900 dark:text-white relative z-10 w-full max-w-full overflow-x-hidden">
+    <div id="admin-dashboard-container" className="min-h-screen flex flex-col bg-transparent text-slate-900 relative z-10 w-full max-w-full overflow-x-hidden">
       {/* Header */}
       <DashboardHeader
         role="admin"
@@ -231,27 +232,26 @@ export const AdminDashboard: React.FC = () => {
         >
           {/* Scrollable Navigation */}
           <div className="p-3 overflow-y-auto space-y-1">
-            {/* Sidebar Brand Badge */}
-            <div className="flex items-center gap-3 px-3 py-2.5 mb-2 rounded-2xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/80 dark:border-white/10 shadow-xs">
-              <div className="w-12 h-12 rounded-2xl bg-transparent p-1 flex items-center justify-center shrink-0 overflow-hidden relative group">
+            {/* Sidebar Official Logo Branding (55-70px tall, no extra text, navigates to Home) */}
+            <button
+              type="button"
+              id="admin-sidebar-logo-btn"
+              onClick={() => navigateToView('home')}
+              className="w-full flex items-center justify-center p-3 mb-2 rounded-2xl bg-white/70 backdrop-blur-md border border-slate-200/80 shadow-xs hover:bg-white/90 transition-all cursor-pointer group"
+              title="Shiv Computer — Home"
+              aria-label="Go to Home"
+            >
+              <div className="h-16 w-16 sm:h-[66px] sm:w-[66px] flex items-center justify-center relative overflow-hidden transition-transform duration-200 group-hover:scale-105">
                 <img
                   src="/logo.png"
                   alt="Shiv Computer"
-                  className="w-full h-full object-contain filter drop-shadow-md relative z-5 transition-transform duration-200 group-hover:scale-105"
+                  className="w-full h-full object-contain filter drop-shadow-md relative z-5"
                   referrerPolicy="no-referrer"
                 />
               </div>
-              <div className="flex flex-col min-w-0 text-left">
-                <span className="font-extrabold text-sm text-slate-900 dark:text-white truncate">
-                  Shiv Computer
-                </span>
-                <span className="text-[11px] text-sky-600 dark:text-sky-400 font-bold leading-none mt-0.5">
-                  {language === 'gu' ? 'એડમિન' : 'Admin'}
-                </span>
-              </div>
-            </div>
+            </button>
 
-            <div className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+            <div className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">
               {language === 'gu' ? 'મેનૂ' : 'Menu'}
             </div>
 
@@ -270,7 +270,7 @@ export const AdminDashboard: React.FC = () => {
                   className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${
                     isActive
                       ? 'btn-glossy-primary shadow-xs'
-                      : 'text-slate-700 dark:text-slate-300 hover:bg-white/60 dark:hover:bg-slate-800/60'
+                      : 'text-slate-700  hover:bg-white/60 '
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
@@ -282,7 +282,7 @@ export const AdminDashboard: React.FC = () => {
                       className={`px-1.5 py-0.5 rounded-full text-[10px] font-mono font-bold ${
                         isActive
                           ? 'bg-white/20 text-white'
-                          : 'bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-200'
+                          : 'bg-amber-100  text-amber-800 '
                       }`}
                     >
                       {item.badge}
@@ -294,12 +294,12 @@ export const AdminDashboard: React.FC = () => {
           </div>
 
           {/* Admin Sign Out footer */}
-          <div className="p-3 border-t border-slate-200/80 dark:border-white/10 shrink-0">
+          <div className="p-3 border-t border-slate-200/80 shrink-0">
             <button
               id="admin-logout-button"
               type="button"
               onClick={logout}
-              className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 transition-colors"
+              className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-rose-600 hover:bg-rose-50 transition-colors"
             >
               <LogOut className="w-4 h-4 shrink-0" />
               <span>{t.adminSidebar?.logout || 'Sign Out'}</span>
@@ -320,35 +320,42 @@ export const AdminDashboard: React.FC = () => {
           {/* Top Shiv Computer Brand Header (Prominently displayed after login) */}
           <div
             id="admin-dashboard-top-brand"
-            className="p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl bg-linear-to-r from-white/80 via-sky-50/70 to-cyan-50/80 dark:from-slate-900/85 dark:via-slate-900/75 dark:to-slate-800/80 border border-white/80 dark:border-white/10 backdrop-blur-xl shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3.5"
+            className="p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl bg-linear-to-r from-white/80 via-sky-50/70 to-cyan-50/80 border border-white/80 backdrop-blur-xl shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3.5"
           >
             <div className="flex items-center gap-3.5 min-w-0">
-              <div className="w-11 h-11 sm:w-13 sm:h-13 rounded-2xl bg-white/70 dark:bg-slate-800/60 p-1 flex items-center justify-center border border-white/80 dark:border-white/10 shadow-xs shrink-0">
+              <button
+                type="button"
+                id="admin-dash-brand-logo-btn"
+                onClick={() => navigateToView('home')}
+                className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/70 p-1 flex items-center justify-center border border-white/80 shadow-xs shrink-0 cursor-pointer hover:scale-105 transition-transform"
+                title="Shiv Computer — Home"
+                aria-label="Go to Home"
+              >
                 <img
                   src="/logo.png"
-                  alt="Shiv Computer"
+                  alt="Shiv Computer Logo"
                   className="w-full h-full object-contain filter drop-shadow-xs"
                 />
-              </div>
+              </button>
               <div className="min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <h2 className="text-xl sm:text-2xl font-black tracking-tight bg-linear-to-r from-sky-950 via-sky-800 to-cyan-600 dark:from-white dark:via-sky-200 dark:to-cyan-400 bg-clip-text text-transparent">
-                    Shiv Computer
-                  </h2>
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-bold bg-purple-500/15 text-purple-800 dark:text-purple-300 border border-purple-400/30">
+                  <h2 className="text-xl sm:text-2xl font-black tracking-tight bg-linear-to-r from-sky-950 via-sky-800 to-cyan-600 bg-clip-text text-transparent">
                     {language === 'gu' ? 'એડમિન કંટ્રોલ પેનલ' : 'Admin Control Panel'}
+                  </h2>
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-bold bg-purple-500/15 text-purple-800 border border-purple-400/30">
+                    {language === 'gu' ? 'સંચાલન' : 'Management'}
                   </span>
                 </div>
-                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-medium truncate mt-0.5">
+                <p className="text-xs sm:text-sm text-slate-600 font-medium truncate mt-0.5">
                   {language === 'gu'
-                    ? 'શિવ કમ્પ્યુટર — સત્તાવાર સંચાલન, ફોર્મ્સ અને દસ્તાવેજ વ્યવસ્થાપન'
-                    : 'Shiv Computer — Official Administration, Forms & Document Management'}
+                    ? 'સત્તાવાર સંચાલન, ફોર્મ્સ અને દસ્તાવેજ વ્યવસ્થાપન પોર્ટલ'
+                    : 'Official Administration, Forms & Document Management'}
                 </p>
               </div>
             </div>
 
             <div className="flex items-center gap-2 self-start sm:self-center shrink-0">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-white/70 dark:bg-slate-800/60 border border-white/80 dark:border-white/10 text-xs font-semibold text-slate-700 dark:text-slate-300 shadow-2xs backdrop-blur-md">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-white/70 border border-white/80 text-xs font-semibold text-slate-700 shadow-2xs backdrop-blur-md">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 <span>{language === 'gu' ? 'સક્રિય એડમિન' : 'Active Admin'}</span>
               </div>
@@ -359,17 +366,17 @@ export const AdminDashboard: React.FC = () => {
           {activeTab === 'dashboard' && (
             <div className="space-y-6">
               {/* Top Banner */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 sm:p-6 rounded-3xl bg-white/70 dark:bg-slate-900/70 border border-slate-200/80 dark:border-white/10 backdrop-blur-xl shadow-xs">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 sm:p-6 rounded-3xl bg-white/70 border border-slate-200/80 backdrop-blur-xl shadow-xs">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-sky-500/15 text-sky-700 dark:text-sky-300 border border-sky-500/25">
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-sky-500/15 text-sky-700 border border-sky-500/25">
                       {language === 'gu' ? 'એડમિન કંટ્રોલ' : 'Admin'}
                     </span>
                   </div>
-                  <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white mt-1">
+                  <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 mt-1">
                     {language === 'gu' ? 'એડમિન ડેશબોર્ડ' : 'Admin Dashboard'}
                   </h1>
-                  <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+                  <p className="text-xs sm:text-sm text-slate-500 mt-1">
                     {language === 'gu'
                       ? 'દસ્તાવેજો અપલોડ કરો, અરજીઓ ચકાસો અને યુઝર એકાઉન્ટ્સ સંચાલિત કરો.'
                       : 'Upload and manage official documents, review applications, and administer user services.'}
@@ -390,36 +397,36 @@ export const AdminDashboard: React.FC = () => {
 
               {/* Counters Grid */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div className="p-4 rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-white/10 shadow-xs backdrop-blur-md">
-                  <div className="text-xs text-slate-500 dark:text-slate-400">Total Applications</div>
-                  <div className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-1">
+                <div className="p-4 rounded-2xl bg-white/80 border border-slate-200/80 shadow-xs backdrop-blur-md">
+                  <div className="text-xs text-slate-500">Total Applications</div>
+                  <div className="text-xl sm:text-2xl font-bold text-slate-900 mt-1">
                     <AnimatedCounter value={totalApps} />
                   </div>
                 </div>
-                <div className="p-4 rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-white/10 shadow-xs backdrop-blur-md">
-                  <div className="text-xs text-amber-600 dark:text-amber-400">Pending Review</div>
-                  <div className="text-xl sm:text-2xl font-bold text-amber-600 dark:text-amber-400 mt-1">
+                <div className="p-4 rounded-2xl bg-white/80 border border-slate-200/80 shadow-xs backdrop-blur-md">
+                  <div className="text-xs text-amber-600">Pending Review</div>
+                  <div className="text-xl sm:text-2xl font-bold text-amber-600 mt-1">
                     <AnimatedCounter value={pendingApps} />
                   </div>
                 </div>
-                <div className="p-4 rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-white/10 shadow-xs backdrop-blur-md">
-                  <div className="text-xs text-blue-600 dark:text-blue-400">In Processing</div>
-                  <div className="text-xl sm:text-2xl font-bold text-blue-600 dark:text-blue-400 mt-1">
+                <div className="p-4 rounded-2xl bg-white/80 border border-slate-200/80 shadow-xs backdrop-blur-md">
+                  <div className="text-xs text-blue-600">In Processing</div>
+                  <div className="text-xl sm:text-2xl font-bold text-blue-600 mt-1">
                     <AnimatedCounter value={processingApps} />
                   </div>
                 </div>
-                <div className="p-4 rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-white/10 shadow-xs backdrop-blur-md">
-                  <div className="text-xs text-emerald-600 dark:text-emerald-400">Registered Users</div>
-                  <div className="text-xl sm:text-2xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">
+                <div className="p-4 rounded-2xl bg-white/80 border border-slate-200/80 shadow-xs backdrop-blur-md">
+                  <div className="text-xs text-emerald-600">Registered Users</div>
+                  <div className="text-xl sm:text-2xl font-bold text-emerald-600 mt-1">
                     <AnimatedCounter value={users.length} />
                   </div>
                 </div>
               </div>
 
               {/* Recent Applications table */}
-              <div className="rounded-3xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-white/10 shadow-xs overflow-hidden backdrop-blur-md">
-                <div className="p-4 sm:p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                  <h3 className="font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+              <div className="rounded-3xl bg-white/80 border border-slate-200/80 shadow-xs overflow-hidden backdrop-blur-md">
+                <div className="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between">
+                  <h3 className="font-bold text-sm sm:text-base text-slate-900">
                     Recent Applications Pending Action
                   </h3>
                   <button
@@ -433,7 +440,7 @@ export const AdminDashboard: React.FC = () => {
 
                 <div className="table-responsive-container">
                   <table className="w-full min-w-[620px] text-left text-xs sm:text-sm">
-                    <thead className="bg-slate-50 dark:bg-slate-800/60 text-slate-500 uppercase text-[10px] font-semibold border-b border-slate-100 dark:border-slate-800">
+                    <thead className="bg-slate-50 text-slate-500 uppercase text-[10px] font-semibold border-b border-slate-100">
                       <tr>
                         <th className="py-3 px-4">Application ID</th>
                         <th className="py-3 px-4">Applicant</th>
@@ -443,10 +450,10 @@ export const AdminDashboard: React.FC = () => {
                         <th className="py-3 px-4 text-right">Action</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-slate-800 dark:text-slate-200">
+                    <tbody className="divide-y divide-slate-100 text-slate-800">
                       {applications.slice(0, 6).map((app) => (
-                        <tr key={app.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/40">
-                          <td className="py-3 px-4 font-mono font-bold text-sky-600 dark:text-sky-400">{app.id}</td>
+                        <tr key={app.id} className="hover:bg-slate-50">
+                          <td className="py-3 px-4 font-mono font-bold text-sky-600">{app.id}</td>
                           <td className="py-3 px-4 font-medium">{app.applicantName}</td>
                           <td className="py-3 px-4">{app.serviceName}</td>
                           <td className="py-3 px-4 text-slate-500 text-xs">{app.applicationDate}</td>
@@ -459,7 +466,7 @@ export const AdminDashboard: React.FC = () => {
                             <button
                               type="button"
                               onClick={() => setSelectedAppForModal(app)}
-                              className="px-3 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-sky-600 hover:text-white font-semibold text-xs transition-colors"
+                              className="px-3 py-1 rounded-xl bg-slate-100 hover:bg-sky-600 hover:text-white font-semibold text-xs transition-colors"
                             >
                               Review
                             </button>
@@ -486,10 +493,10 @@ export const AdminDashboard: React.FC = () => {
             <div className="space-y-6">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                  <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+                  <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
                     Applications Management
                   </h1>
-                  <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+                  <p className="text-xs sm:text-sm text-slate-500">
                     Review submitted documents, record department notes, and update statuses.
                   </p>
                 </div>
@@ -497,23 +504,23 @@ export const AdminDashboard: React.FC = () => {
 
               {/* Filter controls */}
               <div className="flex flex-col sm:flex-row gap-3">
-                <div className="flex-1 flex items-center bg-white/80 dark:bg-slate-900/80 px-3.5 py-2.5 rounded-2xl border border-slate-200/80 dark:border-white/10 shadow-xs backdrop-blur-md">
+                <div className="flex-1 flex items-center bg-white/80 px-3.5 py-2.5 rounded-2xl border border-slate-200/80 shadow-xs backdrop-blur-md">
                   <Search className="w-4 h-4 text-slate-400 shrink-0" />
                   <input
                     type="text"
                     value={appSearch}
                     onChange={(e) => setAppSearch(e.target.value)}
                     placeholder="Search by ID, applicant name, phone, or service..."
-                    className="w-full pl-2.5 pr-2 py-0.5 text-xs sm:text-sm bg-transparent outline-none text-slate-900 dark:text-white"
+                    className="w-full pl-2.5 pr-2 py-0.5 text-xs sm:text-sm bg-transparent outline-none text-slate-900"
                   />
                 </div>
 
-                <div className="flex items-center bg-white/80 dark:bg-slate-900/80 px-3.5 py-2.5 rounded-2xl border border-slate-200/80 dark:border-white/10 shadow-xs text-xs backdrop-blur-md">
+                <div className="flex items-center bg-white/80 px-3.5 py-2.5 rounded-2xl border border-slate-200/80 shadow-xs text-xs backdrop-blur-md">
                   <Filter className="w-3.5 h-3.5 text-slate-400 mr-2 shrink-0" />
                   <select
                     value={appStatusFilter}
                     onChange={(e) => setAppStatusFilter(e.target.value)}
-                    className="bg-transparent outline-none text-slate-700 dark:text-slate-300 font-medium cursor-pointer"
+                    className="bg-transparent outline-none text-slate-700 font-medium cursor-pointer"
                   >
                     <option value="all">All Statuses</option>
                     <option value="Pending">Pending</option>
@@ -529,21 +536,21 @@ export const AdminDashboard: React.FC = () => {
               {/* Applications List */}
               <div className="space-y-3">
                 {filteredApps.length === 0 ? (
-                  <div className="p-12 text-center bg-white/70 dark:bg-slate-900/70 rounded-3xl border border-slate-200 dark:border-slate-800 text-slate-400">
+                  <div className="p-12 text-center bg-white/70 rounded-3xl border border-slate-200 text-slate-400">
                     No matching applications found.
                   </div>
                 ) : (
                   filteredApps.map((app) => (
                     <div
                       key={app.id}
-                      className="p-5 rounded-3xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-white/10 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4 backdrop-blur-md"
+                      className="p-5 rounded-3xl bg-white/80 border border-slate-200/80 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4 backdrop-blur-md"
                     >
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
-                          <span className="font-mono text-xs font-bold text-sky-600 dark:text-sky-400">{app.id}</span>
-                          <span className="font-bold text-sm text-slate-900 dark:text-white">{app.serviceName}</span>
+                          <span className="font-mono text-xs font-bold text-sky-600">{app.id}</span>
+                          <span className="font-bold text-sm text-slate-900">{app.serviceName}</span>
                         </div>
-                        <div className="text-xs text-slate-600 dark:text-slate-300 font-medium">
+                        <div className="text-xs text-slate-600 font-medium">
                           Applicant: {app.applicantName} ({app.applicantPhone})
                         </div>
                         <div className="text-xs text-slate-400">
@@ -575,10 +582,10 @@ export const AdminDashboard: React.FC = () => {
             <div className="space-y-6">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                  <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+                  <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
                     Services Catalog Management
                   </h1>
-                  <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+                  <p className="text-xs sm:text-sm text-slate-500">
                     Add new digital services, adjust service fees, and manage requirements.
                   </p>
                 </div>
@@ -596,28 +603,28 @@ export const AdminDashboard: React.FC = () => {
                 {[...services, ...agricultureServices].map((service) => (
                   <div
                     key={service.id}
-                    className="p-5 rounded-3xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-white/10 shadow-xs flex flex-col justify-between space-y-4 backdrop-blur-md"
+                    className="p-5 rounded-3xl bg-white/80 border border-slate-200/80 shadow-xs flex flex-col justify-between space-y-4 backdrop-blur-md"
                   >
                     <div>
-                      <div className="flex items-center justify-between text-xs text-sky-600 dark:text-sky-400 font-bold mb-1">
+                      <div className="flex items-center justify-between text-xs text-sky-600 font-bold mb-1">
                         <span className="truncate pr-2">{service.department}</span>
-                        <span className="font-extrabold text-slate-900 dark:text-amber-300 bg-amber-400/15 dark:bg-amber-400/20 px-2.5 py-0.5 rounded-full border border-amber-400/30 shrink-0">
+                        <span className="font-extrabold text-slate-900 bg-amber-400/15 px-2.5 py-0.5 rounded-full border border-amber-400/30 shrink-0">
                           ₹{service.fee}
                         </span>
                       </div>
-                      <h3 className="font-bold text-sm text-slate-900 dark:text-white">{service.name}</h3>
-                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">
+                      <h3 className="font-bold text-sm text-slate-900">{service.name}</h3>
+                      <p className="text-xs text-slate-500 mt-1 line-clamp-2">
                         {service.description}
                       </p>
                     </div>
 
-                    <div className="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800">
+                    <div className="flex items-center justify-between pt-2 border-t border-slate-100">
                       <span className="text-[11px] text-slate-400">Time: {service.processingTime}</span>
                       <div className="flex items-center gap-1.5">
                         <button
                           type="button"
                           onClick={() => setServiceModalState({ isOpen: true, serviceToEdit: service, category: 'general' })}
-                          className="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                          className="p-2 rounded-xl text-slate-600 hover:bg-slate-100"
                           title="Edit Service"
                         >
                           <Edit2 className="w-3.5 h-3.5" />
@@ -625,7 +632,7 @@ export const AdminDashboard: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => deleteService(service.id)}
-                          className="p-2 rounded-xl text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40"
+                          className="p-2 rounded-xl text-rose-500 hover:bg-rose-50"
                           title="Delete Service"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
@@ -643,44 +650,44 @@ export const AdminDashboard: React.FC = () => {
             <div className="space-y-6">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                  <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+                  <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
                     User Accounts Management
                   </h1>
-                  <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+                  <p className="text-xs sm:text-sm text-slate-500">
                     View registered users, monitor verification statuses, and toggle account access.
                   </p>
                 </div>
-                <span className="text-xs font-semibold px-3 py-1 rounded-full bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800">
+                <span className="text-xs font-semibold px-3 py-1 rounded-full bg-sky-50 text-sky-700 border border-sky-200">
                   {users.length} Registered Users
                 </span>
               </div>
 
               {/* User search */}
-              <div className="flex items-center bg-white/80 dark:bg-slate-900/80 px-3.5 py-2.5 rounded-2xl border border-slate-200/80 dark:border-white/10 shadow-xs backdrop-blur-md">
+              <div className="flex items-center bg-white/80 px-3.5 py-2.5 rounded-2xl border border-slate-200/80 shadow-xs backdrop-blur-md">
                 <Search className="w-4 h-4 text-slate-400 shrink-0" />
                 <input
                   type="text"
                   placeholder="Search users by name, email, username, or phone..."
                   value={userSearch}
                   onChange={(e) => setUserSearch(e.target.value)}
-                  className="w-full pl-2.5 pr-2 py-0.5 text-xs sm:text-sm bg-transparent outline-none text-slate-900 dark:text-white"
+                  className="w-full pl-2.5 pr-2 py-0.5 text-xs sm:text-sm bg-transparent outline-none text-slate-900"
                 />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {filteredUsers.length === 0 ? (
-                  <div className="col-span-full p-12 text-center bg-white/70 dark:bg-slate-900/70 rounded-3xl border border-slate-200 dark:border-slate-800 text-slate-400">
+                  <div className="col-span-full p-12 text-center bg-white/70 rounded-3xl border border-slate-200 text-slate-400">
                     No users matching search.
                   </div>
                 ) : (
                   filteredUsers.map((user) => (
                     <div
                       key={user.id}
-                      className="p-5 rounded-3xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-white/10 shadow-xs flex flex-col justify-between space-y-4 backdrop-blur-md"
+                      className="p-5 rounded-3xl bg-white/80 border border-slate-200/80 shadow-xs flex flex-col justify-between space-y-4 backdrop-blur-md"
                     >
                       <div>
                         <div className="flex items-center justify-between gap-2">
-                          <div className="font-bold text-sm text-slate-900 dark:text-white">{user.name}</div>
+                          <div className="font-bold text-sm text-slate-900">{user.name}</div>
                           <button
                             type="button"
                             onClick={() => toggleUserStatus(user.id)}
@@ -693,14 +700,14 @@ export const AdminDashboard: React.FC = () => {
                             {user.status}
                           </button>
                         </div>
-                        <div className="text-xs text-slate-500 dark:text-slate-400 mt-1 space-y-0.5">
+                        <div className="text-xs text-slate-500 mt-1 space-y-0.5">
                           <div>Email: {user.email}</div>
                           <div>Phone: {user.phone || 'Not provided'}</div>
                           {user.username && <div>Username: @{user.username}</div>}
                         </div>
                       </div>
 
-                      <div className="pt-2 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-400 flex items-center justify-between">
+                      <div className="pt-2 border-t border-slate-100 text-[11px] text-slate-400 flex items-center justify-between">
                         <span>Role: {user.role === 'admin' ? 'Admin' : 'User'}</span>
                         <span>Joined: {user.joinedDate || 'Recently'}</span>
                       </div>
@@ -715,22 +722,22 @@ export const AdminDashboard: React.FC = () => {
           {activeTab === 'settings' && (
             <div className="space-y-6">
               <div>
-                <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+                <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
                   Admin System Settings & Security
                 </h1>
-                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+                <p className="text-xs sm:text-sm text-slate-500">
                   Firebase Authentication credentials and official center configuration.
                 </p>
               </div>
 
               {/* Password update card */}
-              <div className="max-w-xl p-5 sm:p-6 rounded-3xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-white/10 shadow-xs space-y-4 backdrop-blur-md">
+              <div className="max-w-xl p-5 sm:p-6 rounded-3xl bg-white/80 border border-slate-200/80 shadow-xs space-y-4 backdrop-blur-md">
                 <div className="flex items-center gap-2">
-                  <div className="p-2 rounded-xl bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20">
+                  <div className="p-2 rounded-xl bg-sky-500/10 text-sky-600 border border-sky-500/20">
                     <ShieldCheck className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-sm text-slate-900 dark:text-white">
+                    <h3 className="font-bold text-sm text-slate-900">
                       Admin Password & Credentials
                     </h3>
                     <p className="text-xs text-slate-400">
@@ -741,7 +748,7 @@ export const AdminDashboard: React.FC = () => {
 
                 <form onSubmit={handleUpdatePassword} className="space-y-3 pt-1 text-xs">
                   <div>
-                    <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                    <label className="block font-semibold text-slate-700 mb-1">
                       New Admin Password (min 6 chars)
                     </label>
                     <input
@@ -749,12 +756,12 @@ export const AdminDashboard: React.FC = () => {
                       value={adminNewPass}
                       onChange={(e) => setAdminNewPass(e.target.value)}
                       placeholder="Enter new password"
-                      className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:border-sky-500"
+                      className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-slate-900 outline-none focus:border-sky-500"
                     />
                   </div>
 
                   <div>
-                    <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                    <label className="block font-semibold text-slate-700 mb-1">
                       Confirm New Password
                     </label>
                     <input
@@ -762,7 +769,7 @@ export const AdminDashboard: React.FC = () => {
                       value={adminConfirmPass}
                       onChange={(e) => setAdminConfirmPass(e.target.value)}
                       placeholder="Confirm new password"
-                      className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:border-sky-500"
+                      className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-slate-900 outline-none focus:border-sky-500"
                     />
                   </div>
 
@@ -781,7 +788,7 @@ export const AdminDashboard: React.FC = () => {
                       type="button"
                       onClick={handleSendAdminResetEmail}
                       disabled={isSendingResetEmail}
-                      className="px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold flex items-center gap-1.5 transition-colors"
+                      className="px-3.5 py-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold flex items-center gap-1.5 transition-colors"
                     >
                       <RefreshCw className={`w-3.5 h-3.5 ${isSendingResetEmail ? 'animate-spin' : ''}`} />
                       <span>{isSendingResetEmail ? 'Sending...' : 'Send Reset Email'}</span>

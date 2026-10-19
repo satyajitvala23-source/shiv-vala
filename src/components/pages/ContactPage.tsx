@@ -2,17 +2,11 @@ import React, { useState } from 'react';
 import {
   Phone,
   MessageCircle,
-  MapPin,
-  Clock,
-  ExternalLink,
-  Send,
   CheckCircle2,
-  Mail,
-  ShieldCheck,
+  Send,
 } from 'lucide-react';
 import { OfficeAddressCard } from '../dashboard/OfficeAddressCard';
 import { useApp } from '../../context/AppContext';
-import { GOOGLE_MAPS_LOCATION_URL } from '../../data/mockData';
 
 export const ContactPage: React.FC = () => {
   const { language } = useApp();
@@ -34,18 +28,18 @@ export const ContactPage: React.FC = () => {
   };
 
   return (
-    <div className="w-full min-h-screen text-slate-100 pb-16 pt-24 sm:pt-28">
+    <div className="w-full min-h-screen text-[#243447] pb-16 pt-24 sm:pt-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Banner */}
-        <div className="p-6 sm:p-10 rounded-3xl bg-[#0a192f]/45 border border-cyan-400/25 backdrop-blur-md shadow-2xl shadow-black/40 mb-8">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 mb-3">
-            <Phone className="w-3.5 h-3.5 text-cyan-300" />
+        <div className="p-6 sm:p-10 rounded-3xl bg-white border border-[#D8E8F5] shadow-xs mb-8">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#EAF5FF] text-[#2196F3] border border-[#2196F3]/30 mb-3">
+            <Phone className="w-3.5 h-3.5 text-[#2196F3]" />
             <span>{language === 'gu' ? 'સંપર્ક અને મુલાકાત' : 'Official Contact & Office Location'}</span>
           </div>
-          <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+          <h1 className="text-2xl sm:text-4xl font-black text-[#243447] tracking-tight">
             {language === 'gu' ? 'શિવ કમ્પ્યુટર કેશોદ કાર્યાલય' : 'Get in Touch with Shiv Computer Keshod'}
           </h1>
-          <p className="text-xs sm:text-sm text-cyan-200/80 mt-2 max-w-2xl leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#64748B] mt-2 max-w-2xl leading-relaxed">
             {language === 'gu'
               ? 'રવિરાજ મકવાણા અને નિકુંદ સોલંકી સાથે સીધો સંપર્ક કરો અથવા અમારા કેશોદ ખાતેના કાર્યાલયની મુલાકાત લો.'
               : 'Direct call, WhatsApp chat, and Google Maps directions to our physical office in Keshod.'}
@@ -58,32 +52,32 @@ export const ContactPage: React.FC = () => {
         </div>
 
         {/* Quick WhatsApp Inquiry Form Section */}
-        <div className="p-6 sm:p-8 rounded-3xl bg-[#0a192f]/40 border border-white/12 backdrop-blur-md shadow-xl max-w-2xl mx-auto">
+        <div className="p-6 sm:p-8 rounded-3xl bg-white border border-[#D8E8F5] shadow-xs max-w-2xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center">
-              <MessageCircle className="w-5 h-5 text-emerald-300" />
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600">
+              <MessageCircle className="w-5 h-5 text-emerald-600" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-white">
+              <h3 className="text-lg font-bold text-[#243447]">
                 {language === 'gu' ? 'ઝડપી વોટ્સએપ પૂછપરછ' : 'Quick WhatsApp Inquiry'}
               </h3>
-              <p className="text-xs text-slate-300">
+              <p className="text-xs text-[#64748B]">
                 {language === 'gu' ? 'સંદેશ મોકલો અને તુરંત જવાબ મેળવો' : 'Send direct inquiry to Raviraj Makwana'}
               </p>
             </div>
           </div>
 
           {submitted ? (
-            <div className="p-6 rounded-2xl bg-emerald-500/15 border border-emerald-400/30 text-center space-y-2">
-              <CheckCircle2 className="w-10 h-10 text-emerald-400 mx-auto" />
-              <h4 className="text-base font-bold text-white">WhatsApp Chat Opened</h4>
-              <p className="text-xs text-slate-300">
+            <div className="p-6 rounded-2xl bg-emerald-50 border border-emerald-200 text-center space-y-2">
+              <CheckCircle2 className="w-10 h-10 text-emerald-600 mx-auto" />
+              <h4 className="text-base font-bold text-emerald-900">WhatsApp Chat Opened</h4>
+              <p className="text-xs text-emerald-800">
                 Your message has been transferred to WhatsApp. We will reply to you as soon as possible.
               </p>
               <button
                 type="button"
                 onClick={() => setSubmitted(false)}
-                className="mt-3 text-xs text-cyan-300 underline font-semibold"
+                className="mt-3 text-xs text-[#2196F3] underline font-semibold cursor-pointer"
               >
                 Send another message
               </button>
@@ -92,7 +86,7 @@ export const ContactPage: React.FC = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-xs font-semibold text-slate-300 block mb-1">
+                  <label className="text-xs font-semibold text-[#64748B] block mb-1">
                     {language === 'gu' ? 'તમારું નામ' : 'Your Full Name'}
                   </label>
                   <input
@@ -101,11 +95,11 @@ export const ContactPage: React.FC = () => {
                     placeholder="Enter your name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/10 border border-white/15 text-white text-xs sm:text-sm focus:outline-none focus:border-cyan-400"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#F5FAFF] border border-[#D8E8F5] text-[#243447] text-xs sm:text-sm focus:outline-none focus:border-[#2196F3] focus:bg-white"
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-slate-300 block mb-1">
+                  <label className="text-xs font-semibold text-[#64748B] block mb-1">
                     {language === 'gu' ? 'મોબાઇલ નંબર' : 'Mobile Number'}
                   </label>
                   <input
@@ -114,19 +108,19 @@ export const ContactPage: React.FC = () => {
                     placeholder="10-digit mobile number"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/10 border border-white/15 text-white text-xs sm:text-sm focus:outline-none focus:border-cyan-400"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#F5FAFF] border border-[#D8E8F5] text-[#243447] text-xs sm:text-sm focus:outline-none focus:border-[#2196F3] focus:bg-white"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-slate-300 block mb-1">
+                <label className="text-xs font-semibold text-[#64748B] block mb-1">
                   {language === 'gu' ? 'જરૂરી સેવા' : 'Service Required'}
                 </label>
                 <select
                   value={serviceRequired}
                   onChange={(e) => setServiceRequired(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#091830] border border-white/20 text-white text-xs sm:text-sm focus:outline-none focus:border-cyan-400"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#F5FAFF] border border-[#D8E8F5] text-[#243447] text-xs sm:text-sm focus:outline-none focus:border-[#2196F3] focus:bg-white"
                 >
                   <option value="iKhedut Agriculture Scheme">iKhedut Agriculture Scheme (ખેડૂત યોજના)</option>
                   <option value="Income Certificate">Income Certificate (આવકનો દાખલો)</option>
@@ -139,7 +133,7 @@ export const ContactPage: React.FC = () => {
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-slate-300 block mb-1">
+                <label className="text-xs font-semibold text-[#64748B] block mb-1">
                   {language === 'gu' ? 'સંદેશ / પ્રશ્ન' : 'Message or Question'}
                 </label>
                 <textarea
@@ -147,13 +141,13 @@ export const ContactPage: React.FC = () => {
                   placeholder="Describe your inquiry..."
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-white/10 border border-white/15 text-white text-xs sm:text-sm focus:outline-none focus:border-cyan-400"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#F5FAFF] border border-[#D8E8F5] text-[#243447] text-xs sm:text-sm focus:outline-none focus:border-[#2196F3] focus:bg-white"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-500 to-cyan-500 text-white font-bold text-sm shadow-lg shadow-emerald-500/25 hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-xs active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Send className="w-4 h-4" />
                 <span>{language === 'gu' ? 'વોટ્સએપ પર મોકલો' : 'Send via WhatsApp'}</span>
